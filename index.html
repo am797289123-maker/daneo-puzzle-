@@ -543,7 +543,93 @@ body{
 .btn-kakao.loading::after{border-top-color:#3c1a1a;}
 .btn-naver.loading::after{border:2px solid rgba(255,255,255,.3);border-top-color:#fff;}
 .btn-apple.loading::after{border:2px solid rgba(255,255,255,.2);border-top-color:#fff;}
+
+/* ── WORD MEANING POPUP ── */
+#meaningPop{
+  position:fixed;inset:0;z-index:5000;
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;
+}
+.meaning-card{
+  background:#13132a;
+  border:2px solid #4a8b8c;
+  border-radius:24px;
+  padding:24px 28px;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.8);
+  min-width:220px;max-width:300px;
+  transform:scale(0);opacity:0;
+  transition:transform .35s cubic-bezier(.17,.67,.36,1.4), opacity .3s ease;
+  pointer-events:none;
+  position:relative;
+}
+.meaning-card.show{
+  transform:scale(1);opacity:1;
+}
+.meaning-card.hide{
+  transform:scale(.8);opacity:0;
+  transition:transform .25s ease, opacity .25s ease;
+}
+.meaning-img{
+  font-size:4rem;margin-bottom:10px;
+  animation:imgPop .4s .1s cubic-bezier(.17,.67,.36,1.4) both;
+}
+@keyframes imgPop{
+  from{transform:scale(0) rotate(-10deg);opacity:0;}
+  to  {transform:scale(1) rotate(0deg);  opacity:1;}
+}
+.meaning-word{
+  font-family:'Black Han Sans',sans-serif;
+  font-size:1.8rem;color:#e8d5b7;letter-spacing:3px;
+  margin-bottom:6px;
+}
+.meaning-read{
+  font-size:.85rem;color:#7ab8b9;letter-spacing:1px;
+  margin-bottom:8px;
+}
+.meaning-def{
+  font-family:'Nanum Gothic',sans-serif;
+  font-size:.92rem;color:#c8c8e8;line-height:1.5;
+}
+.meaning-timer{
+  margin-top:12px;height:3px;border-radius:2px;
+  background:#2a2a48;overflow:hidden;
+}
+.meaning-timer-bar{
+  height:100%;background:#4a8b8c;border-radius:2px;
+  width:100%;transition:width linear;
+}
+
+/* ── SOUND UNLOCK ── */
+#soundUnlock{
+  position:fixed;inset:0;z-index:99998;
+  background:rgba(5,5,20,.95);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:20px;
+}
+#soundUnlock.hide{display:none;}
+.unlock-icon{font-size:4rem;animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+.unlock-title{
+  font-family:'Black Han Sans',sans-serif;
+  font-size:1.3rem;color:#e8d5b7;letter-spacing:2px;text-align:center;
+}
+.unlock-sub{font-size:.8rem;color:#7a9e9f;text-align:center;letter-spacing:1px;}
+.btn-unlock{
+  background:linear-gradient(135deg,#4a8b8c,#7ab8b9);
+  color:#fff;border:none;border-radius:16px;
+  padding:16px 40px;font-family:'Black Han Sans',sans-serif;
+  font-size:1.1rem;cursor:pointer;letter-spacing:2px;
+  box-shadow:0 8px 25px rgba(74,139,140,.5);
+  transition:transform .15s;
+}
+.btn-unlock:active{transform:scale(.95);}
 </style>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js" defer></script>
 </head>
 <body>
 <canvas id="bgCanvas"></canvas>
@@ -557,6 +643,18 @@ body{
   </div>
 </div>
 
+
+
+<!-- SOUND UNLOCK SCREEN -->
+<div id="soundUnlock" class="hide">
+  <div class="unlock-icon">🔊</div>
+  <div class="unlock-title">소리를 켜세요</div>
+  <div class="unlock-sub">글자를 누르면 발음을 들을 수 있어요</div>
+  <button class="btn-unlock" onclick="doUnlockSound()">
+    소리 켜기 →
+  </button>
+  <button style="background:none;border:none;color:#5a5a7a;font-size:.8rem;cursor:pointer;margin-top:4px;" onclick="skipUnlock()">건너뛰기</button>
+</div>
 
 <!-- LOGIN SCREEN -->
 <div id="loginScreen">
@@ -590,13 +688,7 @@ body{
       <span class="btn-social-txt">네이버로 계속하기</span>
     </button>
 
-    <!-- Apple -->
-    <button class="btn-social btn-apple" onclick="loginWith('apple',this)">
-      <div class="btn-social-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#fff" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-      </div>
-      <span class="btn-social-txt">Apple로 계속하기</span>
-    </button>
+
 
     <div class="login-divider">
       <div class="login-divider-line"></div>
@@ -698,6 +790,17 @@ body{
         </label>
       </div>
 
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-row-label">글자 누를 때 발음 🆕</div>
+          <div class="settings-row-sub">격자의 글자를 누르면 발음</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="s-sylTap" checked onchange="saveSetting('sylTap',this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
       <div class="settings-row" style="flex-direction:column;align-items:flex-start;">
         <div class="settings-row-label">발음 속도</div>
         <div class="speed-btns">
@@ -772,6 +875,18 @@ body{
       </div>
     </div>
 
+  </div>
+</div>
+
+
+<!-- WORD MEANING POPUP -->
+<div id="meaningPop">
+  <div class="meaning-card" id="meaningCard">
+    <div class="meaning-img" id="mImg">⭐</div>
+    <div class="meaning-word" id="mWord"></div>
+    <div class="meaning-read" id="mRead"></div>
+    <div class="meaning-def" id="mDef"></div>
+    <div class="meaning-timer"><div class="meaning-timer-bar" id="mBar"></div></div>
   </div>
 </div>
 
@@ -1007,34 +1122,95 @@ const PROVIDER_INFO = {
   google: { name:'Google', color:'#EA4335', bg:'#fff' },
   kakao:  { name:'카카오', color:'#3c1a1a', bg:'#FEE500' },
   naver:  { name:'네이버', color:'#fff',    bg:'#03C75A' },
-  apple:  { name:'Apple', color:'#fff',    bg:'#000' },
   guest:  { name:'게스트', color:'#fff',    bg:'#4a4a6a' },
 };
 
-const FAKE_NAMES = {
-  google: ['김민준','이서연','박지호','최수아','정도윤'],
-  kakao:  ['카카오유저','행복한하루','별빛가득','무지개꿈','달콤한봄'],
-  naver:  ['네이버유저','초록바람','파란하늘','빛나는별','따뜻한봄'],
-  apple:  ['AppleUser','iPhone유저','아이폰','맥유저','애플팬'],
-  guest:  ['게스트'],
+// ── Firebase init ──
+const firebaseConfig = {
+  apiKey:            "AIzaSyAYW4ld7hsJkwqMTaDeQs0c_jrxE7Tylfc",
+  authDomain:        "daneo-puzzle.firebaseapp.com",
+  projectId:         "daneo-puzzle",
+  storageBucket:     "daneo-puzzle.firebasestorage.app",
+  messagingSenderId: "292530532655",
+  appId:             "1:292530532655:web:fe3a3d05b58f36dbeeb1da",
+  measurementId:     "G-FJ4S51DHZF"
 };
 
+let auth = null;
+
+function initFirebase(){
+  try{
+    if(typeof firebase === 'undefined') return; // offline — skip
+    firebase.initializeApp(firebaseConfig);
+    auth = firebase.auth();
+    auth.onAuthStateChanged(user => {
+      if(user && !currentUser){
+        currentUser = {
+          name:      user.displayName || user.email || '유저',
+          provider:  'google',
+          color:     '#fff',
+          textColor: '#3c3c3c',
+          photo:     user.photoURL || null,
+        };
+        try{ localStorage.setItem(USER_KEY, JSON.stringify(currentUser)); }catch(e){}
+        const ls = document.getElementById('loginScreen');
+        if(ls && !ls.classList.contains('hide')) afterLogin();
+        updateUserPill();
+        updateSettingsUser();
+      }
+    });
+  } catch(e){ console.warn('Firebase init failed (offline?):', e); }
+}
+
 function loginWith(provider, btn){
-  // Show loading
   btn.classList.add('loading');
   btn.disabled = true;
 
-  // Simulate login delay
-  setTimeout(()=>{
-    const names = FAKE_NAMES[provider];
-    const name  = names[Math.floor(Math.random()*names.length)];
-    const info  = PROVIDER_INFO[provider];
-    currentUser = { name, provider, color: info.bg, textColor: info.color };
-    try{ localStorage.setItem(USER_KEY, JSON.stringify(currentUser)); }catch(e){}
-    btn.classList.remove('loading');
-    btn.disabled = false;
-    afterLogin();
-  }, 1200);
+  if(provider === 'google'){
+    if(!auth){
+      btn.classList.remove('loading'); btn.disabled = false;
+      alert('인터넷 연결이 필요합니다 🌐\nInternet connection required for login.');
+      return;
+    }
+    const gProvider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(gProvider)
+      .then(result => {
+        const user = result.user;
+        currentUser = {
+          name:      user.displayName || user.email || '유저',
+          provider:  'google',
+          color:     '#fff',
+          textColor: '#3c3c3c',
+          photo:     user.photoURL || null,
+        };
+        try{ localStorage.setItem(USER_KEY, JSON.stringify(currentUser)); }catch(e){}
+        btn.classList.remove('loading');
+        btn.disabled = false;
+        afterLogin();
+      })
+      .catch(err => {
+        console.error(err);
+        btn.classList.remove('loading');
+        btn.disabled = false;
+        alert('로그인 실패: ' + err.message);
+      });
+  } else {
+    // Kakao/Naver — simulate for now (need their SDK)
+    setTimeout(()=>{
+      const fakeNames = {
+        kakao: ['카카오유저','행복한하루','별빛가득'],
+        naver: ['네이버유저','초록바람','파란하늘'],
+      };
+      const names = fakeNames[provider] || ['유저'];
+      const name  = names[Math.floor(Math.random()*names.length)];
+      const info  = PROVIDER_INFO[provider];
+      currentUser = { name, provider, color: info.bg, textColor: info.color };
+      try{ localStorage.setItem(USER_KEY, JSON.stringify(currentUser)); }catch(e){}
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      afterLogin();
+    }, 1000);
+  }
 }
 
 function loginGuest(){
@@ -1073,16 +1249,18 @@ function updateUserPill(){
   const pill = document.getElementById('userPill');
   if(!pill) return;
   const initial = currentUser.name.charAt(0);
-  pill.innerHTML = `
-    <div class="user-avatar" style="background:${currentUser.color};color:${currentUser.textColor}">${initial}</div>
-    <span class="user-name">${currentUser.name}</span>
-  `;
+  const avatarHTML = currentUser.photo
+    ? `<img src="${currentUser.photo}" style="width:24px;height:24px;border-radius:50%;object-fit:cover;" onerror="this.style.display='none'">`
+    : `<div class="user-avatar" style="background:${currentUser.color};color:${currentUser.textColor}">${initial}</div>`;
+  pill.innerHTML = `${avatarHTML}<span class="user-name">${currentUser.name}</span>`;
 }
 
 function logoutUser(){
   if(!confirm('로그아웃 하시겠어요?')) return;
   currentUser = null;
   try{ localStorage.removeItem(USER_KEY); }catch(e){}
+  // Firebase sign out
+  if(auth) auth.signOut().catch(()=>{});
   document.getElementById('settingsOv').classList.remove('show');
   // Show login screen again
   const ls = document.getElementById('loginScreen');
@@ -1098,6 +1276,7 @@ let CFG = {
   chime:    true,
   tts:      true,
   chiptts:  true,
+  sylTap:   true,   // speak syllable on cell tap
   speed:    'normal',
   autohint: false,
   vibrate:  true,
@@ -1119,7 +1298,7 @@ function saveSetting(key, val){
 
 function applySettings(){
   // Sync toggles
-  ['chime','tts','chiptts','autohint','vibrate','bganim'].forEach(k=>{
+  ['chime','tts','chiptts','sylTap','autohint','vibrate','bganim'].forEach(k=>{
     const el = document.getElementById('s-'+k);
     if(el) el.checked = CFG[k];
   });
@@ -1226,6 +1405,28 @@ function playTap(){
 const _ttsCache = {};
 let _ttsAudio = null;
 
+// Unlock audio context on first user gesture
+let _audioUnlocked = false;
+function unlockAudio(){
+  if(_audioUnlocked) return;
+  _audioUnlocked = true;
+  try{
+    const ctx = getACtx();
+    // Play silent buffer to unlock
+    const buf = ctx.createBuffer(1,1,22050);
+    const src = ctx.createBufferSource();
+    src.buffer = buf; src.connect(ctx.destination); src.start(0);
+    ctx.resume();
+  }catch(e){}
+}
+
+// Speak a single syllable — inline Audio inside user gesture
+function speakSyllable(syl){
+  if(!CFG.sylTap) return;
+  // Use same Google TTS as speakWord — proven to work
+  speakWord(syl);
+}
+
 function speakWord(text){
   try{
     // Stop any playing audio
@@ -1282,6 +1483,270 @@ if(window.speechSynthesis){
   window.speechSynthesis.onvoiceschanged = ()=> window.speechSynthesis.getVoices();
 }
 
+
+
+// ═══════════════════════════════════════════════
+//  SOUND UNLOCK (Android fix)
+// ═══════════════════════════════════════════════
+let _soundReady = false;
+
+function showSoundUnlock(){
+  // Only show if sylTap is ON
+  if(!CFG.sylTap) return;
+  document.getElementById('soundUnlock').classList.remove('hide');
+}
+
+function doUnlockSound(){
+  // Play a real silent mp3 to unlock audio on Android
+  try{
+    // Unlock Web Audio
+    const ctx = getACtx();
+    ctx.resume();
+    const buf = ctx.createBuffer(1, ctx.sampleRate * 0.1, ctx.sampleRate);
+    const src = ctx.createBufferSource();
+    src.buffer = buf; src.connect(ctx.destination); src.start(0);
+  }catch(e){}
+
+  // Play test syllable — this gesture will unlock HTML5 Audio too
+  try{
+    const testAudio = new Audio(
+      'https://translate.google.com/translate_tts?ie=UTF-8&tl=ko&client=tw-ob&q=' + encodeURIComponent('한글')
+    );
+    testAudio.volume = 0.8;
+    testAudio.play().then(()=>{
+      _soundReady = true;
+    }).catch(()=>{ _soundReady = true; });
+  }catch(e){ _soundReady = true; }
+
+  _audioUnlocked = true;
+  _soundReady = true;
+  document.getElementById('soundUnlock').classList.add('hide');
+}
+
+function skipUnlock(){
+  _soundReady = false;
+  document.getElementById('soundUnlock').classList.add('hide');
+}
+
+// ═══════════════════════════════════════════════
+//  WORD MEANINGS + EMOJI
+// ═══════════════════════════════════════════════
+const MEANINGS = {
+  // 자연🌿
+  '하늘':['하늘 (sky)','파란 하늘이 맑아요','🌌'],
+  '바람':['바람 (wind)','시원한 바람이 불어요','💨'],
+  '구름':['구름 (cloud)','하얀 구름이 떠요','☁️'],
+  '강산':['강산 (mountains & rivers)','아름다운 강산이에요','🏔️'],
+  '봄날':['봄날 (spring day)','따뜻한 봄날이에요','🌸'],
+  '달빛':['달빛 (moonlight)','달빛이 밝게 빛나요','🌙'],
+  '꽃잎':['꽃잎 (petal)','꽃잎이 날려요','🌺'],
+  '노을':['노을 (sunset glow)','붉은 노을이 예뻐요','🌅'],
+  '별빛':['별빛 (starlight)','별빛이 반짝여요','✨'],
+  '새벽':['새벽 (dawn)','새벽이 밝아와요','🌄'],
+  '안개':['안개 (fog)','안개가 자욱해요','🌫️'],
+  '단풍':['단풍 (autumn leaves)','단풍이 물들어요','🍁'],
+  '나무':['나무 (tree)','나무가 자라요','🌳'],
+  '초록':['초록 (green)','초록이 싱그러워요','💚'],
+  '강물':['강물 (river water)','강물이 흘러요','🌊'],
+  '바다':['바다 (sea)','바다가 넓어요','🌊'],
+  // 감정💛
+  '사랑':['사랑 (love)','사랑해요 ❤️','❤️'],
+  '행복':['행복 (happiness)','행복해요!','😊'],
+  '기쁨':['기쁨 (joy)','기쁨이 넘쳐요','😄'],
+  '슬픔':['슬픔 (sadness)','슬퍼요...','😢'],
+  '그리움':['그리움 (longing)','그리워요','🥺'],
+  '설렘':['설렘 (excitement)','설레는 마음이에요','🦋'],
+  '외로움':['외로움 (loneliness)','외로워요','😔'],
+  '즐거움':['즐거움 (fun)','즐거워요!','🎉'],
+  '두려움':['두려움 (fear)','두려워요','😨'],
+  '희망':['희망 (hope)','희망이 있어요','🌟'],
+  '걱정':['걱정 (worry)','걱정하지 마세요','😟'],
+  '분노':['분노 (anger)','화가 났어요','😤'],
+  '평화':['평화 (peace)','평화로워요','☮️'],
+  '기대':['기대 (anticipation)','기대돼요!','🤩'],
+  // 음식🍜
+  '김치':['김치 (kimchi)','매운 김치예요','🥬'],
+  '불고기':['불고기 (bulgogi)','맛있는 불고기예요','🥩'],
+  '냉면':['냉면 (cold noodles)','시원한 냉면이에요','🍜'],
+  '만두':['만두 (dumpling)','맛있는 만두예요','🥟'],
+  '비빔밥':['비빔밥 (bibimbap)','비빔밥을 비벼요','🍚'],
+  '갈비':['갈비 (ribs)','갈비가 맛있어요','🍖'],
+  '순대':['순대 (sundae)','순대가 맛있어요','🌭'],
+  '잡채':['잡채 (japchae)','잡채가 맛있어요','🍝'],
+  '된장':['된장 (doenjang)','된장찌개예요','🍲'],
+  '삼겹살':['삼겹살 (pork belly)','삼겹살을 구워요','🥓'],
+  '떡볶이':['떡볶이 (tteokbokki)','매운 떡볶이예요','🌶️'],
+  '삼계탕':['삼계탕 (ginseng chicken)','삼계탕이 보양식이에요','🍗'],
+  '감자탕':['감자탕 (pork bone soup)','감자탕이 뜨거워요','🍲'],
+  '설렁탕':['설렁탕 (seolleongtang)','설렁탕이 담백해요','🍲'],
+  // 동물🐯
+  '고양이':['고양이 (cat)','야옹~ 고양이예요','🐱'],
+  '강아지':['강아지 (puppy)','멍멍~ 강아지예요','🐶'],
+  '토끼':['토끼 (rabbit)','귀여운 토끼예요','🐰'],
+  '호랑이':['호랑이 (tiger)','무서운 호랑이예요','🐯'],
+  '독수리':['독수리 (eagle)','독수리가 날아요','🦅'],
+  '돼지':['돼지 (pig)','꿀꿀~ 돼지예요','🐷'],
+  '여우':['여우 (fox)','영리한 여우예요','🦊'],
+  '늑대':['늑대 (wolf)','으르렁~ 늑대예요','🐺'],
+  '기린':['기린 (giraffe)','목이 긴 기린이에요','🦒'],
+  '코끼리':['코끼리 (elephant)','코가 긴 코끼리예요','🐘'],
+  '펭귄':['펭귄 (penguin)','뒤뚱뒤뚱 펭귄이에요','🐧'],
+  '원숭이':['원숭이 (monkey)','원숭이가 재롱을 부려요','🐒'],
+  '사자':['사자 (lion)','백수의 왕 사자예요','🦁'],
+  '곰':['곰 (bear)','곰이 잠을 자요','🐻'],
+  '뱀':['뱀 (snake)','뱀이 기어가요','🐍'],
+  // 색깔🎨
+  '빨강':['빨강 (red)','빨간색이에요','🔴'],
+  '주황':['주황 (orange)','주황색이에요','🟠'],
+  '노랑':['노랑 (yellow)','노란색이에요','🟡'],
+  '파랑':['파랑 (blue)','파란색이에요','🔵'],
+  '보라':['보라 (purple)','보라색이에요','🟣'],
+  '분홍':['분홍 (pink)','분홍색이에요','🩷'],
+  '하늘색':['하늘색 (sky blue)','하늘색이에요','🩵'],
+  '연두':['연두 (light green)','연두색이에요','💚'],
+  '갈색':['갈색 (brown)','갈색이에요','🟤'],
+  '회색':['회색 (gray)','회색이에요','⬜'],
+  '금빛':['금빛 (golden)','금빛이 반짝여요','✨'],
+  '은빛':['은빛 (silver)','은빛이 빛나요','🩶'],
+  // 직업💼
+  '의사':['의사 (doctor)','병을 고쳐요','👨‍⚕️'],
+  '간호사':['간호사 (nurse)','환자를 돌봐요','👩‍⚕️'],
+  '변호사':['변호사 (lawyer)','법을 지켜요','⚖️'],
+  '경찰관':['경찰관 (police)','우리를 지켜요','👮'],
+  '소방관':['소방관 (firefighter)','불을 꺼요','🚒'],
+  '기자':['기자 (journalist)','뉴스를 전해요','📰'],
+  '농부':['농부 (farmer)','농사를 지어요','👨‍🌾'],
+  '화가':['화가 (painter)','그림을 그려요','🎨'],
+  '요리사':['요리사 (chef)','음식을 만들어요','👨‍🍳'],
+  '선생님':['선생님 (teacher)','가르쳐줘요','👩‍🏫'],
+  '건축가':['건축가 (architect)','건물을 설계해요','🏗️'],
+  '배우':['배우 (actor)','연기를 해요','🎭'],
+  // 스포츠⚽
+  '축구':['축구 (football)','공을 차요','⚽'],
+  '야구':['야구 (baseball)','공을 쳐요','⚾'],
+  '농구':['농구 (basketball)','골을 넣어요','🏀'],
+  '배구':['배구 (volleyball)','공을 넘겨요','🏐'],
+  '테니스':['테니스 (tennis)','라켓으로 쳐요','🎾'],
+  '태권도':['태권도 (taekwondo)','발차기를 해요','🥋'],
+  '볼링':['볼링 (bowling)','핀을 쓰러뜨려요','🎳'],
+  '마라톤':['마라톤 (marathon)','42km를 달려요','🏃'],
+  '수영':['수영 (swimming)','물에서 헤엄쳐요','🏊'],
+  '체조':['체조 (gymnastics)','몸을 구부려요','🤸'],
+  '씨름':['씨름 (ssireum)','한국 전통 씨름이에요','🤼'],
+  '유도':['유도 (judo)','상대를 넘겨요','🥋'],
+  '검도':['검도 (kendo)','칼로 겨뤄요','⚔️'],
+  // 나라🌍
+  '한국':['한국 (Korea)','우리나라예요','🇰🇷'],
+  '미국':['미국 (USA)','아메리카예요','🇺🇸'],
+  '일본':['일본 (Japan)','이웃 나라예요','🇯🇵'],
+  '중국':['중국 (China)','큰 나라예요','🇨🇳'],
+  '프랑스':['프랑스 (France)','에펠탑이 있어요','🇫🇷'],
+  '독일':['독일 (Germany)','맥주가 유명해요','🇩🇪'],
+  '영국':['영국 (UK)','런던이 수도예요','🇬🇧'],
+  '브라질':['브라질 (Brazil)','축구 강국이에요','🇧🇷'],
+  '캐나다':['캐나다 (Canada)','단풍나무의 나라','🇨🇦'],
+  '호주':['호주 (Australia)','캥거루가 있어요','🇦🇺'],
+  '러시아':['러시아 (Russia)','가장 큰 나라예요','🇷🇺'],
+  '이탈리아':['이탈리아 (Italy)','피자의 나라예요','🇮🇹'],
+  // 과일🍓
+  '사과':['사과 (apple)','빨간 사과예요','🍎'],
+  '바나나':['바나나 (banana)','노란 바나나예요','🍌'],
+  '딸기':['딸기 (strawberry)','빨간 딸기예요','🍓'],
+  '포도':['포도 (grape)','달콤한 포도예요','🍇'],
+  '수박':['수박 (watermelon)','시원한 수박이에요','🍉'],
+  '복숭아':['복숭아 (peach)','달콤한 복숭아예요','🍑'],
+  '귤':['귤 (tangerine)','새콤달콤 귤이에요','🍊'],
+  '망고':['망고 (mango)','열대 과일 망고예요','🥭'],
+  '키위':['키위 (kiwi)','초록색 키위예요','🥝'],
+  '레몬':['레몬 (lemon)','새콤한 레몬이에요','🍋'],
+  '파인애플':['파인애플 (pineapple)','달콤한 파인애플이에요','🍍'],
+  '체리':['체리 (cherry)','빨간 체리예요','🍒'],
+  // 학교📚
+  '교실':['교실 (classroom)','공부하는 곳이에요','🏫'],
+  '칠판':['칠판 (blackboard)','선생님이 써요','📋'],
+  '연필':['연필 (pencil)','글씨를 써요','✏️'],
+  '공책':['공책 (notebook)','필기를 해요','📓'],
+  '가방':['가방 (bag)','책을 넣어요','🎒'],
+  '도서관':['도서관 (library)','책이 많아요','📚'],
+  '운동장':['운동장 (playground)','뛰어놀아요','🏃'],
+  '시험':['시험 (exam)','열심히 공부해요','📝'],
+  '숙제':['숙제 (homework)','집에서 해요','📖'],
+  '친구':['친구 (friend)','같이 놀아요','👫'],
+  '급식':['급식 (school lunch)','맛있는 점심이에요','🍱'],
+  // 날씨🌈
+  '맑음':['맑음 (clear/sunny)','날씨가 맑아요','☀️'],
+  '흐림':['흐림 (cloudy)','날씨가 흐려요','🌥️'],
+  '태풍':['태풍 (typhoon)','바람이 강해요','🌀'],
+  '번개':['번개 (lightning)','번쩍 번개가 쳐요','⚡'],
+  '무지개':['무지개 (rainbow)','색깔이 예뻐요','🌈'],
+  '서리':['서리 (frost)','땅이 하얘요','❄️'],
+  '우박':['우박 (hail)','얼음이 떨어져요','🧊'],
+  '소나기':['소나기 (shower)','갑자기 비가 와요','🌦️'],
+  '폭설':['폭설 (heavy snow)','눈이 많이 와요','❄️'],
+  '강풍':['강풍 (strong wind)','바람이 세요','💨'],
+  '황사':['황사 (yellow dust)','먼지가 날려요','😷'],
+  // 가족👨‍👩‍👧
+  '엄마':['엄마 (mom)','사랑하는 엄마예요','👩'],
+  '아빠':['아빠 (dad)','사랑하는 아빠예요','👨'],
+  '형':['형 (older brother)','남자의 형이에요','👦'],
+  '누나':['누나 (older sister)','남자의 누나예요','👧'],
+  '언니':['언니 (older sister)','여자의 언니예요','👩'],
+  '오빠':['오빠 (older brother)','여자의 오빠예요','👦'],
+  '할머니':['할머니 (grandmother)','할머니를 사랑해요','👵'],
+  '삼촌':['삼촌 (uncle)','아빠의 남동생이에요','👨'],
+  '이모':['이모 (aunt)','엄마의 여동생이에요','👩'],
+  '고모':['고모 (aunt)','아빠의 여동생이에요','👩'],
+  '사촌':['사촌 (cousin)','같은 조부모예요','👫'],
+  '조카':['조카 (nephew/niece)','형제의 자녀예요','👶'],
+};
+
+let _meaningTimer = null;
+
+function showMeaning(word){
+  const data = MEANINGS[word];
+  if(!data) return;
+  const [title, desc, emoji] = data;
+
+  const card = document.getElementById('meaningCard');
+  const mImg  = document.getElementById('mImg');
+  const mWord = document.getElementById('mWord');
+  const mRead = document.getElementById('mRead');
+  const mDef  = document.getElementById('mDef');
+  const mBar  = document.getElementById('mBar');
+
+  // Reset
+  card.classList.remove('show','hide');
+  clearTimeout(_meaningTimer);
+
+  mImg.textContent  = emoji;
+  mWord.textContent = word;
+  // Split title into word + reading
+  const parts = title.split(' ');
+  mRead.textContent = parts.slice(1).join(' ');
+  mDef.textContent  = desc;
+
+  // Animate bar
+  mBar.style.transition = 'none';
+  mBar.style.width = '100%';
+  void mBar.offsetWidth; // force reflow
+
+  // Show card
+  void card.offsetWidth; // force reflow
+  card.classList.add('show');
+
+  // Start bar countdown
+  setTimeout(()=>{
+    mBar.style.transition = 'width 8s linear';
+    mBar.style.width = '0%';
+  }, 50);
+
+  // Hide after 8s
+  _meaningTimer = setTimeout(()=>{
+    card.classList.remove('show');
+    card.classList.add('hide');
+    setTimeout(()=> card.classList.remove('hide'), 400);
+  }, 8000);
+}
 // ═══════════════════════════════════════════════
 //  LEVEL SELECT SCREEN
 // ═══════════════════════════════════════════════
@@ -1364,6 +1829,8 @@ function loadProgress(){
 // ═══════════════════════════════════════════════
 function init(){
   loadSettings(); // ⚙️ load settings first
+  // Init Firebase after SDKs load
+  setTimeout(initFirebase, 800);
 
   // Check if already logged in
   const alreadyLoggedIn = loadUser();
@@ -1381,7 +1848,8 @@ function init(){
       splash.style.display='none';
       updateUserPill();
       updateSettingsUser();
-      showLvlSelect();
+      showSoundUnlock();
+      setTimeout(showLvlSelect, 200);
     }, 700);
   }, 2200);
 
@@ -1465,6 +1933,8 @@ function renderGrid(lv){
   nw.addEventListener('pointermove',pdMove);
   nw.addEventListener('pointerup',pdUp);
   nw.addEventListener('pointercancel',pdUp);
+  // Unlock audio on first touch
+  nw.addEventListener('pointerdown', unlockAudio, {once:true});
 }
 
 function renderChips(lv){
@@ -1495,6 +1965,11 @@ function pdDown(e){
   if(!cell) return;
   isSel=true; selDir=null; selCells=[cell];
   refreshSel();
+  // Unlock + speak syllable on tap
+  unlockAudio();
+  if(CFG.sylTap && cell.dataset.syl){
+    speakSyllable(cell.dataset.syl);
+  }
 }
 
 function pdMove(e){
@@ -1590,6 +2065,7 @@ function markFound(w){
   document.getElementById('fc').textContent=foundWords.length;
 
   soundFound(w.text); // 🔊 chime + speak
+  showMeaning(w.text); // 📖 show meaning
   if(CFG.vibrate && navigator.vibrate) navigator.vibrate(60);
   const lv=getLv(curLv);
   if(foundWords.length===lv.words.length){
