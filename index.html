@@ -60,15 +60,46 @@ body{
 }
 
 /* TOP BAR */
-.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
-.lname{font-family:'Black Han Sans',sans-serif;font-size:.75rem;color:#8a7a6a;letter-spacing:1px;}
-.score{font-family:'Black Han Sans',sans-serif;font-size:.95rem;color:#4a3a2a;}
-.score em{color:#4a8b8c;font-style:normal;font-size:1.2rem;}
-.btn-hint{
-  background:#e8e0d0;color:#5a4a3a;border:none;border-radius:9px;
-  padding:5px 12px;font-size:.73rem;cursor:pointer;transition:all .2s;
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:8px;}
+.topbar-left{display:flex;flex-direction:column;gap:1px;min-width:0;}
+.lname{font-family:'Black Han Sans',sans-serif;font-size:.7rem;color:#8a7a6a;letter-spacing:1px;white-space:nowrap;}
+.lname-theme{font-size:.85rem;color:#5a8a5a;}
+.score{font-family:'Black Han Sans',sans-serif;font-size:.82rem;color:#4a3a2a;}
+.score em{color:#4a8b8c;font-style:normal;}
+.topbar-mid{flex:1;display:flex;justify-content:center;}
+.level-pill{
+  display:flex;align-items:center;gap:7px;
+  background:#3a3010;border-radius:30px;
+  padding:7px 16px 7px 10px;
+  box-shadow:0 3px 12px rgba(0,0,0,.25);
+  cursor:pointer;transition:transform .15s;
+  max-width:180px;
 }
+.level-pill:active{transform:scale(.96);}
+.level-pill-icon{
+  width:28px;height:28px;border-radius:50%;
+  background:#f5c800;display:flex;align-items:center;justify-content:center;
+  font-size:1rem;flex-shrink:0;
+}
+.level-pill-text{
+  font-family:'Black Han Sans',sans-serif;
+  font-size:.88rem;color:#f5c800;
+  letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.topbar-right{display:flex;gap:5px;align-items:center;flex-shrink:0;}
+.btn-hint{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:#e8e0d0;color:#5a4a3a;border:none;border-radius:10px;
+  padding:5px 10px;font-size:.6rem;cursor:pointer;transition:all .2s;
+  line-height:1.2;gap:1px;
+}
+.btn-hint .hint-icon{font-size:1.1rem;line-height:1;}
 .btn-hint:hover{background:#d8c8b0;}
+.btn-back-sq{
+  background:#e8e0d0;color:#5a4a3a;border:none;border-radius:10px;
+  padding:6px 10px;font-size:1rem;cursor:pointer;transition:all .2s;
+}
+.btn-back-sq:hover{background:#d8c8b0;}
 
 /* DIRECTION BADGE */
 .dir-badge{
@@ -625,6 +656,466 @@ body{
   transition:transform .15s;
 }
 .btn-unlock:active{transform:scale(.95);}
+
+/* ── LANGUAGE SELECTOR ── */
+.lang-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:7px;margin-top:8px;
+}
+.lang-btn{
+  padding:8px 4px;border-radius:10px;
+  background:#1e1e38;border:2px solid #2a2a48;
+  color:#8a8aaa;font-size:.75rem;text-align:center;
+  cursor:pointer;transition:all .15s;
+}
+.lang-btn.active{
+  background:#0e2a2a;color:#7ab8b9;border-color:#4a8b8c;
+}
+.lang-btn:hover:not(.active){ background:#2a2a48; }
+.lang-flag{ font-size:1.1rem;display:block;margin-bottom:2px; }
+
+/* ── MEANING POPUP ENHANCEMENTS ── */
+.meaning-sentence{
+  font-family:'Nanum Gothic',sans-serif;
+  font-size:.78rem;line-height:1.7;
+  margin-top:8px;border-top:1px solid #2a2a48;padding-top:8px;
+  text-align:center;
+}
+#mSentKo{
+  color:#c8c8e8;font-style:italic;margin-bottom:3px;
+  font-size:.8rem;
+}
+#mSentTrans{
+  color:#7a9e9f;font-size:.74rem;
+  font-style:normal;
+}
+.meaning-trans-main{
+  font-size:1.1rem;font-weight:700;color:#e8b87a;letter-spacing:1px;
+  margin-bottom:4px;
+}
+.meaning-pronounce-btn{
+  background:none;border:1px solid #4a8b8c;border-radius:8px;
+  color:#7ab8b9;font-size:.75rem;padding:4px 10px;
+  cursor:pointer;margin-top:8px;transition:all .2s;
+  font-family:'Nanum Gothic',sans-serif;
+}
+.meaning-pronounce-btn:hover{background:#0e2a2a;}
+
+/* ── STAR RATING in WIN ── */
+.win-stars{
+  display:flex;justify-content:center;gap:8px;
+  font-size:2rem;margin:10px 0 14px;
+}
+.win-star{ 
+  transition:transform .3s; display:inline-block;
+  filter:grayscale(1);opacity:.3;
+}
+.win-star.lit{ filter:none;opacity:1;animation:starPop .4s cubic-bezier(.17,.67,.36,1.4) both; }
+@keyframes starPop{
+  0%{transform:scale(0) rotate(-20deg);}
+  70%{transform:scale(1.3) rotate(5deg);}
+  100%{transform:scale(1) rotate(0);}
+}
+.win-stat-row{
+  display:flex;justify-content:center;gap:16px;margin-bottom:14px;
+}
+.win-stat{
+  background:#f0ece0;border-radius:12px;padding:8px 14px;text-align:center;
+}
+.win-stat-num{ font-family:'Black Han Sans',sans-serif;font-size:1.1rem;color:#4a8b8c; }
+.win-stat-lbl{ font-size:.62rem;color:#8a7a6a;letter-spacing:1px; }
+
+/* ── REVIEW QUIZ OVERLAY ── */
+#reviewOv{
+  position:fixed;inset:0;z-index:6000;
+  background:rgba(5,5,20,.95);
+  display:none;align-items:center;justify-content:center;
+}
+#reviewOv.show{display:flex;}
+.review-box{
+  background:#13132a;border-radius:24px;padding:28px 24px;
+  max-width:340px;width:92%;text-align:center;
+  border:2px solid #4a8b8c;
+  box-shadow:0 20px 60px rgba(0,0,0,.8);
+  animation:pop .35s cubic-bezier(.17,.67,.36,1.4);
+}
+.review-title{
+  font-family:'Black Han Sans',sans-serif;font-size:1rem;
+  color:#7a9e9f;letter-spacing:2px;margin-bottom:6px;
+}
+.review-progress{
+  font-size:.7rem;color:#5a5a7a;margin-bottom:16px;letter-spacing:1px;
+}
+.review-word{
+  font-family:'Black Han Sans',sans-serif;font-size:2.5rem;
+  color:#e8d5b7;letter-spacing:4px;margin-bottom:6px;
+}
+.review-emoji{ font-size:2rem;margin-bottom:16px;display:block; }
+.review-choices{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;
+}
+.review-choice{
+  background:#1e1e38;border:2px solid #2a2a48;border-radius:12px;
+  color:#c8c8e8;font-family:'Nanum Gothic',sans-serif;font-size:.88rem;
+  padding:12px 8px;cursor:pointer;transition:all .18s;
+}
+.review-choice:hover:not(:disabled){background:#2a2a48;}
+.review-choice.correct{background:#0e2a2a!important;border-color:#4a8b8c!important;color:#7ab8b9!important;}
+.review-choice.wrong  {background:#2a0e0e!important;border-color:#d46a7a!important;color:#d46a7a!important;}
+.review-result{
+  font-size:.9rem;color:#e8d5b7;margin-bottom:14px;min-height:1.2em;
+}
+.btn-review-next{
+  background:linear-gradient(135deg,#7ab8b9,#4a8b8c);color:#fff;border:none;
+  border-radius:13px;padding:11px 28px;
+  font-family:'Black Han Sans',sans-serif;font-size:.95rem;
+  cursor:pointer;letter-spacing:1px;box-shadow:0 5px 18px rgba(74,139,140,.4);
+  transition:transform .18s;
+}
+.btn-review-next:hover{transform:scale(1.04);}
+.btn-review-skip{
+  background:none;border:none;color:#5a5a7a;font-size:.78rem;
+  cursor:pointer;margin-top:10px;display:block;width:100%;
+}
+
+/* ── VOCAB BOOK OVERLAY ── */
+#vocabOv{
+  position:fixed;inset:0;z-index:700;
+  background:#0a0a1a;
+  display:none;flex-direction:column;align-items:center;
+  overflow-y:auto;padding:20px 14px 40px;
+  transition:opacity .3s;
+}
+#vocabOv.show{display:flex;}
+.vocab-header{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;max-width:420px;margin-bottom:16px;
+}
+.vocab-title{
+  font-family:'Black Han Sans',sans-serif;font-size:1.3rem;
+  color:#e8d5b7;letter-spacing:3px;
+}
+.vocab-count{font-size:.75rem;color:#7a9e9f;}
+.vocab-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:10px;width:100%;max-width:420px;
+}
+.vocab-item{
+  background:#13132a;border:1px solid #2a2a48;border-radius:16px;
+  padding:14px 12px;text-align:center;cursor:pointer;
+  transition:all .18s;
+}
+.vocab-item:hover{border-color:#4a8b8c;background:#0e1a2a;}
+.vocab-item-emoji{font-size:1.8rem;margin-bottom:6px;}
+.vocab-item-word{
+  font-family:'Black Han Sans',sans-serif;font-size:1.1rem;
+  color:#e8d5b7;margin-bottom:3px;
+}
+.vocab-item-trans{font-size:.8rem;color:#7ab8b9;}
+.vocab-item-date{font-size:.6rem;color:#4a4a6a;margin-top:4px;}
+.vocab-empty{
+  color:#5a5a7a;font-size:.85rem;text-align:center;margin-top:60px;
+}
+.btn-vocab{
+  background:#e8e0d0;color:#5a4a3a;border:none;border-radius:9px;
+  padding:5px 11px;font-size:.82rem;cursor:pointer;transition:all .2s;
+}
+.btn-vocab:hover{background:#d8c8b0;}
+
+/* ── VOCAB DETAIL PANEL ── */
+#vocabDetail{
+  position:fixed;inset:0;z-index:750;
+  background:rgba(5,5,20,.93);
+  display:none;align-items:flex-end;justify-content:center;
+}
+#vocabDetail.show{ display:flex; }
+.vocab-detail-sheet{
+  background:#13132a;border-radius:24px 24px 0 0;
+  width:100%;max-width:460px;
+  padding:24px 22px 44px;
+  transform:translateY(100%);
+  transition:transform .35s cubic-bezier(.32,1,.36,1);
+  text-align:center;
+}
+#vocabDetail.show .vocab-detail-sheet{ transform:translateY(0); }
+.vd-handle{ width:40px;height:4px;border-radius:2px;background:#3a3a5a;margin:0 auto 18px; }
+.vd-emoji{ font-size:3.5rem;margin-bottom:8px; }
+.vd-word{ font-family:'Black Han Sans',sans-serif;font-size:2rem;color:#e8d5b7;letter-spacing:4px;margin-bottom:6px; }
+.vd-trans{ font-size:1.2rem;color:#e8b87a;font-weight:700;margin-bottom:4px; }
+.vd-desc{ font-size:.82rem;color:#7a9e9f;margin-bottom:16px; }
+.vd-actions{ display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px; }
+.btn-vd{
+  border:none;border-radius:14px;padding:11px 20px;
+  font-family:'Black Han Sans',sans-serif;font-size:.88rem;
+  cursor:pointer;transition:all .18s;letter-spacing:1px;
+}
+.btn-vd-listen{ background:linear-gradient(135deg,#4a8b8c,#7ab8b9);color:#fff; }
+.btn-vd-mic   { background:linear-gradient(135deg,#d46a7a,#e8a06a);color:#fff; }
+.btn-vd-mic.listening{ animation:pulse 0.8s ease-in-out infinite; }
+.vd-mic-feedback{ font-size:.82rem;min-height:1.4em;margin-bottom:10px;color:#c8c8e8; }
+.vd-bar{ height:3px;border-radius:2px;background:#2a2a48;margin-bottom:16px;overflow:hidden; }
+.vd-bar-fill{ height:100%;background:#4a8b8c;border-radius:2px;width:0;transition:width linear; }
+.btn-vd-close{ background:#2a2a48;color:#8a8aaa;font-size:.8rem;padding:9px 22px;border-radius:12px; }
+
+/* ── PRONUNCIATION CHALLENGE ── */
+.pronunc-challenge{
+  display:none;margin-top:10px;
+  border-top:1px solid #2a2a48;padding-top:10px;
+}
+.pronunc-challenge.show{display:block;}
+.pronunc-label{font-size:.72rem;color:#7a9e9f;margin-bottom:6px;}
+.btn-mic{
+  background:linear-gradient(135deg,#d46a7a,#e8a06a);
+  color:#fff;border:none;border-radius:12px;
+  padding:8px 18px;font-size:.82rem;cursor:pointer;
+  font-family:'Black Han Sans',sans-serif;letter-spacing:1px;
+  transition:all .2s;
+}
+.btn-mic.listening{
+  background:linear-gradient(135deg,#e86a9a,#d46a7a);
+  animation:pulse 0.8s ease-in-out infinite;
+}
+.pronunc-feedback{font-size:.8rem;color:#c8c8e8;margin-top:6px;min-height:1.2em;}
+
+/* ── RACE MENU ── */
+#raceMenu{
+  position:fixed;inset:0;z-index:800;background:rgba(5,5,20,.92);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+#raceMenu.show{display:flex;}
+.race-box{
+  background:#13132a;border-radius:24px;padding:28px 22px;
+  max-width:340px;width:100%;border:2px solid #4a8b8c;
+  text-align:center;animation:pop .3s cubic-bezier(.17,.67,.36,1.4);
+}
+.race-title{font-family:'Black Han Sans',sans-serif;font-size:1.3rem;color:#e8d5b7;letter-spacing:3px;margin-bottom:6px;}
+.race-sub{font-size:.75rem;color:#6a6a9a;margin-bottom:20px;}
+.race-option{
+  background:#1e1e38;border:2px solid #2a2a48;border-radius:16px;
+  padding:16px;margin-bottom:12px;cursor:pointer;
+  transition:all .18s;text-align:right;direction:rtl;
+}
+.race-option:active{transform:scale(.97);}
+.race-option.active{border-color:#4a8b8c;background:#0e2a2a;}
+.race-option-icon{font-size:1.8rem;margin-bottom:6px;}
+.race-option-title{font-family:'Black Han Sans',sans-serif;font-size:.95rem;color:#e8d5b7;margin-bottom:3px;}
+.race-option-desc{font-size:.72rem;color:#6a6a9a;line-height:1.5;}
+.race-option-timer{font-size:.68rem;color:#e8b87a;margin-top:4px;font-family:'Black Han Sans',sans-serif;}
+.race-btn-row{display:flex;gap:8px;margin-top:6px;}
+.btn-race-start{flex:1;background:linear-gradient(135deg,#4a8b8c,#7ab8b9);color:#fff;border:none;border-radius:12px;padding:11px;font-family:'Black Han Sans',sans-serif;font-size:.88rem;cursor:pointer;}
+.btn-race-off{flex:1;background:#2a2a48;color:#8a8aaa;border:none;border-radius:12px;padding:11px;font-family:'Black Han Sans',sans-serif;font-size:.82rem;cursor:pointer;}
+
+/* ── WORD RACE TIMER (shown in meaning popup) ── */
+#wordRaceBar{
+  width:100%;height:6px;background:#2a2a48;border-radius:3px;margin:8px 0 4px;overflow:hidden;display:none;
+}
+#wordRaceFill{height:100%;background:linear-gradient(90deg,#7ab8b9,#e8b87a);border-radius:3px;transition:width 1s linear;}
+#wordRaceFill.urgent{background:linear-gradient(90deg,#d46a7a,#e86a3a)!important;}
+#wordRaceNum{font-size:.65rem;color:#e8b87a;text-align:center;display:none;font-family:'Black Han Sans',sans-serif;}
+
+/* ── WRITE RACE TIMER (shown in write mode) ── */
+#writeRaceBar{
+  width:100%;height:5px;background:#2a2a48;border-radius:3px;margin-bottom:10px;overflow:hidden;display:none;
+}
+#writeRaceFill{height:100%;background:linear-gradient(90deg,#7ab8b9,#e8b87a);border-radius:3px;transition:width 1s linear;}
+#writeRaceFill.urgent{background:linear-gradient(90deg,#d46a7a,#e86a3a)!important;}
+#writeRaceNum{font-size:.7rem;color:#e8b87a;text-align:center;display:none;font-family:'Black Han Sans',sans-serif;margin-bottom:6px;}
+#wotdBanner{
+  width:100%;max-width:420px;position:relative;z-index:1;
+  background:linear-gradient(135deg,#0e2a2a,#13132a);
+  border:1px solid #4a8b8c;border-radius:16px;
+  padding:12px 16px;display:none;cursor:pointer;transition:transform .15s;
+}
+#wotdBanner:active{transform:scale(.98);}
+.wotd-label{font-size:.6rem;color:#7a9e9f;letter-spacing:2px;margin-bottom:4px;}
+.wotd-row{display:flex;align-items:center;gap:10px;}
+.wotd-emoji{font-size:1.8rem;}
+.wotd-word{font-family:'Black Han Sans',sans-serif;font-size:1.4rem;color:#e8d5b7;letter-spacing:3px;}
+.wotd-trans{font-size:.82rem;color:#e8b87a;margin-top:2px;}
+.wotd-listen{margin-left:auto;background:#4a8b8c;color:#fff;border:none;border-radius:8px;padding:5px 12px;font-size:.72rem;cursor:pointer;font-family:'Black Han Sans',sans-serif;}
+
+/* ── STREAK BADGE ── */
+#streakBadge{
+  display:flex;align-items:center;gap:5px;
+  background:#13132a;border:1px solid #e8b87a;
+  border-radius:20px;padding:5px 12px;
+  font-family:'Black Han Sans',sans-serif;font-size:.82rem;color:#e8b87a;
+  cursor:pointer;transition:transform .15s;width:fit-content;
+  position:relative;z-index:1;
+}
+#streakBadge:active{transform:scale(.95);}
+
+/* ── COUNTDOWN TIMER ── */
+#countdownBar{
+  width:100%;max-width:420px;position:relative;z-index:1;
+  display:none;align-items:center;gap:10px;
+}
+#countdownBar.show{display:flex;}
+.cd-label{font-size:.68rem;color:#8a7a6a;white-space:nowrap;}
+.cd-track{flex:1;height:8px;background:#2a2a48;border-radius:4px;overflow:hidden;}
+.cd-fill{height:100%;background:linear-gradient(90deg,#7ab8b9,#e8b87a);border-radius:4px;transition:width 1s linear,background .5s;}
+.cd-fill.urgent{background:linear-gradient(90deg,#d46a7a,#e86a3a)!important;}
+.cd-num{font-family:'Black Han Sans',sans-serif;font-size:.9rem;color:#e8d5b7;min-width:28px;text-align:right;}
+
+/* ── STATS SCREEN ── */
+#statsOv{
+  position:fixed;inset:0;z-index:700;background:#0a0a1a;
+  display:none;flex-direction:column;align-items:center;
+  overflow-y:auto;padding:20px 14px 40px;
+}
+#statsOv.show{display:flex;}
+.stats-header{width:100%;max-width:420px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;margin-top:10px;}
+.stats-title{font-family:'Black Han Sans',sans-serif;font-size:1.3rem;color:#e8d5b7;letter-spacing:3px;}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;width:100%;max-width:420px;margin-bottom:18px;}
+.stat-card{background:#13132a;border:1px solid #2a2a48;border-radius:16px;padding:16px 12px;text-align:center;}
+.stat-card-num{font-family:'Black Han Sans',sans-serif;font-size:1.9rem;color:#7ab8b9;}
+.stat-card-lbl{font-size:.67rem;color:#6a6a9a;letter-spacing:1px;margin-top:4px;}
+.stat-card-sub{font-size:.6rem;color:#4a4a6a;margin-top:2px;}
+.stats-section-title{font-family:'Black Han Sans',sans-serif;font-size:.7rem;color:#5a5a7a;letter-spacing:2px;width:100%;max-width:420px;margin:12px 0 8px;text-transform:uppercase;}
+.streak-history{display:flex;gap:5px;width:100%;max-width:420px;flex-wrap:wrap;}
+.sh-day{width:34px;height:34px;border-radius:8px;background:#1e1e38;border:1px solid #2a2a48;display:flex;align-items:center;justify-content:center;font-size:.65rem;color:#5a5a7a;font-family:'Black Han Sans',sans-serif;}
+.sh-day.done{background:#0e2a2a;border-color:#4a8b8c;color:#7ab8b9;}
+.sh-day.today{background:#2a1e0a;border-color:#e8b87a;color:#e8b87a;}
+
+/* ── LEVEL STARS in card ── */
+.ls-card-stars{font-size:.65rem;letter-spacing:-2px;margin-top:3px;}
+
+/* ── WRITING MODE OVERLAY ── */
+#writeOv{
+  position:fixed;inset:0;z-index:6500;
+  background:rgba(5,5,20,.97);
+  display:none;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:20px 16px;
+  overflow-y:auto;
+}
+#writeOv.show{display:flex;}
+.write-box{
+  background:#13132a;border-radius:24px;
+  padding:24px 20px 20px;
+  max-width:360px;width:100%;
+  border:2px solid #4a8b8c;
+  box-shadow:0 20px 60px rgba(0,0,0,.8);
+  text-align:center;
+  animation:pop .35s cubic-bezier(.17,.67,.36,1.4);
+}
+.write-progress{font-size:.7rem;color:#5a5a7a;letter-spacing:2px;margin-bottom:12px;}
+.write-emoji{font-size:2.8rem;margin-bottom:4px;}
+.write-trans{font-size:1.2rem;color:#e8b87a;font-weight:700;margin-bottom:3px;letter-spacing:1px;}
+.write-desc{font-size:.75rem;color:#7a9e9f;margin-bottom:14px;}
+.write-input-display{
+  display:flex;gap:5px;justify-content:center;flex-wrap:wrap;
+  min-height:48px;margin-bottom:13px;align-items:center;
+}
+.write-syl-slot{
+  width:42px;height:42px;border-radius:10px;
+  background:#1e1e38;border:2px solid #2a2a48;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Black Han Sans',sans-serif;font-size:1.2rem;
+  color:#e8d5b7;transition:all .15s;
+}
+.write-syl-slot.filled {border-color:#4a8b8c;background:#0e2a2a;}
+.write-syl-slot.correct{border-color:#6aae7a!important;background:#0e2a0e!important;color:#6aae7a!important;}
+.write-syl-slot.wrong  {border-color:#d46a7a!important;background:#2a0e0e!important;color:#d46a7a!important;}
+.write-syl-slot.hint-show{border-color:#e8b87a!important;background:#2a1e0a!important;color:#e8b87a!important;}
+.write-kbd{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:4px;margin-bottom:12px;
+}
+.write-key{
+  background:#1e1e38;border:2px solid #2a2a48;border-radius:9px;
+  padding:9px 2px;font-family:'Black Han Sans',sans-serif;
+  font-size:.95rem;color:#c8c8e8;cursor:pointer;
+  transition:all .1s;text-align:center;
+}
+.write-key:active{transform:scale(.9);background:#2a2a48;}
+.write-key.used{opacity:.25;pointer-events:none;}
+.write-key-del{
+  background:#2a1e2e;border-color:#5a3a5a;color:#d46a7a;
+  grid-column:span 2;font-size:.8rem;
+}
+.write-feedback{
+  font-size:.85rem;min-height:1.2em;margin-bottom:10px;
+  font-weight:700;letter-spacing:1px;
+}
+.write-feedback.ok {color:#6aae7a;}
+.write-feedback.bad{color:#d46a7a;}
+.write-actions{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;}
+.btn-write{
+  border:none;border-radius:12px;padding:10px 18px;
+  font-family:'Black Han Sans',sans-serif;font-size:.85rem;
+  cursor:pointer;letter-spacing:1px;transition:all .18s;
+}
+.btn-write-check{background:linear-gradient(135deg,#4a8b8c,#7ab8b9);color:#fff;}
+.btn-write-skip {background:#2a2a48;color:#8a8aaa;}
+.btn-write-next {background:linear-gradient(135deg,#6aae7a,#4a8e5a);color:#fff;display:none;}
+
+/* ── WORDS DRAWER ── */
+#wordsDrawer{
+  position:fixed;inset:0;z-index:850;
+  background:rgba(5,5,20,.88);
+  display:none;align-items:flex-end;justify-content:center;
+}
+#wordsDrawer.show{display:flex;}
+.words-sheet{
+  background:#13132a;
+  border-radius:24px 24px 0 0;
+  width:100%;max-width:460px;
+  padding:20px 18px 40px;
+  transform:translateY(100%);
+  transition:transform .35s cubic-bezier(.32,1,.36,1);
+  max-height:80vh;overflow-y:auto;
+}
+#wordsDrawer.show .words-sheet{transform:translateY(0);}
+.words-drawer-handle{width:40px;height:4px;border-radius:2px;background:#3a3a5a;margin:0 auto 16px;}
+.words-drawer-title{
+  font-family:'Black Han Sans',sans-serif;
+  font-size:1.1rem;color:#e8d5b7;letter-spacing:2px;
+  margin-bottom:4px;text-align:center;
+}
+.words-drawer-sub{
+  font-size:.72rem;color:#6a6a9a;text-align:center;
+  margin-bottom:16px;letter-spacing:1px;
+}
+.words-drawer-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.wd-item{
+  background:#1e1e38;border:2px solid #2a2a48;
+  border-radius:16px;padding:12px 10px;
+  text-align:center;cursor:pointer;
+  transition:all .18s;position:relative;
+}
+.wd-item.found{border-color:#4a8b8c;background:#0e2a2a;}
+.wd-item.notfound{opacity:.4;border-style:dashed;}
+.wd-item:hover:not(.notfound){transform:scale(1.04);}
+.wd-item-emoji{font-size:1.6rem;margin-bottom:5px;}
+.wd-item-word{
+  font-family:'Black Han Sans',sans-serif;
+  font-size:1rem;color:#e8d5b7;margin-bottom:3px;
+}
+.wd-item-trans{font-size:.75rem;color:#7ab8b9;}
+.wd-item-status{
+  position:absolute;top:6px;right:8px;
+  font-size:.7rem;
+}
+.words-drawer-close{
+  display:block;width:100%;margin-top:18px;
+  background:#2a2a48;color:#8a8aaa;border:none;
+  border-radius:14px;padding:12px;
+  font-family:'Black Han Sans',sans-serif;font-size:.88rem;
+  cursor:pointer;transition:all .18s;
+}
+.words-drawer-close:hover{background:#3a3a58;}
+
+.btn-words{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:#e8e0d0;color:#5a4a3a;border:none;border-radius:10px;
+  padding:5px 9px;cursor:pointer;transition:all .2s;line-height:1.1;
+  font-family:'Black Han Sans',sans-serif;
+}
+.btn-words:hover{background:#d8c8b0;}
 </style>
 
 <!-- Firebase SDK -->
@@ -702,18 +1193,56 @@ body{
 
 <div id="fadeOv"></div>
 
+<!-- STREAK BADGE -->
+<div id="streakBadge" onclick="closeSettings();openStats()">
+  <span>🔥</span><span id="streakNum">0</span><span id="uiStreakUnit" style="font-size:.65rem;color:#a88a4a">يوم</span>
+</div>
+
+<!-- WORD OF THE DAY -->
+<div id="wotdBanner" onclick="wotdSpeak()">
+  <div class="wotd-label" id="uiWotdLabel">📅 كلمة اليوم</div>
+  <div class="wotd-row">
+    <span class="wotd-emoji" id="wotdEmoji">⭐</span>
+    <div>
+      <div class="wotd-word"  id="wotdWord"></div>
+      <div class="wotd-trans" id="wotdTrans"></div>
+    </div>
+    <button class="wotd-listen" onclick="event.stopPropagation();wotdSpeak()" id="wotdBtn">🔊 استمع</button>
+  </div>
+</div>
+
 <div class="hdr">
   <h1>단어 퍼즐</h1>
   <p>한글 단어를 찾아보세요</p>
 </div>
 
+<!-- RACE TYPE 1 BAR: word-find timer (inside meaning popup injected via JS) -->
+<!-- RACE TYPE 2 BAR: write timer (inside write overlay injected via JS) -->
+
+<!-- RACE MENU OVERLAY -->
+
+
 <div class="card">
   <div class="topbar">
-    <div>
-      <div class="lname" id="lname">레벨 1</div>
+    <div class="topbar-left">
+      <div class="lname" id="lname">레벨 1 · 자연</div>
+      <div class="lname-theme" id="ltheme">🌿</div>
       <div class="score">찾은 단어: <em id="fc">0</em> / <em id="tc">0</em></div>
     </div>
-    <div style="display:flex;gap:6px;align-items:center"><div class="user-pill" id="userPill" onclick="openSettings()"><div class="user-avatar" style="background:#4a4a6a;color:#fff">?</div><span class="user-name">로그인</span></div><button class="btn-back" onclick="showLvlSelect()">☰</button><button class="btn-hint" onclick="hint()">💡 힌트</button><button class="btn-gear" onclick="openSettings()">⚙️</button></div>
+    <div class="topbar-mid">
+      <div class="level-pill" onclick="showLvlSelect()" title="اختيار المستوى">
+        <div class="level-pill-icon" id="pillIcon">⭐</div>
+        <div class="level-pill-text" id="pillName">별빛가득</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="btn-words" onclick="openWordsDrawer()">
+        <span style="font-size:.9rem;">📋</span>
+        <span id="btnWordsLbl" style="font-size:.58rem;display:block;margin-top:1px;">كلماتي</span>
+      </button>
+      <button class="btn-hint" onclick="hint()"><span class="hint-icon">💡</span><span>힌트</span></button>
+      <button class="btn-gear" onclick="openSettings()">⚙️</button>
+    </div>
   </div>
 
   <div class="gwrap" id="gwrap">
@@ -751,16 +1280,16 @@ body{
 <div id="settingsOv" onclick="closeSettings(event)">
   <div class="settings-sheet">
     <div class="settings-handle"></div>
-    <div class="settings-title">⚙️ 설정</div>
+    <div class="settings-title" id="uiSettingsTitle">⚙️ 설정</div>
 
     <!-- SOUND SECTION -->
     <div class="settings-section">
-      <div class="settings-section-title">🔊 사운드</div>
+      <div class="settings-section-title" id="uiSecSound">🔊 사운드</div>
 
       <div class="settings-row">
         <div class="settings-row-left">
-          <div class="settings-row-label">효과음</div>
-          <div class="settings-row-sub">정답 차임벨 소리</div>
+          <div class="settings-row-label" id="uiChimeLabel">효과음</div>
+          <div class="settings-row-sub"   id="uiChimeSub">정답 차임벨 소리</div>
         </div>
         <label class="toggle">
           <input type="checkbox" id="s-chime" checked onchange="saveSetting('chime',this.checked)">
@@ -770,8 +1299,8 @@ body{
 
       <div class="settings-row">
         <div class="settings-row-left">
-          <div class="settings-row-label">단어 발음</div>
-          <div class="settings-row-sub">단어를 찾으면 발음해줘요</div>
+          <div class="settings-row-label" id="uiTtsLabel">단어 발음</div>
+          <div class="settings-row-sub"   id="uiTtsSub">단어를 찾으면 발음해줘요</div>
         </div>
         <label class="toggle">
           <input type="checkbox" id="s-tts" checked onchange="saveSetting('tts',this.checked)">
@@ -781,8 +1310,8 @@ body{
 
       <div class="settings-row">
         <div class="settings-row-left">
-          <div class="settings-row-label">칩 누를 때 발음</div>
-          <div class="settings-row-sub">단어 목록 눌러서 듣기</div>
+          <div class="settings-row-label" id="uiChipTtsLabel">칩 누를 때 발음</div>
+          <div class="settings-row-sub"   id="uiChipTtsSub">단어 목록 눌러서 듣기</div>
         </div>
         <label class="toggle">
           <input type="checkbox" id="s-chiptts" checked onchange="saveSetting('chiptts',this.checked)">
@@ -792,8 +1321,8 @@ body{
 
       <div class="settings-row">
         <div class="settings-row-left">
-          <div class="settings-row-label">글자 누를 때 발음 🆕</div>
-          <div class="settings-row-sub">격자의 글자를 누르면 발음</div>
+          <div class="settings-row-label" id="uiSylTapLabel">글자 누를 때 발음 🆕</div>
+          <div class="settings-row-sub"   id="uiSylTapSub">격자의 글자를 누르면 발음</div>
         </div>
         <label class="toggle">
           <input type="checkbox" id="s-sylTap" checked onchange="saveSetting('sylTap',this.checked)">
@@ -802,23 +1331,37 @@ body{
       </div>
 
       <div class="settings-row" style="flex-direction:column;align-items:flex-start;">
-        <div class="settings-row-label">발음 속도</div>
+        <div class="settings-row-label" id="uiSpeedLabel">발음 속도</div>
         <div class="speed-btns">
-          <div class="speed-btn" id="spd-slow"  onclick="setSpeed('slow')">🐢 느리게</div>
-          <div class="speed-btn active" id="spd-normal" onclick="setSpeed('normal')">▶ 보통</div>
-          <div class="speed-btn" id="spd-fast"  onclick="setSpeed('fast')">⚡ 빠르게</div>
+          <div class="speed-btn" id="spd-slow"   onclick="setSpeed('slow')"   data-ui-spd="slow">🐢 느리게</div>
+          <div class="speed-btn active" id="spd-normal" onclick="setSpeed('normal')" data-ui-spd="normal">▶ 보통</div>
+          <div class="speed-btn" id="spd-fast"   onclick="setSpeed('fast')"   data-ui-spd="fast">⚡ 빠르게</div>
         </div>
+      </div>
+    </div>
+
+    <!-- LANGUAGE SECTION -->
+    <div class="settings-section">
+      <div class="settings-section-title" id="uiSecLang">🌍 번역 언어</div>
+      <div class="settings-row-sub" id="uiLangSub" style="color:#6a6a9a;font-size:.72rem;margin-bottom:8px;">단어 의미를 표시할 언어를 선택하세요</div>
+      <div class="lang-grid" id="langGrid">
+        <div class="lang-btn active" data-lang="ko" onclick="setLang('ko')"><span class="lang-flag">🇰🇷</span>한국어</div>
+        <div class="lang-btn" data-lang="ar" onclick="setLang('ar')" style="font-family:sans-serif"><span class="lang-flag">🇸🇦</span>العربية</div>
+        <div class="lang-btn" data-lang="en" onclick="setLang('en')"><span class="lang-flag">🇬🇧</span>English</div>
+        <div class="lang-btn" data-lang="ja" onclick="setLang('ja')"><span class="lang-flag">🇯🇵</span>日本語</div>
+        <div class="lang-btn" data-lang="zh" onclick="setLang('zh')"><span class="lang-flag">🇨🇳</span>中文</div>
+        <div class="lang-btn" data-lang="ru" onclick="setLang('ru')"><span class="lang-flag">🇷🇺</span>Русский</div>
       </div>
     </div>
 
     <!-- GAME SECTION -->
     <div class="settings-section">
-      <div class="settings-section-title">🎮 게임</div>
+      <div class="settings-section-title" id="uiSecGame">🎮 게임</div>
 
       <div class="settings-row">
         <div class="settings-row-left">
-          <div class="settings-row-label">힌트 자동 표시</div>
-          <div class="settings-row-sub">30초 후 힌트 자동 깜빡임</div>
+          <div class="settings-row-label" id="uiAutoHintLabel">힌트 자동 표시</div>
+          <div class="settings-row-sub"   id="uiAutoHintSub">30초 후 힌트 자동 깜빡임</div>
         </div>
         <label class="toggle">
           <input type="checkbox" id="s-autohint" onchange="saveSetting('autohint',this.checked)">
@@ -828,8 +1371,8 @@ body{
 
       <div class="settings-row">
         <div class="settings-row-left">
-          <div class="settings-row-label">진동</div>
-          <div class="settings-row-sub">정답/오답 시 진동</div>
+          <div class="settings-row-label" id="uiVibrateLabel">진동</div>
+          <div class="settings-row-sub"   id="uiVibrateSub">정답/오답 시 진동</div>
         </div>
         <label class="toggle">
           <input type="checkbox" id="s-vibrate" checked onchange="saveSetting('vibrate',this.checked)">
@@ -840,12 +1383,12 @@ body{
 
     <!-- DISPLAY SECTION -->
     <div class="settings-section">
-      <div class="settings-section-title">🖥️ 화면</div>
+      <div class="settings-section-title" id="uiSecDisplay">🖥️ 화면</div>
 
       <div class="settings-row">
         <div class="settings-row-left">
-          <div class="settings-row-label">배경 애니메이션</div>
-          <div class="settings-row-sub">떠다니는 한글 글자</div>
+          <div class="settings-row-label" id="uiBgAnimLabel">배경 애니메이션</div>
+          <div class="settings-row-sub"   id="uiBgAnimSub">떠다니는 한글 글자</div>
         </div>
         <label class="toggle">
           <input type="checkbox" id="s-bganim" checked onchange="saveSetting('bganim',this.checked);toggleBgAnim(this.checked)">
@@ -854,24 +1397,40 @@ body{
       </div>
     </div>
 
-    <!-- RESET -->
+    <!-- ACCOUNT + TOOLS + DATA -->
     <div class="settings-section">
-      <div class="settings-section-title">👤 계정</div>
+      <div class="settings-section-title" id="uiSecAccount">👤 계정</div>
       <div class="settings-row">
         <div class="settings-row-left">
           <div class="settings-row-label" id="settings-username">게스트</div>
-          <div class="settings-row-sub" id="settings-provider">로그인 안됨</div>
+          <div class="settings-row-sub"   id="settings-provider">로그인 안됨</div>
         </div>
-        <button onclick="logoutUser()" style="background:#2a2a48;color:#c8c8e8;border:none;border-radius:9px;padding:7px 14px;font-family:'Black Han Sans',sans-serif;font-size:.8rem;cursor:pointer;">로그아웃</button>
+        <button id="uiLogoutBtn" onclick="logoutUser()" style="background:#2a2a48;color:#c8c8e8;border:none;border-radius:9px;padding:7px 14px;font-family:'Black Han Sans',sans-serif;font-size:.8rem;cursor:pointer;">로그아웃</button>
       </div>
 
-      <div class="settings-section-title" style="margin-top:16px">⚠️ 데이터</div>
+      <div class="settings-section-title" style="margin-top:16px" id="uiToolsSection">🎮 أدوات</div>
       <div class="settings-row">
         <div class="settings-row-left">
-          <div class="settings-row-label">진행 초기화</div>
-          <div class="settings-row-sub">모든 레벨 기록 삭제</div>
+          <div class="settings-row-label" id="uiStatsLabel">📊 إحصائياتي</div>
+          <div class="settings-row-sub"   id="uiStatsSub">كلمات / مستويات / سلسلة الأيام</div>
         </div>
-        <button onclick="resetProgress()" style="background:#d46a7a;color:#fff;border:none;border-radius:9px;padding:7px 14px;font-family:'Black Han Sans',sans-serif;font-size:.8rem;cursor:pointer;">초기화</button>
+        <button id="uiStatsBtn" onclick="closeSettings();openStats()" style="background:#4a8b8c;color:#fff;border:none;border-radius:9px;padding:7px 14px;font-family:'Black Han Sans',sans-serif;font-size:.8rem;cursor:pointer;">عرض</button>
+      </div>
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-row-label" id="uiRaceLabel">⏱️ وضع السباق</div>
+          <div class="settings-row-sub"   id="uiRaceSub">90 ثانية لكل مستوى</div>
+        </div>
+        <button id="btnRace" onclick="toggleRaceMode()" style="background:#2a2a48;color:#8a8aaa;border:none;border-radius:9px;padding:7px 14px;font-family:'Black Han Sans',sans-serif;font-size:.8rem;cursor:pointer;transition:all .2s;">تشغيل</button>
+      </div>
+
+      <div class="settings-section-title" id="uiSecData" style="margin-top:16px">⚠️ 데이터</div>
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-row-label" id="uiResetLabel">진행 초기화</div>
+          <div class="settings-row-sub"   id="uiResetSub">모든 레벨 기록 삭제</div>
+        </div>
+        <button id="uiResetBtn" onclick="resetProgress()" style="background:#d46a7a;color:#fff;border:none;border-radius:9px;padding:7px 14px;font-family:'Black Han Sans',sans-serif;font-size:.8rem;cursor:pointer;">초기화</button>
       </div>
     </div>
 
@@ -879,14 +1438,92 @@ body{
 </div>
 
 
+<!-- STATS SCREEN -->
+<div id="statsOv">
+  <div class="stats-header">
+    <div class="stats-title" id="uiStatsTitle">📊 إحصائياتي</div>
+    <button class="btn-vocab" id="uiStatsClose" onclick="closeStats()">✕ إغلاق</button>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-card-num" id="stTotalWords">0</div>
+      <div class="stat-card-lbl" data-ui="stWords">كلمة تعلمتها</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-num" id="stLevels">0</div>
+      <div class="stat-card-lbl" data-ui="stLevels">مستوى أكملته</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-num" id="stStreak">0</div>
+      <div class="stat-card-lbl" data-ui="stStreak">🔥 سلسلة الأيام</div>
+      <div class="stat-card-sub" id="stStreakMax"></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-num" id="stAccuracy">-</div>
+      <div class="stat-card-lbl" data-ui="stAccuracy">دقة الكتابة</div>
+      <div class="stat-card-sub" id="stWriteSub"></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-num" id="stPerfect">0</div>
+      <div class="stat-card-lbl" data-ui="stPerfect">⭐⭐⭐ مثالي</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-num" id="stBestTime">-</div>
+      <div class="stat-card-lbl" data-ui="stBestTime">⚡ أسرع مستوى</div>
+    </div>
+  </div>
+  <div class="stats-section-title" id="uiStatsHistTitle" data-ui="stHistoryTitle">🗓️ آخر 14 يوم</div>
+  <div class="streak-history" id="streakHistory"></div>
+</div>
+
+<!-- RACE MENU -->
+<div id="raceMenu" onclick="if(event.target===this)closeRaceMenu()">
+  <div class="race-box">
+    <div class="race-title">⏱️ وضع السباق</div>
+    <div class="race-sub" id="raceMenuSub">اختر نوع السباق</div>
+    <div class="race-option" id="raceOpt1" onclick="selectRaceType(1)">
+      <div class="race-option-icon">🔍</div>
+      <div class="race-option-title">سباق إيجاد الكلمة</div>
+      <div class="race-option-desc">لما تيجي الكلمة في الـ popup، عندك وقت محدد تلاقيها في الشبكة</div>
+      <div class="race-option-timer" id="raceTimer1Lbl">⏱ 15 ثانية لكل كلمة</div>
+    </div>
+    <div class="race-option" id="raceOpt2" onclick="selectRaceType(2)">
+      <div class="race-option-icon">✍️</div>
+      <div class="race-option-title">سباق كتابة الكلمة</div>
+      <div class="race-option-desc">في وضع الكتابة، عندك وقت محدد تكتب كل كلمة</div>
+      <div class="race-option-timer" id="raceTimer2Lbl">⏱ 20 ثانية لكل كلمة</div>
+    </div>
+    <div class="race-btn-row">
+      <button class="btn-race-start" onclick="startSelectedRace()">▶ تشغيل</button>
+      <button class="btn-race-off"   onclick="closeRaceMenu()">✕ إلغاء</button>
+    </div>
+    <div id="raceActiveLabel" style="font-size:.7rem;color:#d46a7a;margin-top:10px;display:none;"></div>
+  </div>
+</div>
+
 <!-- WORD MEANING POPUP -->
 <div id="meaningPop">
   <div class="meaning-card" id="meaningCard">
     <div class="meaning-img" id="mImg">⭐</div>
     <div class="meaning-word" id="mWord"></div>
+    <div class="meaning-trans-main" id="mTransMain"></div>
     <div class="meaning-read" id="mRead"></div>
     <div class="meaning-def" id="mDef"></div>
+    <div class="meaning-sentence" id="mSentence">
+      <div id="mSentKo"></div>
+      <div id="mSentTrans"></div>
+    </div>
+    <button class="meaning-pronounce-btn" id="mPronounce" onclick="event.stopPropagation();rePronounce()">🔊 استمع مرة أخرى</button>
+    <!-- Pronunciation Challenge -->
+    <div class="pronunc-challenge" id="pronuncChallenge">
+      <div class="pronunc-label" id="uiPronLabel">🎙️ جرب تنطقها!</div>
+      <button class="btn-mic" onclick="event.stopPropagation();startPronunciation()" id="btnMic">🎤 시작</button>
+      <div class="pronunc-feedback" id="pronuncFeedback"></div>
+    </div>
     <div class="meaning-timer"><div class="meaning-timer-bar" id="mBar"></div></div>
+    <div id="race1Bar" style="display:none;width:100%;height:6px;background:#2a2a48;border-radius:3px;margin:6px 0 2px;overflow:hidden;"><div id="race1Fill" style="height:100%;width:100%;background:linear-gradient(90deg,#7ab8b9,#e8b87a);border-radius:3px;transition:width 1s linear;"></div></div>
+    <div id="race1Num" style="display:none;font-size:.65rem;color:#e8b87a;text-align:center;font-family:'Black Han Sans',sans-serif;margin-bottom:2px;"></div>
+    <div id="uiTapClose" style="font-size:.6rem;color:#4a4a6a;margin-top:8px;letter-spacing:1px;">اضغط للإغلاق</div>
   </div>
 </div>
 
@@ -894,9 +1531,54 @@ body{
   <div class="win-box">
     <div class="wico" id="wico">🎉</div>
     <div class="wttl" id="wttl">완료!</div>
+    <div class="win-stars" id="winStars">
+      <span class="win-star" id="star0">⭐</span>
+      <span class="win-star" id="star1">⭐</span>
+      <span class="win-star" id="star2">⭐</span>
+    </div>
+    <div class="win-stat-row">
+      <div class="win-stat">
+        <div class="win-stat-num" id="winStatTime">0s</div>
+        <div class="win-stat-lbl" id="winStatTimeLbl">وقت</div>
+      </div>
+      <div class="win-stat">
+        <div class="win-stat-num" id="winStatErrors">0</div>
+        <div class="win-stat-lbl" id="winStatErrLbl">أخطاء</div>
+      </div>
+      <div class="win-stat">
+        <div class="win-stat-num" id="winStatHints">0</div>
+        <div class="win-stat-lbl" id="winStatHintLbl">هنت</div>
+      </div>
+    </div>
     <div class="wsub" id="wsub">모든 단어를 찾았어요!</div>
-    <button class="btn-next" onclick="nextLv()">다음 레벨 →</button>
+    <button class="btn-next" id="btnWinNext" onclick="nextLv()">다음 레벨 →</button>
+    <button id="btnReview" onclick="startReview()" style="display:none;margin-top:10px;background:#e8b87a;color:#3a2000;border:none;border-radius:13px;padding:10px 22px;font-family:'Black Han Sans',sans-serif;font-size:.88rem;cursor:pointer;letter-spacing:1px;">🧠 مراجعة سريعة</button>
   </div>
+</div>
+
+<!-- REVIEW QUIZ OVERLAY -->
+<div id="reviewOv">
+  <div class="review-box">
+    <div class="review-title">🧠 مراجعة سريعة</div>
+    <div class="review-progress" id="reviewProgress">1 / 5</div>
+    <span class="review-emoji" id="reviewEmoji">⭐</span>
+    <div class="review-word" id="reviewWord">하늘</div>
+    <div class="review-choices" id="reviewChoices"></div>
+    <div class="review-result" id="reviewResult"></div>
+    <button class="btn-review-next" id="btnReviewNext" onclick="nextReviewQ()" style="display:none" id="btnReviewNextLbl">التالي →</button>
+    <button class="btn-review-skip" id="btnReviewSkipLbl" onclick="closeReview()">تخطي المراجعة</button>
+  </div>
+</div>
+
+<!-- VOCABULARY BOOK OVERLAY -->
+<div id="vocabOv">
+  <div class="vocab-header">
+    <div class="vocab-title" id="uiVocabTitle">📚 كلماتي</div>
+    <span class="vocab-count" id="vocabCount"></span>
+    <button class="btn-vocab" id="uiVocabClose" onclick="closeVocab()">✕ إغلاق</button>
+  </div>
+  <div class="vocab-grid" id="vocabGrid"></div>
+  <div class="vocab-empty" id="vocabEmptyTxt" style="display:none">لم تجد أي كلمات بعد!<br>ابدأ اللعب لتجميع كلماتك 🎮</div>
 </div>
 
 <script>
@@ -1297,6 +1979,7 @@ function saveSetting(key, val){
 }
 
 function applySettings(){
+  applyLang();
   // Sync toggles
   ['chime','tts','chiptts','sylTap','autohint','vibrate','bganim'].forEach(k=>{
     const el = document.getElementById('s-'+k);
@@ -1313,7 +1996,7 @@ function openSettings(){
   document.getElementById('settingsOv').classList.add('show');
 }
 function closeSettings(e){
-  if(e.target.id==='settingsOv') document.getElementById('settingsOv').classList.remove('show');
+  if(!e || e.target.id==='settingsOv') document.getElementById('settingsOv').classList.remove('show');
 }
 
 function setSpeed(s){
@@ -1464,10 +2147,10 @@ function fallbackTTS(text){
   } catch(e){}
 }
 
-// Called when word is found (chime + speak)
+// Called when word is found (chime only — TTS is handled inside showMeaning)
 function soundFound(word){
   playChime();
-  if(CFG.tts) setTimeout(() => speakWord(word), 350);
+  // Note: speakWord is now called inside showMeaning via speakWordWithCallback
 }
 
 // Called when chip is tapped (tap sound + speak)
@@ -1531,221 +2214,830 @@ function skipUnlock(){
 // ═══════════════════════════════════════════════
 //  WORD MEANINGS + EMOJI
 // ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
+//  LANGUAGE SYSTEM
+// ═══════════════════════════════════════════════
+const LANGS = {
+  ko: {label:'한국어', flag:'🇰🇷'},
+  ar: {label:'العربية', flag:'🇸🇦'},
+  en: {label:'English', flag:'🇬🇧'},
+  ja: {label:'日本語', flag:'🇯🇵'},
+  zh: {label:'中文',   flag:'🇨🇳'},
+  ru: {label:'Русский',flag:'🇷🇺'},
+};
+let currentLang = localStorage.getItem('naltmal_lang') || 'ko';
+
+// ═══════════════════════════════════════════════
+//  UI TEXT — 6 languages
+// ═══════════════════════════════════════════════
+const UI_TEXT = {
+  ko:{
+    // Settings
+    settingsTitle:'⚙️ 설정',
+    secSound:'🔊 사운드', chimeLabel:'효과음', chimeSub:'정답 차임벨 소리',
+    ttsLabel:'단어 발음', ttsSub:'단어를 찾으면 발음해줘요',
+    chipTtsLabel:'칩 누를 때 발음', chipTtsSub:'단어 목록 눌러서 듣기',
+    sylTapLabel:'글자 누를 때 발음 🆕', sylTapSub:'격자의 글자를 누르면 발음',
+    speedLabel:'발음 속도', spdSlow:'🐢 느리게', spdNormal:'▶ 보통', spdFast:'⚡ 빠르게',
+    secLang:'🌍 번역 언어', langSub:'단어 의미를 표시할 언어를 선택하세요',
+    secGame:'🎮 게임', autoHintLabel:'힌트 자동 표시', autoHintSub:'30초 후 힌트 자동 깜빡임',
+    vibrateLabel:'진동', vibrateSub:'정답/오답 시 진동',
+    secDisplay:'🖥️ 화면', bgAnimLabel:'배경 애니메이션', bgAnimSub:'떠다니는 한글 글자',
+    secAccount:'👤 계정', logoutBtn:'로그아웃',
+    secData:'⚠️ 데이터', resetLabel:'진행 초기화', resetSub:'모든 레벨 기록 삭제', resetBtn:'초기화',
+    toolsSection:'🎮 도구', statsLabel:'📊 내 통계', statsSub:'단어 / 레벨 / 연속 일수',
+    statsBtn:'보기', raceLabel:'⏱️ 레이스 모드', raceSub:'레벨당 90초',
+    raceOn:'시작', raceOff:'중지',
+    listenAgain:'🔊 다시 듣기', tapClose:'눌러서 닫기',
+    tryPronounce:'🎙️ 발음해보세요!', micStart:'🎤 시작',
+    wotdLabel:'📅 오늘의 단어', wotdBtn:'🔊 듣기',
+    streakUnit:'일', writeCheck:'✓ 확인', writeNext:'다음 →', writeSkip:'건너뛰기',
+    writeDel:'⌫ 삭제', writeComplete:'أكمل الكلمة أولاً!',
+    writeGreat:'✅ 훌륭해요! 🎉', writeGood:'✅ 맞아요! 💪',
+    writeWrong:'❌ 정답:', writeTryAgain:'— 다시 시도',
+    writeAnswer:'정답:', timeUp:'⏰ 시간 초과! -별',
+    statsClose:'✕ 닫기', statsTitle:'📊 내 통계',
+    stWords:'배운 단어', stLevels:'완료 레벨', stStreak:'🔥 연속 일수',
+    stStreakMax:'최고:', stAccuracy:'쓰기 정확도', stPerfect:'⭐⭐⭐ 완벽',
+    stBestTime:'⚡ 최고 기록', stHistoryTitle:'🗓️ 최근 14일',
+    vocabClose:'✕ 닫기', vocabTitle:'내 단어장',
+    reviewResult:(s,t,p)=>`결과: ${s}/${t} (${p}%)\n${p===100?'훌륭해요! 🏆':p>=60?'잘했어요! 💪':'계속 연습하세요! 📚'}`,
+    reviewWrong:(c)=>`❌ 정답: ${c}`,
+    micCorrect:'✅ 훌륭해요! 발음이 정확해요 🎉',
+    micWrong:(h)=>`❌ 들린 말: "${h}" — 다시 해보세요!`,
+    micNoHear:'⚠️ 듣지 못했어요, 다시 해보세요',
+    vdListen:'🔊 듣기', vdMic:'🎤 연습', vdClose:'✕ 닫기',
+    vdMicOn:'🔴 듣는 중...', vdCorrect:'✅ 훌륭해요! 발음이 정확해요 🎉',
+    vdWrong:(h)=>`❌ 들린 말: "${h}" — 다시 해보세요!`,
+  },
+  ar:{
+    // Settings
+    settingsTitle:'⚙️ الإعدادات',
+    secSound:'🔊 الصوت', chimeLabel:'نغمة الإجابة', chimeSub:'صوت عند إيجاد الكلمة',
+    ttsLabel:'نطق الكلمة', ttsSub:'ينطق الكلمة عند إيجادها',
+    chipTtsLabel:'نطق عند الضغط', chipTtsSub:'اضغط على الكلمة لسماعها',
+    sylTapLabel:'نطق الحرف 🆕', sylTapSub:'اضغط على حرف في الشبكة لسماعه',
+    speedLabel:'سرعة النطق', spdSlow:'🐢 بطيء', spdNormal:'▶ عادي', spdFast:'⚡ سريع',
+    secLang:'🌍 لغة الترجمة', langSub:'اختر اللغة لعرض معنى الكلمات',
+    secGame:'🎮 اللعبة', autoHintLabel:'تلميح تلقائي', autoHintSub:'يومض التلميح بعد 30 ثانية',
+    vibrateLabel:'اهتزاز', vibrateSub:'اهتزاز عند الإجابة الصحيحة/الخاطئة',
+    secDisplay:'🖥️ الشاشة', bgAnimLabel:'خلفية متحركة', bgAnimSub:'حروف هانغل عائمة',
+    secAccount:'👤 الحساب', logoutBtn:'تسجيل الخروج',
+    secData:'⚠️ البيانات', resetLabel:'إعادة ضبط التقدم', resetSub:'حذف كل سجلات المستويات', resetBtn:'إعادة ضبط',
+    toolsSection:'🎮 أدوات', statsLabel:'📊 إحصائياتي', statsSub:'كلمات / مستويات / سلسلة الأيام',
+    statsBtn:'عرض', raceLabel:'⏱️ وضع السباق', raceSub:'90 ثانية لكل مستوى',
+    raceOn:'تشغيل', raceOff:'إيقاف',
+    listenAgain:'🔊 استمع مرة أخرى', tapClose:'اضغط للإغلاق',
+    tryPronounce:'🎙️ جرب تنطقها!', micStart:'🎤 ابدأ',
+    wotdLabel:'📅 كلمة اليوم', wotdBtn:'🔊 استمع',
+    streakUnit:'يوم', writeCheck:'✓ تحقق', writeNext:'التالي ←', writeSkip:'تخطي',
+    writeDel:'⌫ حذف', writeComplete:'أكمل الكلمة أولاً!',
+    writeGreat:'✅ ممتاز! 🎉', writeGood:'✅ صح! أحسنت 💪',
+    writeWrong:'❌ الكلمة:', writeTryAgain:'— حاول مرة أخرى',
+    writeAnswer:'الإجابة:', timeUp:'⏰ انتهى الوقت! -نجمة',
+    statsClose:'✕ إغلاق', statsTitle:'📊 إحصائياتي',
+    stWords:'كلمة تعلمتها', stLevels:'مستوى أكملته', stStreak:'🔥 سلسلة الأيام',
+    stStreakMax:'أعلى:', stAccuracy:'دقة الكتابة', stPerfect:'⭐⭐⭐ مثالي',
+    stBestTime:'⚡ أسرع مستوى', stHistoryTitle:'🗓️ آخر 14 يوم',
+    vocabClose:'✕ إغلاق', vocabTitle:'كلماتي',
+    reviewResult:(s,t,p)=>`نتيجتك: ${s}/${t} (${p}%)\n${p===100?'ممتاز! 🏆':p>=60?'جيد جداً! 💪':'استمر في التدريب! 📚'}`,
+    reviewWrong:(c)=>`❌ الجواب: ${c}`,
+    micCorrect:'✅ ممتاز! نطقك صحيح 🎉',
+    micWrong:(h)=>`❌ سمعت: "${h}" — حاول مرة أخرى!`,
+    micNoHear:'⚠️ لم أسمع شيئاً، حاول مرة أخرى',
+    vdListen:'🔊 استمع', vdMic:'🎤 دربني', vdClose:'✕ إغلاق',
+    vdMicOn:'🔴 جاري الاستماع...', vdCorrect:'✅ ممتاز! نطقك صحيح 🎉',
+    vdWrong:(h)=>`❌ سمعت: "${h}" — حاول مرة أخرى!`,
+  },
+  en:{
+    // Settings
+    settingsTitle:'⚙️ Settings',
+    secSound:'🔊 Sound', chimeLabel:'Sound effects', chimeSub:'Chime when word is found',
+    ttsLabel:'Word pronunciation', ttsSub:'Pronounces word when found',
+    chipTtsLabel:'Tap chip to hear', chipTtsSub:'Tap word list to listen',
+    sylTapLabel:'Tap letter to hear 🆕', sylTapSub:'Tap grid letter to pronounce',
+    speedLabel:'Speech speed', spdSlow:'🐢 Slow', spdNormal:'▶ Normal', spdFast:'⚡ Fast',
+    secLang:'🌍 Translation language', langSub:'Choose language for word meanings',
+    secGame:'🎮 Game', autoHintLabel:'Auto hint', autoHintSub:'Hint flashes after 30 seconds',
+    vibrateLabel:'Vibration', vibrateSub:'Vibrate on correct/wrong answer',
+    secDisplay:'🖥️ Display', bgAnimLabel:'Background animation', bgAnimSub:'Floating Hangul letters',
+    secAccount:'👤 Account', logoutBtn:'Log out',
+    secData:'⚠️ Data', resetLabel:'Reset progress', resetSub:'Delete all level records', resetBtn:'Reset',
+    toolsSection:'🎮 Tools', statsLabel:'📊 My Stats', statsSub:'Words / Levels / Streak',
+    statsBtn:'View', raceLabel:'⏱️ Race Mode', raceSub:'90 seconds per level',
+    raceOn:'Start', raceOff:'Stop',
+    listenAgain:'🔊 Listen again', tapClose:'Tap to close',
+    tryPronounce:'🎙️ Try to pronounce!', micStart:'🎤 Start',
+    wotdLabel:'📅 Word of the Day', wotdBtn:'🔊 Listen',
+    streakUnit:'day', writeCheck:'✓ Check', writeNext:'Next →', writeSkip:'Skip',
+    writeDel:'⌫ Delete', writeComplete:'Complete the word first!',
+    writeGreat:'✅ Excellent! 🎉', writeGood:'✅ Correct! Well done 💪',
+    writeWrong:'❌ Word:', writeTryAgain:'— Try again',
+    writeAnswer:'Answer:', timeUp:'⏰ Time\'s up! -star',
+    statsClose:'✕ Close', statsTitle:'📊 My Stats',
+    stWords:'Words learned', stLevels:'Levels completed', stStreak:'🔥 Day streak',
+    stStreakMax:'Best:', stAccuracy:'Writing accuracy', stPerfect:'⭐⭐⭐ Perfect',
+    stBestTime:'⚡ Best time', stHistoryTitle:'🗓️ Last 14 days',
+    vocabClose:'✕ Close', vocabTitle:'My Words',
+    reviewResult:(s,t,p)=>`Score: ${s}/${t} (${p}%)\n${p===100?'Excellent! 🏆':p>=60?'Well done! 💪':'Keep practicing! 📚'}`,
+    reviewWrong:(c)=>`❌ Answer: ${c}`,
+    micCorrect:'✅ Excellent! Your pronunciation is correct 🎉',
+    micWrong:(h)=>`❌ I heard: "${h}" — Try again!`,
+    micNoHear:'⚠️ Didn\'t hear anything, try again',
+    vdListen:'🔊 Listen', vdMic:'🎤 Practice', vdClose:'✕ Close',
+    vdMicOn:'🔴 Listening...', vdCorrect:'✅ Excellent pronunciation 🎉',
+    vdWrong:(h)=>`❌ Heard: "${h}" — Try again!`,
+  },
+  ja:{
+    // Settings
+    settingsTitle:'⚙️ 設定',
+    secSound:'🔊 サウンド', chimeLabel:'効果音', chimeSub:'正解時のチャイム音',
+    ttsLabel:'単語の発音', ttsSub:'単語を見つけたら発音します',
+    chipTtsLabel:'チップタップで発音', chipTtsSub:'単語リストをタップして聴く',
+    sylTapLabel:'文字タップで発音 🆕', sylTapSub:'グリッドの文字をタップして発音',
+    speedLabel:'発音速度', spdSlow:'🐢 ゆっくり', spdNormal:'▶ 普通', spdFast:'⚡ 速く',
+    secLang:'🌍 翻訳言語', langSub:'単語の意味を表示する言語を選択',
+    secGame:'🎮 ゲーム', autoHintLabel:'自動ヒント', autoHintSub:'30秒後にヒントが点滅',
+    vibrateLabel:'バイブレーション', vibrateSub:'正解/不正解時に振動',
+    secDisplay:'🖥️ 画面', bgAnimLabel:'背景アニメーション', bgAnimSub:'浮かぶハングル文字',
+    secAccount:'👤 アカウント', logoutBtn:'ログアウト',
+    secData:'⚠️ データ', resetLabel:'進行リセット', resetSub:'全レベルの記録を削除', resetBtn:'リセット',
+    toolsSection:'🎮 ツール', statsLabel:'📊 マイ統計', statsSub:'単語 / レベル / 連続日数',
+    statsBtn:'表示', raceLabel:'⏱️ レースモード', raceSub:'1レベル90秒',
+    raceOn:'開始', raceOff:'停止',
+    listenAgain:'🔊 もう一度聴く', tapClose:'タップして閉じる',
+    tryPronounce:'🎙️ 発音してみて！', micStart:'🎤 開始',
+    wotdLabel:'📅 今日の単語', wotdBtn:'🔊 聴く',
+    streakUnit:'日', writeCheck:'✓ 確認', writeNext:'次へ →', writeSkip:'スキップ',
+    writeDel:'⌫ 削除', writeComplete:'単語を完成させてください！',
+    writeGreat:'✅ 素晴らしい！ 🎉', writeGood:'✅ 正解！よくできました 💪',
+    writeWrong:'❌ 単語:', writeTryAgain:'— もう一度',
+    writeAnswer:'答え:', timeUp:'⏰ 時間切れ！-星',
+    statsClose:'✕ 閉じる', statsTitle:'📊 マイ統計',
+    stWords:'覚えた単語', stLevels:'完了レベル', stStreak:'🔥 連続日数',
+    stStreakMax:'最高:', stAccuracy:'書き正確度', stPerfect:'⭐⭐⭐ 完璧',
+    stBestTime:'⚡ 最速記録', stHistoryTitle:'🗓️ 最近14日',
+    vocabClose:'✕ 閉じる', vocabTitle:'マイ単語帳',
+    reviewResult:(s,t,p)=>`結果: ${s}/${t} (${p}%)\n${p===100?'素晴らしい！ 🏆':p>=60?'よくできました！ 💪':'練習を続けましょう！ 📚'}`,
+    reviewWrong:(c)=>`❌ 答え: ${c}`,
+    micCorrect:'✅ 素晴らしい！発音が正確です 🎉',
+    micWrong:(h)=>`❌ 聞こえた言葉: "${h}" — もう一度！`,
+    micNoHear:'⚠️ 聞こえませんでした、もう一度',
+    vdListen:'🔊 聴く', vdMic:'🎤 練習', vdClose:'✕ 閉じる',
+    vdMicOn:'🔴 聴いています...', vdCorrect:'✅ 発音が正確です 🎉',
+    vdWrong:(h)=>`❌ 聞こえた: "${h}" — もう一度！`,
+  },
+  zh:{
+    // Settings
+    settingsTitle:'⚙️ 设置',
+    secSound:'🔊 声音', chimeLabel:'音效', chimeSub:'找到单词时的提示音',
+    ttsLabel:'单词发音', ttsSub:'找到单词时自动发音',
+    chipTtsLabel:'点击词块发音', chipTtsSub:'点击单词列表收听',
+    sylTapLabel:'点击字母发音 🆕', sylTapSub:'点击网格中的字母发音',
+    speedLabel:'语速', spdSlow:'🐢 慢', spdNormal:'▶ 正常', spdFast:'⚡ 快',
+    secLang:'🌍 翻译语言', langSub:'选择显示单词含义的语言',
+    secGame:'🎮 游戏', autoHintLabel:'自动提示', autoHintSub:'30秒后闪烁提示',
+    vibrateLabel:'振动', vibrateSub:'答对/答错时振动',
+    secDisplay:'🖥️ 显示', bgAnimLabel:'背景动画', bgAnimSub:'漂浮的韩文字母',
+    secAccount:'👤 账户', logoutBtn:'退出登录',
+    secData:'⚠️ 数据', resetLabel:'重置进度', resetSub:'删除所有关卡记录', resetBtn:'重置',
+    toolsSection:'🎮 工具', statsLabel:'📊 我的统计', statsSub:'单词 / 关卡 / 连续天数',
+    statsBtn:'查看', raceLabel:'⏱️ 竞速模式', raceSub:'每关90秒',
+    raceOn:'开始', raceOff:'停止',
+    listenAgain:'🔊 再听一遍', tapClose:'点击关闭',
+    tryPronounce:'🎙️ 试着发音！', micStart:'🎤 开始',
+    wotdLabel:'📅 每日单词', wotdBtn:'🔊 听',
+    streakUnit:'天', writeCheck:'✓ 检查', writeNext:'下一个 →', writeSkip:'跳过',
+    writeDel:'⌫ 删除', writeComplete:'请先完成单词！',
+    writeGreat:'✅ 太棒了！ 🎉', writeGood:'✅ 正确！做得好 💪',
+    writeWrong:'❌ 单词:', writeTryAgain:'— 再试一次',
+    writeAnswer:'答案:', timeUp:'⏰ 时间到！-星',
+    statsClose:'✕ 关闭', statsTitle:'📊 我的统计',
+    stWords:'学过的单词', stLevels:'完成关卡', stStreak:'🔥 连续天数',
+    stStreakMax:'最高:', stAccuracy:'写作准确率', stPerfect:'⭐⭐⭐ 完美',
+    stBestTime:'⚡ 最快记录', stHistoryTitle:'🗓️ 最近14天',
+    vocabClose:'✕ 关闭', vocabTitle:'我的单词本',
+    reviewResult:(s,t,p)=>`得分: ${s}/${t} (${p}%)\n${p===100?'太棒了！ 🏆':p>=60?'做得好！ 💪':'继续练习！ 📚'}`,
+    reviewWrong:(c)=>`❌ 答案: ${c}`,
+    micCorrect:'✅ 太棒了！发音正确 🎉',
+    micWrong:(h)=>`❌ 听到: "${h}" — 再试！`,
+    micNoHear:'⚠️ 没听到，请再试',
+    vdListen:'🔊 听', vdMic:'🎤 练习', vdClose:'✕ 关闭',
+    vdMicOn:'🔴 正在听...', vdCorrect:'✅ 发音正确 🎉',
+    vdWrong:(h)=>`❌ 听到: "${h}" — 再试！`,
+  },
+  ru:{
+    // Settings
+    settingsTitle:'⚙️ Настройки',
+    secSound:'🔊 Звук', chimeLabel:'Звуковые эффекты', chimeSub:'Звонок при нахождении слова',
+    ttsLabel:'Произношение слова', ttsSub:'Произносит слово при нахождении',
+    chipTtsLabel:'Нажать чип для прослушивания', chipTtsSub:'Нажмите список слов чтобы слушать',
+    sylTapLabel:'Нажать букву для произношения 🆕', sylTapSub:'Нажмите букву в сетке',
+    speedLabel:'Скорость речи', spdSlow:'🐢 Медленно', spdNormal:'▶ Нормально', spdFast:'⚡ Быстро',
+    secLang:'🌍 Язык перевода', langSub:'Выберите язык для значений слов',
+    secGame:'🎮 Игра', autoHintLabel:'Авто-подсказка', autoHintSub:'Подсказка мигает через 30 секунд',
+    vibrateLabel:'Вибрация', vibrateSub:'Вибрация при правильном/неправильном ответе',
+    secDisplay:'🖥️ Экран', bgAnimLabel:'Анимация фона', bgAnimSub:'Плавающие буквы хангыль',
+    secAccount:'👤 Аккаунт', logoutBtn:'Выйти',
+    secData:'⚠️ Данные', resetLabel:'Сбросить прогресс', resetSub:'Удалить все записи уровней', resetBtn:'Сбросить',
+    toolsSection:'🎮 Инструменты', statsLabel:'📊 Моя статистика', statsSub:'Слова / Уровни / Серия дней',
+    statsBtn:'Смотреть', raceLabel:'⏱️ Режим гонки', raceSub:'90 секунд на уровень',
+    raceOn:'Старт', raceOff:'Стоп',
+    listenAgain:'🔊 Слушать снова', tapClose:'Нажмите чтобы закрыть',
+    tryPronounce:'🎙️ Попробуй произнести!', micStart:'🎤 Начать',
+    wotdLabel:'📅 Слово дня', wotdBtn:'🔊 Слушать',
+    streakUnit:'день', writeCheck:'✓ Проверить', writeNext:'Далее →', writeSkip:'Пропустить',
+    writeDel:'⌫ Удалить', writeComplete:'Сначала завершите слово!',
+    writeGreat:'✅ Отлично! 🎉', writeGood:'✅ Верно! Молодец 💪',
+    writeWrong:'❌ Слово:', writeTryAgain:'— Попробуй снова',
+    writeAnswer:'Ответ:', timeUp:'⏰ Время вышло! -звезда',
+    statsClose:'✕ Закрыть', statsTitle:'📊 Моя статистика',
+    stWords:'Слов выучено', stLevels:'Уровней пройдено', stStreak:'🔥 Серия дней',
+    stStreakMax:'Лучший:', stAccuracy:'Точность письма', stPerfect:'⭐⭐⭐ Идеально',
+    stBestTime:'⚡ Лучшее время', stHistoryTitle:'🗓️ Последние 14 дней',
+    vocabClose:'✕ Закрыть', vocabTitle:'Мои слова',
+    reviewResult:(s,t,p)=>`Результат: ${s}/${t} (${p}%)\n${p===100?'Отлично! 🏆':p>=60?'Хорошо! 💪':'Продолжайте тренироваться! 📚'}`,
+    reviewWrong:(c)=>`❌ Ответ: ${c}`,
+    micCorrect:'✅ Отлично! Произношение правильное 🎉',
+    micWrong:(h)=>`❌ Услышал: "${h}" — Попробуй снова!`,
+    micNoHear:'⚠️ Ничего не услышал, попробуй снова',
+    vdListen:'🔊 Слушать', vdMic:'🎤 Практика', vdClose:'✕ Закрыть',
+    vdMicOn:'🔴 Слушаю...', vdCorrect:'✅ Произношение правильное 🎉',
+    vdWrong:(h)=>`❌ Услышал: "${h}" — Ещё раз!`,
+  },
+};
+
+function T(key, ...args){
+  const t = UI_TEXT[currentLang] || UI_TEXT.ar;
+  const v = t[key] || UI_TEXT.ar[key] || key;
+  return typeof v === 'function' ? v(...args) : v;
+}
+
+function setLang(l){
+  currentLang = l;
+  localStorage.setItem('naltmal_lang', l);
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.lang === l);
+  });
+  applyLang();
+}
+
+function applyLang(){
+  const l = currentLang || 'ko';
+  const rtl = l === 'ar';
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.lang === l);
+  });
+
+  // Settings tools section
+  const toolsSec = document.getElementById('uiToolsSection');
+  const statsLbl = document.getElementById('uiStatsLabel');
+  const statsSub = document.getElementById('uiStatsSub');
+  const statsBtn = document.getElementById('uiStatsBtn');
+  const raceLbl  = document.getElementById('uiRaceLabel');
+  const raceSub  = document.getElementById('uiRaceSub');
+  const raceBtn  = document.getElementById('btnRace');
+  if(toolsSec) toolsSec.textContent = T('toolsSection');
+  if(statsLbl) statsLbl.textContent = T('statsLabel');
+  if(statsSub) statsSub.textContent = T('statsSub');
+  if(statsBtn) statsBtn.textContent = T('statsBtn');
+  if(raceLbl)  raceLbl.textContent  = T('raceLabel');
+  if(raceSub)  raceSub.textContent  = T('raceSub');
+  if(raceBtn)  raceBtn.textContent  = _raceType ? T('raceOff') : T('raceOn');
+
+  // Meaning popup
+  const mPronBtn = document.getElementById('mPronounce');
+  if(mPronBtn) mPronBtn.textContent = T('listenAgain');
+  const tapClose = document.getElementById('uiTapClose');
+  if(tapClose) tapClose.textContent = T('tapClose');
+  const pronLabel = document.getElementById('uiPronLabel');
+  if(pronLabel) pronLabel.textContent = T('tryPronounce');
+  const btnMic = document.getElementById('btnMic');
+  if(btnMic && !btnMic.classList.contains('listening')) btnMic.textContent = T('micStart');
+
+  // Word of day
+  const wotdLabel = document.getElementById('uiWotdLabel');
+  if(wotdLabel) wotdLabel.textContent = T('wotdLabel');
+  // Refresh wotd translation
+  if(window._wotdWord && MEANINGS[window._wotdWord]){
+    const m = MEANINGS[window._wotdWord];
+    document.getElementById('wotdTrans').textContent = m[l] || m.ko;
+  }
+
+  // Streak badge unit
+  const sUnit = document.getElementById('uiStreakUnit');
+  if(sUnit) sUnit.textContent = T('streakUnit');
+
+  // Write mode buttons
+  const wCheck = document.querySelector('.btn-write-check');
+  const wNext  = document.getElementById('wrtBtnNext');
+  const wSkip  = document.querySelector('.btn-write-skip');
+  if(wCheck) wCheck.textContent = T('writeCheck');
+  if(wNext)  wNext.textContent  = T('writeNext');
+  if(wSkip)  wSkip.textContent  = T('writeSkip');
+
+  // Stats screen
+  const stTitle = document.getElementById('uiStatsTitle');
+  const stClose = document.getElementById('uiStatsClose');
+  if(stTitle) stTitle.textContent = T('statsTitle');
+  if(stClose) stClose.textContent = T('statsClose');
+  document.querySelectorAll('[data-ui]').forEach(el=>{
+    const key = el.dataset.ui;
+    if(key) el.textContent = T(key);
+  });
+
+  // RTL
+  document.querySelectorAll('.write-box,.vocab-detail-sheet,.win-box,.review-box').forEach(el=>{
+    el.style.direction = rtl ? 'rtl' : 'ltr';
+  });
+
+  // ── Settings panel ──
+  const ids = {
+    uiSettingsTitle:'settingsTitle', uiSecSound:'secSound',
+    uiChimeLabel:'chimeLabel', uiChimeSub:'chimeSub',
+    uiTtsLabel:'ttsLabel', uiTtsSub:'ttsSub',
+    uiChipTtsLabel:'chipTtsLabel', uiChipTtsSub:'chipTtsSub',
+    uiSylTapLabel:'sylTapLabel', uiSylTapSub:'sylTapSub',
+    uiSpeedLabel:'speedLabel',
+    uiSecLang:'secLang', uiLangSub:'langSub',
+    uiSecGame:'secGame', uiAutoHintLabel:'autoHintLabel', uiAutoHintSub:'autoHintSub',
+    uiVibrateLabel:'vibrateLabel', uiVibrateSub:'vibrateSub',
+    uiSecDisplay:'secDisplay', uiBgAnimLabel:'bgAnimLabel', uiBgAnimSub:'bgAnimSub',
+    uiSecAccount:'secAccount', uiLogoutBtn:'logoutBtn',
+    uiSecData:'secData', uiResetLabel:'resetLabel', uiResetSub:'resetSub', uiResetBtn:'resetBtn',
+  };
+  Object.entries(ids).forEach(([id,key])=>{
+    const el=document.getElementById(id); if(el) el.textContent=T(key);
+  });
+  // Speed buttons
+  document.querySelectorAll('[data-ui-spd]').forEach(el=>{
+    el.textContent = T('spd'+el.dataset.uiSpd.charAt(0).toUpperCase()+el.dataset.uiSpd.slice(1));
+  });
+
+  // Vocab title
+  const vocabTitle = document.getElementById('uiVocabTitle');
+  if(vocabTitle) vocabTitle.textContent = T('vocabTitle');
+  // ── Dynamic HTML elements ──
+  const wotdBtnEl = document.getElementById('wotdBtn');
+  if(wotdBtnEl) wotdBtnEl.textContent = {ko:'🔊 듣기',ar:'🔊 استمع',en:'🔊 Listen',ja:'🔊 聴く',zh:'🔊 听',ru:'🔊 Слушать'}[l] || '🔊 듣기';
+
+  const btnWordsLbl = document.getElementById('btnWordsLbl');
+  if(btnWordsLbl) btnWordsLbl.textContent = {ko:'단어장',ar:'كلماتي',en:'Words',ja:'単語',zh:'单词',ru:'Слова'}[l] || '단어장';
+
+  const vocabEmptyTxt = document.getElementById('vocabEmptyTxt');
+  if(vocabEmptyTxt) vocabEmptyTxt.innerHTML = {
+    ko:'아직 단어가 없어요!<br>게임을 시작해보세요 🎮',
+    ar:'لم تجد أي كلمات بعد!<br>ابدأ اللعب لتجميع كلماتك 🎮',
+    en:'No words yet!<br>Start playing to collect words 🎮',
+    ja:'まだ単語がありません！<br>ゲームを始めましょう 🎮',
+    zh:'还没有单词！<br>开始游戏收集单词 🎮',
+    ru:'Слов пока нет!<br>Начни играть 🎮'
+  }[l] || '아직 단어가 없어요!';
+
+  const vdListenBtn = document.getElementById('vdListenBtn');
+  if(vdListenBtn) vdListenBtn.textContent = T('vdListen');
+
+  const vdCloseBtn = document.getElementById('vdCloseBtn');
+  if(vdCloseBtn) vdCloseBtn.textContent = T('vdClose');
+
+  const wrtBtnCheck = document.getElementById('wrtBtnCheck');
+  if(wrtBtnCheck) wrtBtnCheck.textContent = T('writeCheck');
+
+  const wrtBtnSkip = document.getElementById('wrtBtnSkip');
+  if(wrtBtnSkip) wrtBtnSkip.textContent = T('writeSkip');
+
+  const wdCloseBtn = document.getElementById('wdCloseBtn');
+  if(wdCloseBtn) wdCloseBtn.textContent = {ko:'✕ 닫기',ar:'✕ إغلاق',en:'✕ Close',ja:'✕ 閉じる',zh:'✕ 关闭',ru:'✕ Закрыть'}[l] || '✕ 닫기';
+
+  const btnReviewNextLbl = document.getElementById('btnReviewNextLbl');
+  if(btnReviewNextLbl) btnReviewNextLbl.textContent = {ko:'다음 →',ar:'التالي →',en:'Next →',ja:'次へ →',zh:'下一个 →',ru:'Далее →'}[l] || '다음 →';
+
+  const btnReviewSkipLbl = document.getElementById('btnReviewSkipLbl');
+  if(btnReviewSkipLbl) btnReviewSkipLbl.textContent = {ko:'건너뛰기',ar:'تخطي المراجعة',en:'Skip Review',ja:'スキップ',zh:'跳过',ru:'Пропустить'}[l] || '건너뛰기';
+
+  const mBtnMic = document.getElementById('btnMic');
+  if(mBtnMic && !mBtnMic.classList.contains('listening')) mBtnMic.textContent = T('micStart');
+
+}
+
+function getMeaning(word){
+  const d = MEANINGS[word];
+  if(!d) return null;
+  // Build localized description from translation
+  const trans = d[currentLang] || d.ko;
+  const descTemplates = {
+    ko: (t) => d.desc_ko,
+    ar: (t) => d.desc_ar || (t + ' 🌟'),
+    en: (t) => d.desc_en || (t + ' 🌟'),
+    ja: (t) => d.desc_ja || (t + ' 🌟'),
+    zh: (t) => d.desc_zh || (t + ' 🌟'),
+    ru: (t) => d.desc_ru || (t + ' 🌟'),
+  };
+  const descFn = descTemplates[currentLang] || descTemplates.ko;
+  const desc = descFn(trans);
+  return {
+    emoji: d.emoji,
+    word:  word,
+    trans: trans,
+    desc:  desc,
+    desc_ko: d.desc_ko,
+  };
+}
+
+// MEANINGS: each word has translations in all 6 langs + korean description
 const MEANINGS = {
   // 자연🌿
-  '하늘':['하늘 (sky)','파란 하늘이 맑아요','🌌'],
-  '바람':['바람 (wind)','시원한 바람이 불어요','💨'],
-  '구름':['구름 (cloud)','하얀 구름이 떠요','☁️'],
-  '강산':['강산 (mountains & rivers)','아름다운 강산이에요','🏔️'],
-  '봄날':['봄날 (spring day)','따뜻한 봄날이에요','🌸'],
-  '달빛':['달빛 (moonlight)','달빛이 밝게 빛나요','🌙'],
-  '꽃잎':['꽃잎 (petal)','꽃잎이 날려요','🌺'],
-  '노을':['노을 (sunset glow)','붉은 노을이 예뻐요','🌅'],
-  '별빛':['별빛 (starlight)','별빛이 반짝여요','✨'],
-  '새벽':['새벽 (dawn)','새벽이 밝아와요','🌄'],
-  '안개':['안개 (fog)','안개가 자욱해요','🌫️'],
-  '단풍':['단풍 (autumn leaves)','단풍이 물들어요','🍁'],
-  '나무':['나무 (tree)','나무가 자라요','🌳'],
-  '초록':['초록 (green)','초록이 싱그러워요','💚'],
-  '강물':['강물 (river water)','강물이 흘러요','🌊'],
-  '바다':['바다 (sea)','바다가 넓어요','🌊'],
+  '하늘':{emoji:'🌌',ko:'하늘',ar:'السماء',en:'Sky',ja:'空',zh:'天空',ru:'Небо',desc_ko:'파란 하늘이 맑아요',desc_ar:'السماء زرقاء وصافية',desc_en:'The sky is blue and clear',desc_ja:'空は青く澄んでいます',desc_zh:'天空蔚蓝清澈',desc_ru:'Небо голубое и чистое'},
+  '바람':{emoji:'💨',ko:'바람',ar:'الريح',en:'Wind',ja:'風',zh:'风',ru:'Ветер',desc_ko:'시원한 바람이 불어요',desc_ar:'ريح منعشة تهب',desc_en:'A cool breeze is blowing',desc_ja:'涼しい風が吹いています',desc_zh:'清爽的风吹来',desc_ru:'Дует прохладный ветер'},
+  '구름':{emoji:'☁️',ko:'구름',ar:'سحابة',en:'Cloud',ja:'雲',zh:'云',ru:'Облако',desc_ko:'하얀 구름이 떠요',desc_ar:'غيوم بيضاء تطفو',desc_en:'White clouds are floating',desc_ja:'白い雲が浮かんでいます',desc_zh:'白云飘浮',desc_ru:'Белые облака плывут'},
+  '강산':{emoji:'🏔️',ko:'강산',ar:'الجبال والأنهار',en:'Mountains & Rivers',ja:'山河',zh:'江山',ru:'Горы и реки',desc_ko:'아름다운 강산이에요',desc_ar:'جبال وأنهار جميلة',desc_en:'Beautiful mountains and rivers',desc_ja:'美しい山河',desc_zh:'美丽的江山',desc_ru:'Красивые горы и реки'},
+  '봄날':{emoji:'🌸',ko:'봄날',ar:'يوم الربيع',en:'Spring Day',ja:'春の日',zh:'春天',ru:'Весенний день',desc_ko:'따뜻한 봄날이에요',desc_ar:'يوم ربيعي دافئ',desc_en:'A warm spring day',desc_ja:'暖かい春の日',desc_zh:'温暖的春天',desc_ru:'Тёплый весенний день'},
+  '달빛':{emoji:'🌙',ko:'달빛',ar:'ضوء القمر',en:'Moonlight',ja:'月光',zh:'月光',ru:'Лунный свет',desc_ko:'달빛이 밝게 빛나요',desc_ar:'ضوء القمر يسطع بإشراق',desc_en:'The moonlight shines brightly',desc_ja:'月の光が明るく輝く',desc_zh:'月光明亮地照耀',desc_ru:'Лунный свет ярко светит'},
+  '꽃잎':{emoji:'🌺',ko:'꽃잎',ar:'بتلة الزهرة',en:'Petal',ja:'花びら',zh:'花瓣',ru:'Лепесток',desc_ko:'꽃잎이 날려요',desc_ar:'بتلات الأزهار تتساقط',desc_en:'Flower petals are falling',desc_ja:'花びらが舞っています',desc_zh:'花瓣飘落',desc_ru:'Лепестки цветов опадают'},
+  '노을':{emoji:'🌅',ko:'노을',ar:'شفق الغروب',en:'Sunset Glow',ja:'夕焼け',zh:'晚霞',ru:'Закат',desc_ko:'붉은 노을이 예뻐요',desc_ar:'غروب الشمس الأحمر الجميل',desc_en:'A beautiful red sunset glow',desc_ja:'美しい赤い夕焼け',desc_zh:'美丽的红色晚霞',desc_ru:'Красивый красный закат'},
+  '별빛':{emoji:'✨',ko:'별빛',ar:'ضوء النجوم',en:'Starlight',ja:'星明かり',zh:'星光',ru:'Свет звезд',desc_ko:'별빛이 반짝여요',desc_ar:'ضوء النجوم يتلألأ',desc_en:'Starlight is twinkling',desc_ja:'星明かりがきらめく',desc_zh:'星光闪烁',desc_ru:'Звёздный свет мерцает'},
+  '새벽':{emoji:'🌄',ko:'새벽',ar:'الفجر',en:'Dawn',ja:'夜明け',zh:'黎明',ru:'Рассвет',desc_ko:'새벽이 밝아와요',desc_ar:'الفجر يضيء',desc_en:'Dawn is breaking',desc_ja:'夜明けが来ます',desc_zh:'黎明到来',desc_ru:'Рассвет наступает'},
+  '안개':{emoji:'🌫️',ko:'안개',ar:'الضباب',en:'Fog',ja:'霧',zh:'雾',ru:'Туман',desc_ko:'안개가 자욱해요',desc_ar:'الضباب يكسو الأرض',desc_en:'Fog covers the ground',desc_ja:'霧が立ち込めています',desc_zh:'雾气弥漫',desc_ru:'Туман стелется'},
+  '단풍':{emoji:'🍁',ko:'단풍',ar:'أوراق الخريف',en:'Autumn Leaves',ja:'紅葉',zh:'枫叶',ru:'Осенние листья',desc_ko:'단풍이 물들어요',desc_ar:'أوراق الخريف تتلون',desc_en:'Autumn leaves change color',desc_ja:'紅葉が色づく',desc_zh:'枫叶变色',desc_ru:'Осенние листья меняют цвет'},
+  '나무':{emoji:'🌳',ko:'나무',ar:'شجرة',en:'Tree',ja:'木',zh:'树',ru:'Дерево',desc_ko:'나무가 자라요',desc_ar:'الشجرة تنمو',desc_en:'The tree is growing',desc_ja:'木が育っています',desc_zh:'树木生长',desc_ru:'Дерево растёт'},
+  '초록':{emoji:'💚',ko:'초록',ar:'الأخضر',en:'Green',ja:'緑',zh:'绿色',ru:'Зелёный',desc_ko:'초록이 싱그러워요',desc_ar:'اللون أخضر منعش',desc_en:'Green is refreshing',desc_ja:'緑は清々しい',desc_zh:'绿色令人清爽',desc_ru:'Зелёный освежает'},
+  '강물':{emoji:'🌊',ko:'강물',ar:'مياه النهر',en:'River Water',ja:'川の水',zh:'江水',ru:'Речная вода',desc_ko:'강물이 흘러요',desc_ar:'مياه النهر تجري',desc_en:'River water is flowing',desc_ja:'川の水が流れます',desc_zh:'江水流淌',desc_ru:'Речная вода течёт'},
+  '바다':{emoji:'🌊',ko:'바다',ar:'البحر',en:'Sea',ja:'海',zh:'大海',ru:'Море',desc_ko:'바다가 넓어요',desc_ar:'البحر واسع وعميق',desc_en:'The sea is wide and deep',desc_ja:'海は広く深い',desc_zh:'大海宽广深邃',desc_ru:'Море широкое и глубокое'},
   // 감정💛
-  '사랑':['사랑 (love)','사랑해요 ❤️','❤️'],
-  '행복':['행복 (happiness)','행복해요!','😊'],
-  '기쁨':['기쁨 (joy)','기쁨이 넘쳐요','😄'],
-  '슬픔':['슬픔 (sadness)','슬퍼요...','😢'],
-  '그리움':['그리움 (longing)','그리워요','🥺'],
-  '설렘':['설렘 (excitement)','설레는 마음이에요','🦋'],
-  '외로움':['외로움 (loneliness)','외로워요','😔'],
-  '즐거움':['즐거움 (fun)','즐거워요!','🎉'],
-  '두려움':['두려움 (fear)','두려워요','😨'],
-  '희망':['희망 (hope)','희망이 있어요','🌟'],
-  '걱정':['걱정 (worry)','걱정하지 마세요','😟'],
-  '분노':['분노 (anger)','화가 났어요','😤'],
-  '평화':['평화 (peace)','평화로워요','☮️'],
-  '기대':['기대 (anticipation)','기대돼요!','🤩'],
+  '사랑':{emoji:'❤️',ko:'사랑',ar:'الحب',en:'Love',ja:'愛',zh:'爱',ru:'Любовь',desc_ko:'사랑해요',desc_ar:'أنا أحبك',desc_en:'I love you',desc_ja:'愛しています',desc_zh:'我爱你',desc_ru:'Я люблю тебя'},
+  '행복':{emoji:'😊',ko:'행복',ar:'السعادة',en:'Happiness',ja:'幸せ',zh:'幸福',ru:'Счастье',desc_ko:'행복해요!',desc_ar:'أنا سعيد جداً',desc_en:'I am very happy',desc_ja:'とても幸せです',desc_zh:'我很幸福',desc_ru:'Я очень счастлив'},
+  '기쁨':{emoji:'😄',ko:'기쁨',ar:'الفرح',en:'Joy',ja:'喜び',zh:'喜悦',ru:'Радость',desc_ko:'기쁨이 넘쳐요',desc_ar:'الفرح يفيض',desc_en:'Joy is overflowing',desc_ja:'喜びが溢れる',desc_zh:'喜悦满溢',desc_ru:'Радость переполняет'},
+  '슬픔':{emoji:'😢',ko:'슬픔',ar:'الحزن',en:'Sadness',ja:'悲しみ',zh:'悲伤',ru:'Грусть',desc_ko:'슬퍼요...',desc_ar:'أنا حزين',desc_en:'I am sad',desc_ja:'悲しいです',desc_zh:'我很悲伤',desc_ru:'Мне грустно'},
+  '그리움':{emoji:'🥺',ko:'그리움',ar:'الشوق',en:'Longing',ja:'懐かしさ',zh:'思念',ru:'Тоска',desc_ko:'그리워요',desc_ar:'أشتاق إليك',desc_en:'I miss you',desc_ja:'会いたいです',desc_zh:'我想念你',desc_ru:'Я скучаю по тебе'},
+  '설렘':{emoji:'🦋',ko:'설렘',ar:'الإثارة',en:'Excitement',ja:'ときめき',zh:'心动',ru:'Волнение',desc_ko:'설레는 마음이에요',desc_ar:'قلبي ينبض بسعادة',desc_en:'My heart flutters',desc_ja:'ときめいています',desc_zh:'心跳加速',desc_ru:'Сердце трепещет'},
+  '외로움':{emoji:'😔',ko:'외로움',ar:'الوحدة',en:'Loneliness',ja:'孤独',zh:'孤独',ru:'Одиночество',desc_ko:'외로워요',desc_ar:'أشعر بالوحدة',desc_en:'I feel lonely',desc_ja:'孤独を感じます',desc_zh:'我感到孤独',desc_ru:'Я чувствую одиночество'},
+  '즐거움':{emoji:'🎉',ko:'즐거움',ar:'المتعة',en:'Fun',ja:'楽しさ',zh:'快乐',ru:'Веселье',desc_ko:'즐거워요!',desc_ar:'أنا ممتع!',desc_en:'I am having fun!',desc_ja:'楽しいです！',desc_zh:'我很快乐！',desc_ru:'Мне весело!'},
+  '두려움':{emoji:'😨',ko:'두려움',ar:'الخوف',en:'Fear',ja:'恐れ',zh:'恐惧',ru:'Страх',desc_ko:'두려워요',desc_ar:'أنا خائف',desc_en:'I am afraid',desc_ja:'怖いです',desc_zh:'我很害怕',desc_ru:'Я боюсь'},
+  '희망':{emoji:'🌟',ko:'희망',ar:'الأمل',en:'Hope',ja:'希望',zh:'希望',ru:'Надежда',desc_ko:'희망이 있어요',desc_ar:'لدي أمل',desc_en:'There is hope',desc_ja:'希望があります',desc_zh:'充满希望',desc_ru:'Есть надежда'},
+  '걱정':{emoji:'😟',ko:'걱정',ar:'القلق',en:'Worry',ja:'心配',zh:'担心',ru:'Беспокойство',desc_ko:'걱정하지 마세요',desc_ar:'لا تقلق',desc_en:'Do not worry',desc_ja:'心配しないで',desc_zh:'不要担心',desc_ru:'Не беспокойся'},
+  '분노':{emoji:'😤',ko:'분노',ar:'الغضب',en:'Anger',ja:'怒り',zh:'愤怒',ru:'Злость',desc_ko:'화가 났어요',desc_ar:'أنا غاضب',desc_en:'I am angry',desc_ja:'怒っています',desc_zh:'我很愤怒',desc_ru:'Я злюсь'},
+  '평화':{emoji:'☮️',ko:'평화',ar:'السلام',en:'Peace',ja:'平和',zh:'和平',ru:'Мир',desc_ko:'평화로워요',desc_ar:'الجو هادئ',desc_en:'It is peaceful',desc_ja:'平和です',desc_zh:'很和平',desc_ru:'Здесь мирно'},
+  '기대':{emoji:'🤩',ko:'기대',ar:'التوقع',en:'Anticipation',ja:'期待',zh:'期待',ru:'Ожидание',desc_ko:'기대돼요!',desc_ar:'أنا متحمس!',desc_en:'I am excited!',desc_ja:'楽しみです！',desc_zh:'我很期待！',desc_ru:'Я с нетерпением жду!'},
   // 음식🍜
-  '김치':['김치 (kimchi)','매운 김치예요','🥬'],
-  '불고기':['불고기 (bulgogi)','맛있는 불고기예요','🥩'],
-  '냉면':['냉면 (cold noodles)','시원한 냉면이에요','🍜'],
-  '만두':['만두 (dumpling)','맛있는 만두예요','🥟'],
-  '비빔밥':['비빔밥 (bibimbap)','비빔밥을 비벼요','🍚'],
-  '갈비':['갈비 (ribs)','갈비가 맛있어요','🍖'],
-  '순대':['순대 (sundae)','순대가 맛있어요','🌭'],
-  '잡채':['잡채 (japchae)','잡채가 맛있어요','🍝'],
-  '된장':['된장 (doenjang)','된장찌개예요','🍲'],
-  '삼겹살':['삼겹살 (pork belly)','삼겹살을 구워요','🥓'],
-  '떡볶이':['떡볶이 (tteokbokki)','매운 떡볶이예요','🌶️'],
-  '삼계탕':['삼계탕 (ginseng chicken)','삼계탕이 보양식이에요','🍗'],
-  '감자탕':['감자탕 (pork bone soup)','감자탕이 뜨거워요','🍲'],
-  '설렁탕':['설렁탕 (seolleongtang)','설렁탕이 담백해요','🍲'],
+  '김치':{emoji:'🥬',ko:'김치',ar:'الكيمتشي',en:'Kimchi',ja:'キムチ',zh:'泡菜',ru:'Кимчи',desc_ko:'매운 김치예요',desc_ar:'الكيمتشي طعام كوري حار',desc_en:'Kimchi is spicy Korean food',desc_ja:'キムチは辛い韓国料理',desc_zh:'泡菜是辛辣的韩国食物',desc_ru:'Кимчи — острая корейская еда'},
+  '불고기':{emoji:'🥩',ko:'불고기',ar:'بولغوغي',en:'Bulgogi',ja:'プルコギ',zh:'烤肉',ru:'Пулькоги',desc_ko:'맛있는 불고기예요',desc_ar:'بولغوغي لحم شهي',desc_en:'Bulgogi is delicious meat',desc_ja:'プルコギは美味しい肉料理',desc_zh:'烤肉非常美味',desc_ru:'Пулькоги — вкусное мясо'},
+  '냉면':{emoji:'🍜',ko:'냉면',ar:'الشعرية الباردة',en:'Cold Noodles',ja:'冷麺',zh:'冷面',ru:'Холодная лапша',desc_ko:'시원한 냉면이에요',desc_ar:'شعرية باردة منعشة',desc_en:'Cold noodles are refreshing',desc_ja:'冷麺は爽やかです',desc_zh:'冷面清凉爽口',desc_ru:'Холодная лапша освежает'},
+  '만두':{emoji:'🥟',ko:'만두',ar:'المانتو',en:'Dumpling',ja:'餃子',zh:'饺子',ru:'Манду',desc_ko:'맛있는 만두예요',desc_ar:'المانتو لذيذ',desc_en:'Dumplings are delicious',desc_ja:'餃子は美味しいです',desc_zh:'饺子很好吃',desc_ru:'Манду очень вкусные'},
+  '비빔밥':{emoji:'🍚',ko:'비빔밥',ar:'بيبيمباب',en:'Bibimbap',ja:'ビビンバ',zh:'拌饭',ru:'Пибимбап',desc_ko:'비빔밥을 비벼요',desc_ar:'نخلط البيبيمباب',desc_en:'We mix the bibimbap',desc_ja:'ビビンバを混ぜます',desc_zh:'拌饭要搅拌',desc_ru:'Смешиваем пибимбап'},
+  '갈비':{emoji:'🍖',ko:'갈비',ar:'الضلوع',en:'Ribs',ja:'カルビ',zh:'排骨',ru:'Кальби',desc_ko:'갈비가 맛있어요',desc_ar:'الضلوع لذيذة جداً',desc_en:'The ribs are very delicious',desc_ja:'カルビはとても美味しい',desc_zh:'排骨非常好吃',desc_ru:'Рёбрышки очень вкусные'},
+  '순대':{emoji:'🌭',ko:'순대',ar:'السوندى',en:'Sundae',ja:'スンデ',zh:'血肠',ru:'Сундэ',desc_ko:'순대가 맛있어요'},
+  '잡채':{emoji:'🍝',ko:'잡채',ar:'الجابتشيه',en:'Japchae',ja:'チャプチェ',zh:'杂菜',ru:'Чапчхэ',desc_ko:'잡채가 맛있어요'},
+  '된장':{emoji:'🍲',ko:'된장',ar:'عجينة فول الصويا',en:'Doenjang',ja:'テンジャン',zh:'大酱',ru:'Твенджан',desc_ko:'된장찌개예요'},
+  '삼겹살':{emoji:'🥓',ko:'삼겹살',ar:'لحم البطن',en:'Pork Belly',ja:'サムギョプサル',zh:'五花肉',ru:'Самгёпсаль',desc_ko:'삼겹살을 구워요',desc_ar:'نشوي لحم البطن',desc_en:'We grill pork belly',desc_ja:'サムギョプサルを焼きます',desc_zh:'烤五花肉',desc_ru:'Жарим свиное брюшко'},
+  '떡볶이':{emoji:'🌶️',ko:'떡볶이',ar:'كعك الأرز الحار',en:'Tteokbokki',ja:'トッポギ',zh:'炒年糕',ru:'Ттокпокки',desc_ko:'매운 떡볶이예요',desc_ar:'كعك الأرز الحار',desc_en:'Spicy rice cake',desc_ja:'辛いトッポギ',desc_zh:'辣味年糕',desc_ru:'Острые рисовые лепёшки'},
+  '삼계탕':{emoji:'🍗',ko:'삼계탕',ar:'حساء الدجاج',en:'Ginseng Chicken Soup',ja:'サムゲタン',zh:'参鸡汤',ru:'Самгетан',desc_ko:'삼계탕이 보양식이에요',desc_ar:'حساء الدجاج مغذٍّ',desc_en:'Ginseng chicken soup is nutritious',desc_ja:'サムゲタンは滋養食',desc_zh:'参鸡汤营养丰富',desc_ru:'Самгетан питательный'},
+  '감자탕':{emoji:'🍲',ko:'감자탕',ar:'حساء عظام الخنزير',en:'Pork Bone Soup',ja:'カムジャタン',zh:'土豆汤',ru:'Камджатан',desc_ko:'감자탕이 뜨거워요'},
+  '설렁탕':{emoji:'🍲',ko:'설렁탕',ar:'حساء العظام',en:'Seolleongtang',ja:'ソルロンタン',zh:'雪浓汤',ru:'Сольлонтхан',desc_ko:'설렁탕이 담백해요'},
   // 동물🐯
-  '고양이':['고양이 (cat)','야옹~ 고양이예요','🐱'],
-  '강아지':['강아지 (puppy)','멍멍~ 강아지예요','🐶'],
-  '토끼':['토끼 (rabbit)','귀여운 토끼예요','🐰'],
-  '호랑이':['호랑이 (tiger)','무서운 호랑이예요','🐯'],
-  '독수리':['독수리 (eagle)','독수리가 날아요','🦅'],
-  '돼지':['돼지 (pig)','꿀꿀~ 돼지예요','🐷'],
-  '여우':['여우 (fox)','영리한 여우예요','🦊'],
-  '늑대':['늑대 (wolf)','으르렁~ 늑대예요','🐺'],
-  '기린':['기린 (giraffe)','목이 긴 기린이에요','🦒'],
-  '코끼리':['코끼리 (elephant)','코가 긴 코끼리예요','🐘'],
-  '펭귄':['펭귄 (penguin)','뒤뚱뒤뚱 펭귄이에요','🐧'],
-  '원숭이':['원숭이 (monkey)','원숭이가 재롱을 부려요','🐒'],
-  '사자':['사자 (lion)','백수의 왕 사자예요','🦁'],
-  '곰':['곰 (bear)','곰이 잠을 자요','🐻'],
-  '뱀':['뱀 (snake)','뱀이 기어가요','🐍'],
+  '고양이':{emoji:'🐱',ko:'고양이',ar:'قطة',en:'Cat',ja:'猫',zh:'猫',ru:'Кошка',desc_ko:'야옹~ 고양이예요',desc_ar:'القطة تصدر صوت مياو',desc_en:'The cat says meow',desc_ja:'猫はニャーと鳴きます',desc_zh:'猫咪发出喵喵声',desc_ru:'Кошка мяукает'},
+  '강아지':{emoji:'🐶',ko:'강아지',ar:'جرو',en:'Puppy',ja:'子犬',zh:'小狗',ru:'Щенок',desc_ko:'멍멍~ 강아지예요',desc_ar:'الجرو يلعب',desc_en:'The puppy is playing',desc_ja:'子犬が遊んでいます',desc_zh:'小狗在玩耍',desc_ru:'Щенок играет'},
+  '토끼':{emoji:'🐰',ko:'토끼',ar:'أرنب',en:'Rabbit',ja:'ウサギ',zh:'兔子',ru:'Кролик',desc_ko:'귀여운 토끼예요',desc_ar:'الأرنب لطيف',desc_en:'The rabbit is cute',desc_ja:'ウサギは可愛いです',desc_zh:'兔子很可爱',desc_ru:'Кролик милый'},
+  '호랑이':{emoji:'🐯',ko:'호랑이',ar:'نمر',en:'Tiger',ja:'虎',zh:'老虎',ru:'Тигр',desc_ko:'무서운 호랑이예요',desc_ar:'النمر مرعب',desc_en:'The tiger is scary',desc_ja:'虎は怖いです',desc_zh:'老虎很可怕',desc_ru:'Тигр страшный'},
+  '독수리':{emoji:'🦅',ko:'독수리',ar:'نسر',en:'Eagle',ja:'鷲',zh:'鹰',ru:'Орёл',desc_ko:'독수리가 날아요',desc_ar:'النسر يحلق',desc_en:'The eagle is soaring',desc_ja:'鷲が飛んでいます',desc_zh:'老鹰翱翔',desc_ru:'Орёл парит'},
+  '돼지':{emoji:'🐷',ko:'돼지',ar:'خنزير',en:'Pig',ja:'豚',zh:'猪',ru:'Свинья',desc_ko:'꿀꿀~ 돼지예요',desc_ar:'الخنزير يصدر أصواتاً',desc_en:'The pig is oinking',desc_ja:'豚がブーブー鳴く',desc_zh:'猪发出哼哼声',desc_ru:'Свинья хрюкает'},
+  '여우':{emoji:'🦊',ko:'여우',ar:'ثعلب',en:'Fox',ja:'キツネ',zh:'狐狸',ru:'Лиса',desc_ko:'영리한 여우예요',desc_ar:'الثعلب ذكي',desc_en:'The fox is clever',desc_ja:'キツネは賢いです',desc_zh:'狐狸很聪明',desc_ru:'Лиса умная'},
+  '늑대':{emoji:'🐺',ko:'늑대',ar:'ذئب',en:'Wolf',ja:'オオカミ',zh:'狼',ru:'Волк',desc_ko:'으르렁~ 늑대예요',desc_ar:'الذئب يزمجر',desc_en:'The wolf growls',desc_ja:'オオカミがうなる',desc_zh:'狼嗥叫',desc_ru:'Волк рычит'},
+  '기린':{emoji:'🦒',ko:'기린',ar:'زرافة',en:'Giraffe',ja:'キリン',zh:'长颈鹿',ru:'Жираф',desc_ko:'목이 긴 기린이에요',desc_ar:'الزرافة لها رقبة طويلة',desc_en:'The giraffe has a long neck',desc_ja:'キリンは首が長い',desc_zh:'长颈鹿脖子很长',desc_ru:'У жирафа длинная шея'},
+  '코끼리':{emoji:'🐘',ko:'코끼리',ar:'فيل',en:'Elephant',ja:'象',zh:'大象',ru:'Слон',desc_ko:'코가 긴 코끼리예요',desc_ar:'الفيل له خرطوم طويل',desc_en:'The elephant has a long trunk',desc_ja:'象は鼻が長い',desc_zh:'大象鼻子很长',desc_ru:'У слона длинный хобот'},
+  '펭귄':{emoji:'🐧',ko:'펭귄',ar:'بطريق',en:'Penguin',ja:'ペンギン',zh:'企鹅',ru:'Пингвин',desc_ko:'뒤뚱뒤뚱 펭귄이에요',desc_ar:'البطريق يمشي متمايلاً',desc_en:'The penguin waddles',desc_ja:'ペンギンがよちよち歩く',desc_zh:'企鹅摇摇摆摆地走',desc_ru:'Пингвин вразвалку ходит'},
+  '원숭이':{emoji:'🐒',ko:'원숭이',ar:'قرد',en:'Monkey',ja:'猿',zh:'猴子',ru:'Обезьяна',desc_ko:'원숭이가 재롱을 부려요',desc_ar:'القرد يقفز',desc_en:'The monkey is jumping',desc_ja:'猿が跳び回る',desc_zh:'猴子跳来跳去',desc_ru:'Обезьяна прыгает'},
+  '사자':{emoji:'🦁',ko:'사자',ar:'أسد',en:'Lion',ja:'ライオン',zh:'狮子',ru:'Лев',desc_ko:'백수의 왕 사자예요',desc_ar:'الأسد ملك الغابة',desc_en:'The lion is king of the jungle',desc_ja:'ライオンは百獣の王',desc_zh:'狮子是丛林之王',desc_ru:'Лев — царь зверей'},
+  '곰':{emoji:'🐻',ko:'곰',ar:'دب',en:'Bear',ja:'クマ',zh:'熊',ru:'Медведь',desc_ko:'곰이 잠을 자요',desc_ar:'الدب ينام شتاءً',desc_en:'The bear hibernates in winter',desc_ja:'クマは冬眠します',desc_zh:'熊冬天冬眠',desc_ru:'Медведь зимой спит'},
+  '뱀':{emoji:'🐍',ko:'뱀',ar:'ثعبان',en:'Snake',ja:'蛇',zh:'蛇',ru:'Змея',desc_ko:'뱀이 기어가요',desc_ar:'الثعبان يزحف',desc_en:'The snake is slithering',desc_ja:'蛇がはっています',desc_zh:'蛇在爬行',desc_ru:'Змея ползёт'},
   // 색깔🎨
-  '빨강':['빨강 (red)','빨간색이에요','🔴'],
-  '주황':['주황 (orange)','주황색이에요','🟠'],
-  '노랑':['노랑 (yellow)','노란색이에요','🟡'],
-  '파랑':['파랑 (blue)','파란색이에요','🔵'],
-  '보라':['보라 (purple)','보라색이에요','🟣'],
-  '분홍':['분홍 (pink)','분홍색이에요','🩷'],
-  '하늘색':['하늘색 (sky blue)','하늘색이에요','🩵'],
-  '연두':['연두 (light green)','연두색이에요','💚'],
-  '갈색':['갈색 (brown)','갈색이에요','🟤'],
-  '회색':['회색 (gray)','회색이에요','⬜'],
-  '금빛':['금빛 (golden)','금빛이 반짝여요','✨'],
-  '은빛':['은빛 (silver)','은빛이 빛나요','🩶'],
+  '빨강':{emoji:'🔴',ko:'빨강',ar:'أحمر',en:'Red',ja:'赤',zh:'红色',ru:'Красный',desc_ko:'빨간색이에요',desc_ar:'اللون أحمر',desc_en:'The color is red',desc_ja:'赤い色です',desc_zh:'红色',desc_ru:'Красный цвет'},
+  '주황':{emoji:'🟠',ko:'주황',ar:'برتقالي',en:'Orange',ja:'オレンジ',zh:'橙色',ru:'Оранжевый',desc_ko:'주황색이에요',desc_ar:'اللون برتقالي',desc_en:'The color is orange',desc_ja:'オレンジ色です',desc_zh:'橙色',desc_ru:'Оранжевый цвет'},
+  '노랑':{emoji:'🟡',ko:'노랑',ar:'أصفر',en:'Yellow',ja:'黄色',zh:'黄色',ru:'Жёлтый',desc_ko:'노란색이에요',desc_ar:'اللون أصفر',desc_en:'The color is yellow',desc_ja:'黄色です',desc_zh:'黄色',desc_ru:'Жёлтый цвет'},
+  '파랑':{emoji:'🔵',ko:'파랑',ar:'أزرق',en:'Blue',ja:'青',zh:'蓝色',ru:'Синий',desc_ko:'파란색이에요',desc_ar:'اللون أزرق',desc_en:'The color is blue',desc_ja:'青い色です',desc_zh:'蓝色',desc_ru:'Синий цвет'},
+  '보라':{emoji:'🟣',ko:'보라',ar:'بنفسجي',en:'Purple',ja:'紫',zh:'紫色',ru:'Фиолетовый',desc_ko:'보라색이에요',desc_ar:'اللون بنفسجي',desc_en:'The color is purple',desc_ja:'紫色です',desc_zh:'紫色',desc_ru:'Фиолетовый цвет'},
+  '분홍':{emoji:'🩷',ko:'분홍',ar:'وردي',en:'Pink',ja:'ピンク',zh:'粉色',ru:'Розовый',desc_ko:'분홍색이에요',desc_ar:'اللون وردي',desc_en:'The color is pink',desc_ja:'ピンク色です',desc_zh:'粉色',desc_ru:'Розовый цвет'},
+  '하늘색':{emoji:'🩵',ko:'하늘색',ar:'أزرق سماوي',en:'Sky Blue',ja:'空色',zh:'天蓝色',ru:'Голубой',desc_ko:'하늘색이에요',desc_ar:'اللون أزرق سماوي',desc_en:'The color is sky blue',desc_ja:'空色です',desc_zh:'天蓝色',desc_ru:'Голубой цвет'},
+  '연두':{emoji:'💚',ko:'연두',ar:'أخضر فاتح',en:'Light Green',ja:'黄緑',zh:'嫩绿',ru:'Светло-зелёный',desc_ko:'연두색이에요',desc_ar:'اللون أخضر فاتح',desc_en:'The color is light green',desc_ja:'黄緑色です',desc_zh:'嫩绿色',desc_ru:'Светло-зелёный цвет'},
+  '갈색':{emoji:'🟤',ko:'갈색',ar:'بني',en:'Brown',ja:'茶色',zh:'棕色',ru:'Коричневый',desc_ko:'갈색이에요',desc_ar:'اللون بني',desc_en:'The color is brown',desc_ja:'茶色です',desc_zh:'棕色',desc_ru:'Коричневый цвет'},
+  '회색':{emoji:'⬜',ko:'회색',ar:'رمادي',en:'Gray',ja:'灰色',zh:'灰色',ru:'Серый',desc_ko:'회색이에요',desc_ar:'اللون رمادي',desc_en:'The color is gray',desc_ja:'灰色です',desc_zh:'灰色',desc_ru:'Серый цвет'},
+  '금빛':{emoji:'✨',ko:'금빛',ar:'ذهبي',en:'Golden',ja:'金色',zh:'金色',ru:'Золотой',desc_ko:'금빛이 반짝여요',desc_ar:'اللون ذهبي يلمع',desc_en:'The golden color shines',desc_ja:'金色が輝く',desc_zh:'金色闪闪发光',desc_ru:'Золотой цвет блестит'},
+  '은빛':{emoji:'🩶',ko:'은빛',ar:'فضي',en:'Silver',ja:'銀色',zh:'银色',ru:'Серебряный',desc_ko:'은빛이 빛나요',desc_ar:'اللون الفضي يلمع',desc_en:'The silver color shines',desc_ja:'銀色が輝く',desc_zh:'银色闪亮',desc_ru:'Серебристый цвет блестит'},
   // 직업💼
-  '의사':['의사 (doctor)','병을 고쳐요','👨‍⚕️'],
-  '간호사':['간호사 (nurse)','환자를 돌봐요','👩‍⚕️'],
-  '변호사':['변호사 (lawyer)','법을 지켜요','⚖️'],
-  '경찰관':['경찰관 (police)','우리를 지켜요','👮'],
-  '소방관':['소방관 (firefighter)','불을 꺼요','🚒'],
-  '기자':['기자 (journalist)','뉴스를 전해요','📰'],
-  '농부':['농부 (farmer)','농사를 지어요','👨‍🌾'],
-  '화가':['화가 (painter)','그림을 그려요','🎨'],
-  '요리사':['요리사 (chef)','음식을 만들어요','👨‍🍳'],
-  '선생님':['선생님 (teacher)','가르쳐줘요','👩‍🏫'],
-  '건축가':['건축가 (architect)','건물을 설계해요','🏗️'],
-  '배우':['배우 (actor)','연기를 해요','🎭'],
+  '의사':{emoji:'👨‍⚕️',ko:'의사',ar:'طبيب',en:'Doctor',ja:'医者',zh:'医生',ru:'Врач',desc_ko:'병을 고쳐요',desc_ar:'الطبيب يعالج المرضى',desc_en:'The doctor treats patients',desc_ja:'医者は病気を治す',desc_zh:'医生治病',desc_ru:'Врач лечит пациентов'},
+  '간호사':{emoji:'👩‍⚕️',ko:'간호사',ar:'ممرضة',en:'Nurse',ja:'看護師',zh:'护士',ru:'Медсестра',desc_ko:'환자를 돌봐요',desc_ar:'الممرضة ترعى المرضى',desc_en:'The nurse cares for patients',desc_ja:'看護師は患者の世話をする',desc_zh:'护士照顾病人',desc_ru:'Медсестра ухаживает за пациентами'},
+  '변호사':{emoji:'⚖️',ko:'변호사',ar:'محامي',en:'Lawyer',ja:'弁護士',zh:'律师',ru:'Адвокат',desc_ko:'법을 지켜요',desc_ar:'المحامي يحمي القانون',desc_en:'The lawyer protects the law',desc_ja:'弁護士は法を守る',desc_zh:'律师维护法律',desc_ru:'Адвокат защищает закон'},
+  '경찰관':{emoji:'👮',ko:'경찰관',ar:'شرطي',en:'Police',ja:'警察官',zh:'警察',ru:'Полицейский',desc_ko:'우리를 지켜요',desc_ar:'الشرطي يحمينا',desc_en:'The police officer protects us',desc_ja:'警察官が守ってくれる',desc_zh:'警察保护我们',desc_ru:'Полицейский нас защищает'},
+  '소방관':{emoji:'🚒',ko:'소방관',ar:'رجل إطفاء',en:'Firefighter',ja:'消防士',zh:'消防员',ru:'Пожарный',desc_ko:'불을 꺼요',desc_ar:'رجل الإطفاء يطفئ الحرائق',desc_en:'The firefighter puts out fires',desc_ja:'消防士が火を消す',desc_zh:'消防员灭火',desc_ru:'Пожарный тушит огонь'},
+  '기자':{emoji:'📰',ko:'기자',ar:'صحفي',en:'Journalist',ja:'記者',zh:'记者',ru:'Журналист',desc_ko:'뉴스를 전해요',desc_ar:'الصحفي ينقل الأخبار',desc_en:'The journalist reports the news',desc_ja:'記者がニュースを伝える',desc_zh:'记者传递新闻',desc_ru:'Журналист освещает новости'},
+  '농부':{emoji:'👨‍🌾',ko:'농부',ar:'مزارع',en:'Farmer',ja:'農夫',zh:'农民',ru:'Фермер',desc_ko:'농사를 지어요',desc_ar:'الفلاح يزرع الأرض',desc_en:'The farmer grows crops',desc_ja:'農夫が農業をする',desc_zh:'农民耕种',desc_ru:'Фермер выращивает урожай'},
+  '화가':{emoji:'🎨',ko:'화가',ar:'رسام',en:'Painter',ja:'画家',zh:'画家',ru:'Художник',desc_ko:'그림을 그려요',desc_ar:'الرسام يرسم اللوحات',desc_en:'The painter draws pictures',desc_ja:'画家が絵を描く',desc_zh:'画家作画',desc_ru:'Художник рисует картины'},
+  '요리사':{emoji:'👨‍🍳',ko:'요리사',ar:'طاهي',en:'Chef',ja:'料理人',zh:'厨师',ru:'Повар',desc_ko:'음식을 만들어요',desc_ar:'الطاهي يصنع الطعام',desc_en:'The chef makes food',desc_ja:'料理人が料理を作る',desc_zh:'厨师做饭',desc_ru:'Повар готовит еду'},
+  '선생님':{emoji:'👩‍🏫',ko:'선생님',ar:'معلم',en:'Teacher',ja:'先生',zh:'老师',ru:'Учитель',desc_ko:'가르쳐줘요',desc_ar:'المعلم يعلمنا',desc_en:'The teacher teaches us',desc_ja:'先生が教えてくれる',desc_zh:'老师教导我们',desc_ru:'Учитель нас учит'},
+  '건축가':{emoji:'🏗️',ko:'건축가',ar:'مهندس معماري',en:'Architect',ja:'建築家',zh:'建筑师',ru:'Архитектор',desc_ko:'건물을 설계해요',desc_ar:'المهندس يصمم المباني',desc_en:'The architect designs buildings',desc_ja:'建築家が建物を設計',desc_zh:'建筑师设计建筑',desc_ru:'Архитектор проектирует здания'},
+  '배우':{emoji:'🎭',ko:'배우',ar:'ممثل',en:'Actor',ja:'俳優',zh:'演员',ru:'Актёр',desc_ko:'연기를 해요',desc_ar:'الممثل يؤدي الأدوار',desc_en:'The actor performs roles',desc_ja:'俳優が演技をする',desc_zh:'演员表演角色',desc_ru:'Актёр играет роли'},
   // 스포츠⚽
-  '축구':['축구 (football)','공을 차요','⚽'],
-  '야구':['야구 (baseball)','공을 쳐요','⚾'],
-  '농구':['농구 (basketball)','골을 넣어요','🏀'],
-  '배구':['배구 (volleyball)','공을 넘겨요','🏐'],
-  '테니스':['테니스 (tennis)','라켓으로 쳐요','🎾'],
-  '태권도':['태권도 (taekwondo)','발차기를 해요','🥋'],
-  '볼링':['볼링 (bowling)','핀을 쓰러뜨려요','🎳'],
-  '마라톤':['마라톤 (marathon)','42km를 달려요','🏃'],
-  '수영':['수영 (swimming)','물에서 헤엄쳐요','🏊'],
-  '체조':['체조 (gymnastics)','몸을 구부려요','🤸'],
-  '씨름':['씨름 (ssireum)','한국 전통 씨름이에요','🤼'],
-  '유도':['유도 (judo)','상대를 넘겨요','🥋'],
-  '검도':['검도 (kendo)','칼로 겨뤄요','⚔️'],
+  '축구':{emoji:'⚽',ko:'축구',ar:'كرة القدم',en:'Football',ja:'サッカー',zh:'足球',ru:'Футбол',desc_ko:'공을 차요',desc_ar:'نركل الكرة',desc_en:'We kick the ball',desc_ja:'ボールを蹴ります',desc_zh:'踢球',desc_ru:'Мы пинаем мяч'},
+  '야구':{emoji:'⚾',ko:'야구',ar:'البيسبول',en:'Baseball',ja:'野球',zh:'棒球',ru:'Бейсбол',desc_ko:'공을 쳐요',desc_ar:'نضرب الكرة',desc_en:'We hit the ball',desc_ja:'ボールを打ちます',desc_zh:'打棒球',desc_ru:'Мы бьём по мячу'},
+  '농구':{emoji:'🏀',ko:'농구',ar:'كرة السلة',en:'Basketball',ja:'バスケ',zh:'篮球',ru:'Баскетбол',desc_ko:'골을 넣어요',desc_ar:'نسجل هدفاً',desc_en:'We score a basket',desc_ja:'ゴールを決める',desc_zh:'投篮得分',desc_ru:'Мы забиваем в корзину'},
+  '배구':{emoji:'🏐',ko:'배구',ar:'كرة الطائرة',en:'Volleyball',ja:'バレー',zh:'排球',ru:'Волейбол',desc_ko:'공을 넘겨요',desc_ar:'نرسل الكرة للآخر',desc_en:'We pass the ball over the net',desc_ja:'ボールを越えます',desc_zh:'把球打过网',desc_ru:'Перекидываем мяч через сетку'},
+  '테니스':{emoji:'🎾',ko:'테니스',ar:'التنس',en:'Tennis',ja:'テニス',zh:'网球',ru:'Теннис',desc_ko:'라켓으로 쳐요',desc_ar:'نضرب بالمضرب',desc_en:'We hit with a racket',desc_ja:'ラケットで打ちます',desc_zh:'用球拍打球',desc_ru:'Бьём ракеткой'},
+  '태권도':{emoji:'🥋',ko:'태권도',ar:'التايكواندو',en:'Taekwondo',ja:'テコンドー',zh:'跆拳道',ru:'Тхэквондо',desc_ko:'발차기를 해요',desc_ar:'نضرب بالأقدام',desc_en:'We kick with our feet',desc_ja:'足で蹴ります',desc_zh:'用脚踢击',desc_ru:'Бьём ногами'},
+  '볼링':{emoji:'🎳',ko:'볼링',ar:'البولينج',en:'Bowling',ja:'ボウリング',zh:'保龄球',ru:'Боулинг',desc_ko:'핀을 쓰러뜨려요',desc_ar:'نسقط الأوتاد',desc_en:'We knock down the pins',desc_ja:'ピンを倒す',desc_zh:'击倒瓶子',desc_ru:'Сбиваем кегли'},
+  '마라톤':{emoji:'🏃',ko:'마라톤',ar:'الماراثون',en:'Marathon',ja:'マラソン',zh:'马拉松',ru:'Марафон',desc_ko:'42km를 달려요',desc_ar:'نركض 42 كيلومتراً',desc_en:'We run 42 kilometers',desc_ja:'42kmを走ります',desc_zh:'跑42公里',desc_ru:'Бежим 42 километра'},
+  '수영':{emoji:'🏊',ko:'수영',ar:'السباحة',en:'Swimming',ja:'水泳',zh:'游泳',ru:'Плавание',desc_ko:'물에서 헤엄쳐요',desc_ar:'نسبح في الماء',desc_en:'We swim in the water',desc_ja:'水の中で泳ぎます',desc_zh:'在水中游泳',desc_ru:'Плаваем в воде'},
+  '체조':{emoji:'🤸',ko:'체조',ar:'الجمباز',en:'Gymnastics',ja:'体操',zh:'体操',ru:'Гимнастика',desc_ko:'몸을 구부려요',desc_ar:'نثني أجسادنا',desc_en:'We bend our bodies',desc_ja:'体を曲げます',desc_zh:'弯曲身体',desc_ru:'Сгибаем тело'},
+  '씨름':{emoji:'🤼',ko:'씨름',ar:'المصارعة الكورية',en:'Ssireum',ja:'シルム',zh:'摔跤',ru:'Сирым',desc_ko:'한국 전통 씨름이에요',desc_ar:'مصارعة كورية تقليدية',desc_en:'Traditional Korean wrestling',desc_ja:'韓国の伝統的な相撲',desc_zh:'韩国传统摔跤',desc_ru:'Традиционная корейская борьба'},
+  '유도':{emoji:'🥋',ko:'유도',ar:'الجودو',en:'Judo',ja:'柔道',zh:'柔道',ru:'Дзюдо',desc_ko:'상대를 넘겨요',desc_ar:'نقلب الخصم',desc_en:'We throw the opponent',desc_ja:'相手を投げる',desc_zh:'摔倒对手',desc_ru:'Бросаем противника'},
+  '검도':{emoji:'⚔️',ko:'검도',ar:'الكيندو',en:'Kendo',ja:'剣道',zh:'剑道',ru:'Кэндо',desc_ko:'칼로 겨뤄요',desc_ar:'ندارب بالسيوف',desc_en:'We fight with swords',desc_ja:'剣で戦います',desc_zh:'用剑对战',desc_ru:'Сражаемся на мечах'},
   // 나라🌍
-  '한국':['한국 (Korea)','우리나라예요','🇰🇷'],
-  '미국':['미국 (USA)','아메리카예요','🇺🇸'],
-  '일본':['일본 (Japan)','이웃 나라예요','🇯🇵'],
-  '중국':['중국 (China)','큰 나라예요','🇨🇳'],
-  '프랑스':['프랑스 (France)','에펠탑이 있어요','🇫🇷'],
-  '독일':['독일 (Germany)','맥주가 유명해요','🇩🇪'],
-  '영국':['영국 (UK)','런던이 수도예요','🇬🇧'],
-  '브라질':['브라질 (Brazil)','축구 강국이에요','🇧🇷'],
-  '캐나다':['캐나다 (Canada)','단풍나무의 나라','🇨🇦'],
-  '호주':['호주 (Australia)','캥거루가 있어요','🇦🇺'],
-  '러시아':['러시아 (Russia)','가장 큰 나라예요','🇷🇺'],
-  '이탈리아':['이탈리아 (Italy)','피자의 나라예요','🇮🇹'],
+  '한국':{emoji:'🇰🇷',ko:'한국',ar:'كوريا',en:'Korea',ja:'韓国',zh:'韩国',ru:'Корея',desc_ko:'우리나라예요',desc_ar:'كوريا بلدي',desc_en:'Korea is my country',desc_ja:'韓国は私の国',desc_zh:'韩国是我的国家',desc_ru:'Корея — моя страна'},
+  '미국':{emoji:'🇺🇸',ko:'미국',ar:'أمريكا',en:'USA',ja:'アメリカ',zh:'美国',ru:'США',desc_ko:'아메리카예요',desc_ar:'أمريكا في القارة الأمريكية',desc_en:'America is a large country',desc_ja:'アメリカは大きな国',desc_zh:'美国是大国',desc_ru:'Америка — большая страна'},
+  '일본':{emoji:'🇯🇵',ko:'일본',ar:'اليابان',en:'Japan',ja:'日本',zh:'日本',ru:'Япония',desc_ko:'이웃 나라예요',desc_ar:'اليابان دولة مجاورة',desc_en:'Japan is a neighboring country',desc_ja:'日本は隣の国',desc_zh:'日本是邻国',desc_ru:'Япония — соседняя страна'},
+  '중국':{emoji:'🇨🇳',ko:'중국',ar:'الصين',en:'China',ja:'中国',zh:'中国',ru:'Китай',desc_ko:'큰 나라예요',desc_ar:'الصين دولة كبيرة',desc_en:'China is a big country',desc_ja:'中国は大きな国',desc_zh:'中国是大国',desc_ru:'Китай — большая страна'},
+  '프랑스':{emoji:'🇫🇷',ko:'프랑스',ar:'فرنسا',en:'France',ja:'フランス',zh:'法国',ru:'Франция',desc_ko:'에펠탑이 있어요',desc_ar:'فرنسا فيها برج إيفل',desc_en:'France has the Eiffel Tower',desc_ja:'フランスにはエッフェル塔がある',desc_zh:'法国有埃菲尔铁塔',desc_ru:'Во Франции есть Эйфелева башня'},
+  '독일':{emoji:'🇩🇪',ko:'독일',ar:'ألمانيا',en:'Germany',ja:'ドイツ',zh:'德国',ru:'Германия',desc_ko:'맥주가 유명해요',desc_ar:'ألمانيا مشهورة بالبيرة',desc_en:'Germany is famous for beer',desc_ja:'ドイツはビールで有名',desc_zh:'德国以啤酒著名',desc_ru:'Германия знаменита пивом'},
+  '영국':{emoji:'🇬🇧',ko:'영국',ar:'بريطانيا',en:'UK',ja:'イギリス',zh:'英国',ru:'Великобритания',desc_ko:'런던이 수도예요',desc_ar:'لندن عاصمة بريطانيا',desc_en:'London is the capital of UK',desc_ja:'ロンドンは英国の首都',desc_zh:'伦敦是英国首都',desc_ru:'Лондон — столица Великобритании'},
+  '브라질':{emoji:'🇧🇷',ko:'브라질',ar:'البرازيل',en:'Brazil',ja:'ブラジル',zh:'巴西',ru:'Бразилия',desc_ko:'축구 강국이에요',desc_ar:'البرازيل قوة كرة قدم',desc_en:'Brazil is a football powerhouse',desc_ja:'ブラジルはサッカー強国',desc_zh:'巴西是足球强国',desc_ru:'Бразилия — футбольная держава'},
+  '캐나다':{emoji:'🇨🇦',ko:'캐나다',ar:'كندا',en:'Canada',ja:'カナダ',zh:'加拿大',ru:'Канада',desc_ko:'단풍나무의 나라',desc_ar:'كندا بلد شجرة القيقب',desc_en:'Canada is the land of maple trees',desc_ja:'カナダはメープルの国',desc_zh:'加拿大是枫树之国',desc_ru:'Канада — страна клёнов'},
+  '호주':{emoji:'🇦🇺',ko:'호주',ar:'أستراليا',en:'Australia',ja:'オーストラリア',zh:'澳大利亚',ru:'Австралия',desc_ko:'캥거루가 있어요',desc_ar:'في أستراليا كنغر',desc_en:'Australia has kangaroos',desc_ja:'オーストラリアにはカンガルーがいる',desc_zh:'澳大利亚有袋鼠',desc_ru:'В Австралии есть кенгуру'},
+  '러시아':{emoji:'🇷🇺',ko:'러시아',ar:'روسيا',en:'Russia',ja:'ロシア',zh:'俄罗斯',ru:'Россия',desc_ko:'가장 큰 나라예요',desc_ar:'روسيا أكبر دولة في العالم',desc_en:'Russia is the largest country',desc_ja:'ロシアは最大の国',desc_zh:'俄罗斯是最大的国家',desc_ru:'Россия — самая большая страна'},
+  '이탈리아':{emoji:'🇮🇹',ko:'이탈리아',ar:'إيطاليا',en:'Italy',ja:'イタリア',zh:'意大利',ru:'Италия',desc_ko:'피자의 나라예요',desc_ar:'إيطاليا بلد البيتزا',desc_en:'Italy is the land of pizza',desc_ja:'イタリアはピザの国',desc_zh:'意大利是披萨的发源地',desc_ru:'Италия — родина пиццы'},
   // 과일🍓
-  '사과':['사과 (apple)','빨간 사과예요','🍎'],
-  '바나나':['바나나 (banana)','노란 바나나예요','🍌'],
-  '딸기':['딸기 (strawberry)','빨간 딸기예요','🍓'],
-  '포도':['포도 (grape)','달콤한 포도예요','🍇'],
-  '수박':['수박 (watermelon)','시원한 수박이에요','🍉'],
-  '복숭아':['복숭아 (peach)','달콤한 복숭아예요','🍑'],
-  '귤':['귤 (tangerine)','새콤달콤 귤이에요','🍊'],
-  '망고':['망고 (mango)','열대 과일 망고예요','🥭'],
-  '키위':['키위 (kiwi)','초록색 키위예요','🥝'],
-  '레몬':['레몬 (lemon)','새콤한 레몬이에요','🍋'],
-  '파인애플':['파인애플 (pineapple)','달콤한 파인애플이에요','🍍'],
-  '체리':['체리 (cherry)','빨간 체리예요','🍒'],
+  '사과':{emoji:'🍎',ko:'사과',ar:'تفاحة',en:'Apple',ja:'りんご',zh:'苹果',ru:'Яблоко',desc_ko:'빨간 사과예요',desc_ar:'التفاحة حمراء اللون',desc_en:'The apple is red',desc_ja:'りんごは赤い',desc_zh:'苹果是红色的',desc_ru:'Яблоко красное'},
+  '바나나':{emoji:'🍌',ko:'바나나',ar:'موزة',en:'Banana',ja:'バナナ',zh:'香蕉',ru:'Банан',desc_ko:'노란 바나나예요',desc_ar:'الموزة صفراء اللون',desc_en:'The banana is yellow',desc_ja:'バナナは黄色い',desc_zh:'香蕉是黄色的',desc_ru:'Банан жёлтый'},
+  '딸기':{emoji:'🍓',ko:'딸기',ar:'فراولة',en:'Strawberry',ja:'いちご',zh:'草莓',ru:'Клубника',desc_ko:'빨간 딸기예요',desc_ar:'الفراولة حمراء وحلوة',desc_en:'Strawberries are red and sweet',desc_ja:'いちごは赤くて甘い',desc_zh:'草莓又红又甜',desc_ru:'Клубника красная и сладкая'},
+  '포도':{emoji:'🍇',ko:'포도',ar:'عنب',en:'Grape',ja:'ぶどう',zh:'葡萄',ru:'Виноград',desc_ko:'달콤한 포도예요',desc_ar:'العنب حلو المذاق',desc_en:'Grapes are sweet',desc_ja:'ぶどうは甘い',desc_zh:'葡萄味道甜',desc_ru:'Виноград сладкий'},
+  '수박':{emoji:'🍉',ko:'수박',ar:'بطيخ',en:'Watermelon',ja:'スイカ',zh:'西瓜',ru:'Арбуз',desc_ko:'시원한 수박이에요',desc_ar:'البطيخ منعش في الصيف',desc_en:'Watermelon is refreshing in summer',desc_ja:'スイカは夏に涼しい',desc_zh:'西瓜夏天很清凉',desc_ru:'Арбуз освежает летом'},
+  '복숭아':{emoji:'🍑',ko:'복숭아',ar:'خوخ',en:'Peach',ja:'もも',zh:'桃子',ru:'Персик',desc_ko:'달콤한 복숭아예요',desc_ar:'الخوخ حلو ولذيذ',desc_en:'The peach is sweet and delicious',desc_ja:'もも は甘くて美味しい',desc_zh:'桃子又甜又好吃',desc_ru:'Персик сладкий и вкусный'},
+  '귤':{emoji:'🍊',ko:'귤',ar:'يوسفي',en:'Tangerine',ja:'みかん',zh:'橘子',ru:'Мандарин',desc_ko:'새콤달콤 귤이에요',desc_ar:'اليوسفي حامض وحلو',desc_en:'Tangerine is sour and sweet',desc_ja:'みかんは酸っぱくて甘い',desc_zh:'橘子酸甜可口',desc_ru:'Мандарин кисло-сладкий'},
+  '망고':{emoji:'🥭',ko:'망고',ar:'مانجو',en:'Mango',ja:'マンゴー',zh:'芒果',ru:'Манго',desc_ko:'열대 과일 망고예요',desc_ar:'المانغا فاكهة استوائية',desc_en:'Mango is a tropical fruit',desc_ja:'マンゴーは熱帯の果物',desc_zh:'芒果是热带水果',desc_ru:'Манго — тропический фрукт'},
+  '키위':{emoji:'🥝',ko:'키위',ar:'كيوي',en:'Kiwi',ja:'キウイ',zh:'猕猴桃',ru:'Киви',desc_ko:'초록색 키위예요',desc_ar:'الكيوي أخضر اللون',desc_en:'Kiwi is green inside',desc_ja:'キウイは中が緑',desc_zh:'猕猴桃里面是绿色的',desc_ru:'Киви зелёный внутри'},
+  '레몬':{emoji:'🍋',ko:'레몬',ar:'ليمون',en:'Lemon',ja:'レモン',zh:'柠檬',ru:'Лимон',desc_ko:'새콤한 레몬이에요',desc_ar:'الليمون حامض جداً',desc_en:'Lemon is very sour',desc_ja:'レモンはとても酸っぱい',desc_zh:'柠檬非常酸',desc_ru:'Лимон очень кислый'},
+  '파인애플':{emoji:'🍍',ko:'파인애플',ar:'أناناس',en:'Pineapple',ja:'パイナップル',zh:'菠萝',ru:'Ананас',desc_ko:'달콤한 파인애플이에요',desc_ar:'الأناناس حلو ولذيذ',desc_en:'Pineapple is sweet and delicious',desc_ja:'パイナップルは甘くて美味しい',desc_zh:'菠萝甜美可口',desc_ru:'Ананас сладкий и вкусный'},
+  '체리':{emoji:'🍒',ko:'체리',ar:'كرز',en:'Cherry',ja:'さくらんぼ',zh:'樱桃',ru:'Вишня',desc_ko:'빨간 체리예요',desc_ar:'الكرز أحمر صغير',desc_en:'Cherry is small and red',desc_ja:'さくらんぼは小さくて赤い',desc_zh:'樱桃小而红',desc_ru:'Вишня маленькая и красная'},
   // 학교📚
-  '교실':['교실 (classroom)','공부하는 곳이에요','🏫'],
-  '칠판':['칠판 (blackboard)','선생님이 써요','📋'],
-  '연필':['연필 (pencil)','글씨를 써요','✏️'],
-  '공책':['공책 (notebook)','필기를 해요','📓'],
-  '가방':['가방 (bag)','책을 넣어요','🎒'],
-  '도서관':['도서관 (library)','책이 많아요','📚'],
-  '운동장':['운동장 (playground)','뛰어놀아요','🏃'],
-  '시험':['시험 (exam)','열심히 공부해요','📝'],
-  '숙제':['숙제 (homework)','집에서 해요','📖'],
-  '친구':['친구 (friend)','같이 놀아요','👫'],
-  '급식':['급식 (school lunch)','맛있는 점심이에요','🍱'],
+  '교실':{emoji:'🏫',ko:'교실',ar:'فصل دراسي',en:'Classroom',ja:'教室',zh:'教室',ru:'Класс',desc_ko:'공부하는 곳이에요',desc_ar:'الفصل مكان للدراسة',desc_en:'The classroom is for studying',desc_ja:'教室は勉強する場所',desc_zh:'教室是学习的地方',desc_ru:'Класс — место для учёбы'},
+  '칠판':{emoji:'📋',ko:'칠판',ar:'سبورة',en:'Blackboard',ja:'黒板',zh:'黑板',ru:'Доска',desc_ko:'선생님이 써요',desc_ar:'المعلم يكتب على السبورة',desc_en:'The teacher writes on the board',desc_ja:'先生が黒板に書く',desc_zh:'老师在黑板上写字',desc_ru:'Учитель пишет на доске'},
+  '연필':{emoji:'✏️',ko:'연필',ar:'قلم رصاص',en:'Pencil',ja:'鉛筆',zh:'铅笔',ru:'Карандаш',desc_ko:'글씨를 써요',desc_ar:'نكتب بالقلم',desc_en:'We write with a pencil',desc_ja:'鉛筆で書きます',desc_zh:'用铅笔写字',desc_ru:'Пишем карандашом'},
+  '공책':{emoji:'📓',ko:'공책',ar:'كراسة',en:'Notebook',ja:'ノート',zh:'本子',ru:'Тетрадь',desc_ko:'필기를 해요',desc_ar:'نكتب ملاحظات',desc_en:'We take notes in a notebook',desc_ja:'ノートに書きます',desc_zh:'在本子上做笔记',desc_ru:'Делаем записи в тетради'},
+  '가방':{emoji:'🎒',ko:'가방',ar:'حقيبة',en:'Bag',ja:'カバン',zh:'书包',ru:'Сумка',desc_ko:'책을 넣어요',desc_ar:'نضع الكتب في الحقيبة',desc_en:'We put books in the bag',desc_ja:'カバンに本を入れる',desc_zh:'书包里放书',desc_ru:'Кладём книги в сумку'},
+  '도서관':{emoji:'📚',ko:'도서관',ar:'مكتبة',en:'Library',ja:'図書館',zh:'图书馆',ru:'Библиотека',desc_ko:'책이 많아요',desc_ar:'المكتبة فيها كتير كتب',desc_en:'The library has many books',desc_ja:'図書館には本がたくさん',desc_zh:'图书馆有很多书',desc_ru:'В библиотеке много книг'},
+  '운동장':{emoji:'🏃',ko:'운동장',ar:'ملعب',en:'Playground',ja:'運動場',zh:'操场',ru:'Стадион',desc_ko:'뛰어놀아요',desc_ar:'نلعب في الملعب',desc_en:'We play in the playground',desc_ja:'運動場で遊ぶ',desc_zh:'在操场玩耍',desc_ru:'Играем на стадионе'},
+  '시험':{emoji:'📝',ko:'시험',ar:'امتحان',en:'Exam',ja:'試験',zh:'考试',ru:'Экзамен',desc_ko:'열심히 공부해요',desc_ar:'ندرس بجد للامتحان',desc_en:'We study hard for the exam',desc_ja:'試験のために頑張る',desc_zh:'努力备考',desc_ru:'Усердно учимся к экзамену'},
+  '숙제':{emoji:'📖',ko:'숙제',ar:'واجب منزلي',en:'Homework',ja:'宿題',zh:'作业',ru:'Домашнее задание',desc_ko:'집에서 해요',desc_ar:'نعمل الواجب في البيت',desc_en:'We do homework at home',desc_ja:'家で宿題をする',desc_zh:'在家做作业',desc_ru:'Делаем домашнее задание дома'},
+  '친구':{emoji:'👫',ko:'친구',ar:'صديق',en:'Friend',ja:'友達',zh:'朋友',ru:'Друг',desc_ko:'같이 놀아요',desc_ar:'نلعب مع الأصدقاء',desc_en:'We play with friends',desc_ja:'友達と遊ぶ',desc_zh:'和朋友玩耍',desc_ru:'Играем с друзьями'},
+  '급식':{emoji:'🍱',ko:'급식',ar:'غداء المدرسة',en:'School Lunch',ja:'給食',zh:'学校午餐',ru:'Школьный обед',desc_ko:'맛있는 점심이에요',desc_ar:'الغداء المدرسي لذيذ',desc_en:'School lunch is delicious',desc_ja:'給食は美味しい',desc_zh:'学校午餐很好吃',desc_ru:'Школьный обед вкусный'},
   // 날씨🌈
-  '맑음':['맑음 (clear/sunny)','날씨가 맑아요','☀️'],
-  '흐림':['흐림 (cloudy)','날씨가 흐려요','🌥️'],
-  '태풍':['태풍 (typhoon)','바람이 강해요','🌀'],
-  '번개':['번개 (lightning)','번쩍 번개가 쳐요','⚡'],
-  '무지개':['무지개 (rainbow)','색깔이 예뻐요','🌈'],
-  '서리':['서리 (frost)','땅이 하얘요','❄️'],
-  '우박':['우박 (hail)','얼음이 떨어져요','🧊'],
-  '소나기':['소나기 (shower)','갑자기 비가 와요','🌦️'],
-  '폭설':['폭설 (heavy snow)','눈이 많이 와요','❄️'],
-  '강풍':['강풍 (strong wind)','바람이 세요','💨'],
-  '황사':['황사 (yellow dust)','먼지가 날려요','😷'],
+  '맑음':{emoji:'☀️',ko:'맑음',ar:'مشمس',en:'Sunny',ja:'晴れ',zh:'晴天',ru:'Солнечно',desc_ko:'날씨가 맑아요',desc_ar:'الطقس مشمس',desc_en:'The weather is sunny',desc_ja:'天気が晴れています',desc_zh:'天气晴朗',desc_ru:'Погода солнечная'},
+  '흐림':{emoji:'🌥️',ko:'흐림',ar:'غائم',en:'Cloudy',ja:'曇り',zh:'多云',ru:'Облачно',desc_ko:'날씨가 흐려요',desc_ar:'الطقس غائم',desc_en:'The weather is cloudy',desc_ja:'曇っています',desc_zh:'天气多云',desc_ru:'Погода облачная'},
+  '태풍':{emoji:'🌀',ko:'태풍',ar:'إعصار',en:'Typhoon',ja:'台風',zh:'台风',ru:'Тайфун',desc_ko:'바람이 강해요',desc_ar:'الرياح قوية جداً',desc_en:'The wind is very strong',desc_ja:'風がとても強い',desc_zh:'风非常强劲',desc_ru:'Ветер очень сильный'},
+  '번개':{emoji:'⚡',ko:'번개',ar:'برق',en:'Lightning',ja:'雷',zh:'闪电',ru:'Молния',desc_ko:'번쩍 번개가 쳐요',desc_ar:'البرق يضيء السماء',desc_en:'Lightning flashes in the sky',desc_ja:'稲妻が空を走る',desc_zh:'闪电划过天空',desc_ru:'Молния сверкает в небе'},
+  '무지개':{emoji:'🌈',ko:'무지개',ar:'قوس قزح',en:'Rainbow',ja:'虹',zh:'彩虹',ru:'Радуга',desc_ko:'색깔이 예뻐요',desc_ar:'قوس قزح ملوّن جميل',desc_en:'The rainbow is colorful and beautiful',desc_ja:'虹はカラフルで美しい',desc_zh:'彩虹五彩缤纷',desc_ru:'Радуга яркая и красивая'},
+  '서리':{emoji:'❄️',ko:'서리',ar:'صقيع',en:'Frost',ja:'霜',zh:'霜',ru:'Иней',desc_ko:'땅이 하얘요',desc_ar:'الأرض بيضاء من الصقيع',desc_en:'The ground is white with frost',desc_ja:'霜で地面が白い',desc_zh:'地面因霜而发白',desc_ru:'Земля белая от инея'},
+  '우박':{emoji:'🧊',ko:'우박',ar:'بَرَد',en:'Hail',ja:'ひょう',zh:'冰雹',ru:'Град',desc_ko:'얼음이 떨어져요',desc_ar:'تسقط حبات البَرَد',desc_en:'Hailstones are falling',desc_ja:'ひょうが降っています',desc_zh:'冰雹在下',desc_ru:'Падает град'},
+  '소나기':{emoji:'🌦️',ko:'소나기',ar:'زخة مطر',en:'Shower',ja:'にわか雨',zh:'阵雨',ru:'Ливень',desc_ko:'갑자기 비가 와요',desc_ar:'المطر يهطل فجأة',desc_en:'It suddenly starts raining',desc_ja:'突然雨が降ります',desc_zh:'突然下起阵雨',desc_ru:'Вдруг начинается ливень'},
+  '폭설':{emoji:'❄️',ko:'폭설',ar:'عاصفة ثلجية',en:'Heavy Snow',ja:'大雪',zh:'暴雪',ru:'Метель',desc_ko:'눈이 많이 와요',desc_ar:'الثلج يتساقط بغزارة',desc_en:'Heavy snow is falling',desc_ja:'大雪が降っています',desc_zh:'大雪纷飞',desc_ru:'Идёт сильный снег'},
+  '강풍':{emoji:'💨',ko:'강풍',ar:'رياح شديدة',en:'Strong Wind',ja:'強風',zh:'强风',ru:'Сильный ветер',desc_ko:'바람이 세요',desc_ar:'الرياح عاتية جداً',desc_en:'The winds are very strong',desc_ja:'強風が吹いています',desc_zh:'强风呼啸',desc_ru:'Дует сильный ветер'},
+  '황사':{emoji:'😷',ko:'황사',ar:'الغبار الأصفر',en:'Yellow Dust',ja:'黄砂',zh:'沙尘',ru:'Жёлтая пыль',desc_ko:'먼지가 날려요',desc_ar:'الغبار الأصفر يتطاير',desc_en:'Yellow dust is flying',desc_ja:'黄砂が飛んでいます',desc_zh:'沙尘飞扬',desc_ru:'Жёлтая пыль летит'},
   // 가족👨‍👩‍👧
-  '엄마':['엄마 (mom)','사랑하는 엄마예요','👩'],
-  '아빠':['아빠 (dad)','사랑하는 아빠예요','👨'],
-  '형':['형 (older brother)','남자의 형이에요','👦'],
-  '누나':['누나 (older sister)','남자의 누나예요','👧'],
-  '언니':['언니 (older sister)','여자의 언니예요','👩'],
-  '오빠':['오빠 (older brother)','여자의 오빠예요','👦'],
-  '할머니':['할머니 (grandmother)','할머니를 사랑해요','👵'],
-  '삼촌':['삼촌 (uncle)','아빠의 남동생이에요','👨'],
-  '이모':['이모 (aunt)','엄마의 여동생이에요','👩'],
-  '고모':['고모 (aunt)','아빠의 여동생이에요','👩'],
-  '사촌':['사촌 (cousin)','같은 조부모예요','👫'],
-  '조카':['조카 (nephew/niece)','형제의 자녀예요','👶'],
+  '엄마':{emoji:'👩',ko:'엄마',ar:'أمي',en:'Mom',ja:'お母さん',zh:'妈妈',ru:'Мама',desc_ko:'사랑하는 엄마예요',desc_ar:'أحب أمي كثيراً',desc_en:'I love my mom very much',desc_ja:'お母さんが大好き',desc_zh:'我非常爱妈妈',desc_ru:'Я очень люблю маму'},
+  '아빠':{emoji:'👨',ko:'아빠',ar:'أبي',en:'Dad',ja:'お父さん',zh:'爸爸',ru:'Папа',desc_ko:'사랑하는 아빠예요',desc_ar:'أحب أبي كثيراً',desc_en:'I love my dad very much',desc_ja:'お父さんが大好き',desc_zh:'我非常爱爸爸',desc_ru:'Я очень люблю папу'},
+  '형':{emoji:'👦',ko:'형',ar:'الأخ الأكبر',en:'Older Brother',ja:'お兄さん',zh:'哥哥',ru:'Старший брат',desc_ko:'남자의 형이에요',desc_ar:'الأخ الأكبر للولد',desc_en:'Older brother for a boy',desc_ja:'男性の兄',desc_zh:'男生的哥哥',desc_ru:'Старший брат для мальчика'},
+  '누나':{emoji:'👧',ko:'누나',ar:'الأخت الكبرى',en:'Older Sister',ja:'お姉さん',zh:'姐姐',ru:'Старшая сестра',desc_ko:'남자의 누나예요',desc_ar:'الأخت الكبرى للولد',desc_en:'Older sister for a boy',desc_ja:'男性の姉',desc_zh:'男生的姐姐',desc_ru:'Старшая сестра для мальчика'},
+  '언니':{emoji:'👩',ko:'언니',ar:'الأخت الكبرى',en:'Older Sister',ja:'お姉さん',zh:'姐姐',ru:'Старшая сестра',desc_ko:'여자의 언니예요',desc_ar:'الأخت الكبرى للبنت',desc_en:'Older sister for a girl',desc_ja:'女性の姉',desc_zh:'女生的姐姐',desc_ru:'Старшая сестра для девочки'},
+  '오빠':{emoji:'👦',ko:'오빠',ar:'الأخ الأكبر',en:'Older Brother',ja:'お兄さん',zh:'哥哥',ru:'Старший أخ',desc_ko:'여자의 오빠예요',desc_ar:'الأخ الأكبر للبنت',desc_en:'Older brother for a girl',desc_ja:'女性の兄',desc_zh:'女生的哥哥',desc_ru:'Старший брат для девочки'},
+  '할머니':{emoji:'👵',ko:'할머니',ar:'جدة',en:'Grandmother',ja:'おばあさん',zh:'奶奶',ru:'Бабушка',desc_ko:'할머니를 사랑해요',desc_ar:'نحب الجدة',desc_en:'We love grandmother',desc_ja:'おばあちゃんが大好き',desc_zh:'我们爱奶奶',desc_ru:'Мы любим бабушку'},
+  '삼촌':{emoji:'👨',ko:'삼촌',ar:'عم',en:'Uncle',ja:'おじさん',zh:'叔叔',ru:'Дядя',desc_ko:'아빠의 남동생이에요',desc_ar:'عم هو أخ الأب الأصغر',desc_en:"Uncle is dad's younger brother",desc_ja:'叔父は父の弟',desc_zh:'叔叔是爸爸的弟弟',desc_ru:'Дядя — младший брат папы'},
+  '이모':{emoji:'👩',ko:'이모',ar:'خالة',en:'Aunt',ja:'おばさん',zh:'阿姨',ru:'Тётя',desc_ko:'엄마의 여동생이에요',desc_ar:'خالة هي أخت الأم',desc_en:"Aunt is mom's sister",desc_ja:'叔母は母の妹',desc_zh:'阿姨是妈妈的妹妹',desc_ru:'Тётя — сестра мамы'},
+  '고모':{emoji:'👩',ko:'고모',ar:'عمة',en:'Aunt',ja:'おばさん',zh:'姑姑',ru:'Тётя',desc_ko:'아빠의 여동생이에요',desc_ar:'عمة هي أخت الأب',desc_en:"Aunt is dad's sister",desc_ja:'叔母は父の妹',desc_zh:'姑姑是爸爸的妹妹',desc_ru:'Тётя — сестра папы'},
+  '사촌':{emoji:'👫',ko:'사촌',ar:'ابن العم',en:'Cousin',ja:'いとこ',zh:'表兄弟',ru:'Двоюродный брат',desc_ko:'같은 조부모예요',desc_ar:'ابن العم له نفس الجد',desc_en:'Cousins share the same grandparents',desc_ja:'いとこは同じ祖父母',desc_zh:'表兄弟有共同的祖父母',desc_ru:'Двоюродные — общие дедушка и бабушка'},
+  '조카':{emoji:'👶',ko:'조카',ar:'ابن الأخ',en:'Nephew/Niece',ja:'甥・姪',zh:'侄子',ru:'Племянник',desc_ko:'형제의 자녀예요',desc_ar:'ابن الأخ هو طفل أخيك',desc_en:"Nephew is your sibling's child",desc_ja:'甥は兄弟の子供',desc_zh:'侄子是兄弟的孩子',desc_ru:'Племянник — ребёнок брата или сестры'},
 };
 
 let _meaningTimer = null;
+let _currentMeaningWord = '';
+
+// Sentence examples per word (Korean sentence + translation)
+const SENTENCES = {
+  '하늘':{ko:'오늘 하늘이 정말 맑아요.',ar:'السماء صافية جداً اليوم.',en:'The sky is very clear today.'},
+  '바람':{ko:'시원한 바람이 불어요.',ar:'تهب ريح منعشة.',en:'A cool breeze is blowing.'},
+  '구름':{ko:'하얀 구름이 떠 있어요.',ar:'تطفو غيوم بيضاء.',en:'White clouds are floating.'},
+  '사랑':{ko:'당신을 사랑해요.',ar:'أنا أحبك.',en:'I love you.'},
+  '행복':{ko:'지금 정말 행복해요.',ar:'أنا سعيد جداً الآن.',en:'I am very happy now.'},
+  '김치':{ko:'김치는 한국 음식이에요.',ar:'الكيمتشي طعام كوري.',en:'Kimchi is Korean food.'},
+  '고양이':{ko:'고양이가 귀여워요.',ar:'القطة لطيفة.',en:'The cat is cute.'},
+  '강아지':{ko:'강아지가 뛰어놀아요.',ar:'الجرو يلعب.',en:'The puppy is playing.'},
+  '의사':{ko:'의사가 병을 고쳐요.',ar:'الطبيب يعالج المرضى.',en:'The doctor treats patients.'},
+  '축구':{ko:'축구를 좋아해요.',ar:'أحب كرة القدم.',en:'I like football.'},
+  '한국':{ko:'한국은 아름다운 나라예요.',ar:'كوريا بلد جميل.',en:'Korea is a beautiful country.'},
+  '사과':{ko:'사과가 빨개요.',ar:'التفاحة حمراء.',en:'The apple is red.'},
+  '엄마':{ko:'엄마를 사랑해요.',ar:'أحب أمي.',en:'I love my mom.'},
+  '바다':{ko:'바다가 넓고 깊어요.',ar:'البحر واسع وعميق.',en:'The sea is wide and deep.'},
+};
+
+function getSentence(word){
+  const s = SENTENCES[word];
+  if(!s) return null;
+  return { ko: s.ko, trans: s[currentLang] || null };
+}
+
+function rePronounce(){
+  if(_currentMeaningWord) playTTS(_currentMeaningWord);
+}
+
+// Close meaning card with animation — only called by user tap or explicit code
+function hideMeaningCard(){
+  stopRace1();
+  const card = document.getElementById('meaningCard');
+  card.classList.remove('show');
+  card.classList.add('hide');
+  setTimeout(()=> card.classList.remove('hide'), 400);
+}
+
+// Simple TTS play — returns nothing, no auto-close tied to it
+function playTTS(text){
+  try{
+    if(_ttsAudio){ _ttsAudio.pause(); _ttsAudio.currentTime = 0; }
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=ko&client=tw-ob&q=${encodeURIComponent(text)}`;
+    let audio;
+    if(_ttsCache[text]){
+      audio = _ttsCache[text];
+      audio.currentTime = 0;
+    } else {
+      audio = new Audio(url);
+      _ttsCache[text] = audio;
+    }
+    _ttsAudio = audio;
+
+    // Animate bar with real duration once metadata loads
+    const startBar = ()=>{
+      if(audio.duration && isFinite(audio.duration)){
+        const mBar = document.getElementById('mBar');
+        if(mBar){
+          mBar.style.transition = 'none';
+          mBar.style.width = '100%';
+          void mBar.offsetWidth;
+          requestAnimationFrame(()=>{
+            mBar.style.transition = `width ${audio.duration}s linear`;
+            mBar.style.width = '0%';
+          });
+        }
+      }
+    };
+    audio.addEventListener('loadedmetadata', startBar, {once:true});
+    if(audio.duration && isFinite(audio.duration)) startBar();
+
+    audio.play().catch(()=> fallbackTTS(text));
+  } catch(e){ fallbackTTS(text); }
+}
+
+// After sound finishes: if 1-2 stars → replay once. Popup stays open either way.
+function playTTSWithStarLogic(text){
+  try{
+    if(_ttsAudio){ _ttsAudio.pause(); _ttsAudio.currentTime = 0; }
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=ko&client=tw-ob&q=${encodeURIComponent(text)}`;
+    let audio;
+    if(_ttsCache[text]){
+      audio = _ttsCache[text];
+      audio.currentTime = 0;
+    } else {
+      audio = new Audio(url);
+      _ttsCache[text] = audio;
+    }
+    _ttsAudio = audio;
+
+    const startBar = ()=>{
+      if(audio.duration && isFinite(audio.duration)){
+        const mBar = document.getElementById('mBar');
+        if(mBar){
+          mBar.style.transition = 'none';
+          mBar.style.width = '100%';
+          void mBar.offsetWidth;
+          requestAnimationFrame(()=>{
+            mBar.style.transition = `width ${audio.duration}s linear`;
+            mBar.style.width = '0%';
+          });
+        }
+      }
+    };
+    audio.addEventListener('loadedmetadata', startBar, {once:true});
+    if(audio.duration && isFinite(audio.duration)) startBar();
+
+    audio.addEventListener('ended', ()=>{
+      const stars = _lastStarCount !== undefined ? _lastStarCount : 3;
+      if(stars < 3){
+        // 1-2 stars → replay once (popup stays open)
+        setTimeout(()=> playTTS(text), 500);
+      }
+      // popup stays open — user must tap to close
+    }, {once:true});
+
+    audio.play().catch(()=> fallbackTTS(text));
+  } catch(e){ fallbackTTS(text); }
+}
+
+// Keep existing speakWordWithCallback for vocab detail panel
+function speakWordWithCallback(text, isRepeat, callback){
+  playTTS(text);
+  if(callback) {
+    // For vocab panel — just call callback after estimated time
+    const est = text.length <= 2 ? 1200 : text.length <= 4 ? 1800 : 2400;
+    setTimeout(callback, est);
+  }
+}
+
+let _lastStarCount = 3;
 
 function showMeaning(word){
-  const data = MEANINGS[word];
-  if(!data) return;
-  const [title, desc, emoji] = data;
+  const m = getMeaning(word);
+  if(!m) return;
+  _currentMeaningWord = word;
 
-  const card = document.getElementById('meaningCard');
-  const mImg  = document.getElementById('mImg');
-  const mWord = document.getElementById('mWord');
-  const mRead = document.getElementById('mRead');
-  const mDef  = document.getElementById('mDef');
-  const mBar  = document.getElementById('mBar');
+  const card       = document.getElementById('meaningCard');
+  const mImg       = document.getElementById('mImg');
+  const mWord      = document.getElementById('mWord');
+  const mTransMain = document.getElementById('mTransMain');
+  const mRead      = document.getElementById('mRead');
+  const mDef       = document.getElementById('mDef');
+  const mSent      = document.getElementById('mSentence');
+  const mBar       = document.getElementById('mBar');
+  const mPronBtn   = document.getElementById('mPronounce');
+  const mProCh     = document.getElementById('pronuncChallenge');
 
   // Reset
   card.classList.remove('show','hide');
-  clearTimeout(_meaningTimer);
 
-  mImg.textContent  = emoji;
-  mWord.textContent = word;
-  // Split title into word + reading
-  const parts = title.split(' ');
-  mRead.textContent = parts.slice(1).join(' ');
-  mDef.textContent  = desc;
+  mImg.textContent  = m.emoji;
+  mWord.textContent = m.word;
 
-  // Animate bar
+  // Translation in the user's language (big + colored)
+  if(currentLang !== 'ko'){
+    mTransMain.textContent = m.trans;
+    mTransMain.style.display = 'block';
+    mRead.textContent = '(' + m.desc_ko + ')';
+  } else {
+    mTransMain.textContent = '';
+    mTransMain.style.display = 'none';
+    mRead.textContent = '';
+  }
+  // mDef: show localized description or fall back to Korean
+  if(currentLang !== 'ko'){
+    const d = MEANINGS[word];
+    mDef.textContent = d && d['desc_'+currentLang] ? d['desc_'+currentLang] : m.desc_ko;
+  } else {
+    mDef.textContent = m.desc;
+  }
+
+  // Pronunciation button label
+  const pronLabels = {ko:'🔊 다시 듣기',ar:'🔊 استمع مرة أخرى',en:'🔊 Listen again',ja:'🔊 もう一度聴く',zh:'🔊 再听一遍',ru:'🔊 Слушать снова'};
+  mPronBtn.textContent = pronLabels[currentLang] || pronLabels.ko;
+
+  // Sentence example
+  const sent = getSentence(word);
+  if(sent){
+    document.getElementById('mSentKo').textContent    = '💬 ' + sent.ko;
+    document.getElementById('mSentTrans').textContent = sent.trans ? `(${sent.trans})` : '';
+    mSent.style.display = 'block';
+  } else {
+    mSent.style.display = 'none';
+  }
+
+  // Pronunciation challenge
+  const hasSpeech = 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
+  if(hasSpeech && CFG.sylTap){
+    mProCh.classList.add('show');
+    document.getElementById('pronuncFeedback').textContent = '';
+    document.getElementById('btnMic').classList.remove('listening');
+    document.getElementById('btnMic').textContent = T('micStart');
+  } else {
+    mProCh.classList.remove('show');
+  }
+
+  // RTL for Arabic
+  card.style.direction = currentLang === 'ar' ? 'rtl' : 'ltr';
+
+  // Reset bar
   mBar.style.transition = 'none';
   mBar.style.width = '100%';
-  void mBar.offsetWidth; // force reflow
 
-  // Show card
-  void card.offsetWidth; // force reflow
+  // Make card tappable to close manually
+  card.style.pointerEvents = 'all';
+  card.style.cursor = 'pointer';
+  card.onclick = ()=> hideMeaningCard();
+
+  // Show card — stays open until user taps or sound logic closes it
+  void card.offsetWidth;
   card.classList.add('show');
 
-  // Start bar countdown
-  setTimeout(()=>{
-    mBar.style.transition = 'width 5s linear';
-    mBar.style.width = '0%';
-  }, 50);
+  // Start race1 timer if active
+  startRace1();
 
-  // Hide after 8s
-  _meaningTimer = setTimeout(()=>{
-    card.classList.remove('show');
-    card.classList.add('hide');
-    setTimeout(()=> card.classList.remove('hide'), 400);
-  }, 5000);
+  // Play TTS — star logic decides if it replays (popup stays open regardless)
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      playTTSWithStarLogic(word);
+    });
+  });
 }
 // ═══════════════════════════════════════════════
 //  LEVEL SELECT SCREEN
@@ -1762,7 +3054,6 @@ function hideLvlSelect(){
 }
 
 function buildLvlSelectGrid(){
-  // Update stats
   document.getElementById('ls-done').textContent   = completedSet.size;
   document.getElementById('ls-unlock').textContent = totalUnlocked + 1;
   document.getElementById('ls-cur').textContent    = curLv + 1;
@@ -1770,24 +3061,27 @@ function buildLvlSelectGrid(){
   const grid = document.getElementById('ls-grid');
   grid.innerHTML = '';
 
-  const shown = totalUnlocked + 1; // show all unlocked + next locked
+  const shown = totalUnlocked + 1;
   for(let i = 0; i < shown + 2; i++){
     const lv     = getLv(i);
     const done   = completedSet.has(i);
     const locked = i > totalUnlocked;
     const active = i === curLv;
+    const stars  = _levelStars[i] || 0;
 
     const card = document.createElement('div');
     card.className = 'ls-card' + (done?' done':'') + (active?' active-lv':'') + (locked?' locked':'');
 
-    // Badge
     const badge = done ? '✅' : active ? '▶' : locked ? '🔒' : '';
+    const starsHtml = done
+      ? `<div class="ls-card-stars">${'⭐'.repeat(stars)}${'☆'.repeat(3-stars)}</div>`
+      : `<div class="ls-card-prog">${active?'진행중':'&nbsp;'}</div>`;
 
     card.innerHTML = `
       <div class="ls-card-badge">${badge}</div>
       <div class="ls-card-num">${i+1}</div>
       <div class="ls-card-theme">${lv.name.replace(/레벨 \d+ · /,'')}</div>
-      ${done ? '<div class="ls-card-prog">완료!</div>' : active ? '<div class="ls-card-prog">진행중</div>' : '<div class="ls-card-prog">&nbsp;</div>'}
+      ${starsHtml}
     `;
 
     if(!locked){
@@ -1810,7 +3104,12 @@ function saveProgress(){
     const data = {
       curLv,
       totalUnlocked,
-      completed: [...completedSet]
+      completed: [...completedSet],
+      stars: _levelStars,
+      bestTime: _bestTime,
+      totalWriteCorrect: _totalWriteCorrect,
+      totalWriteAttempts: _totalWriteAttempts,
+      perfectLevels: _perfectLevels,
     };
     localStorage.setItem(SAVE_KEY, JSON.stringify(data));
   } catch(e){}
@@ -1828,19 +3127,15 @@ function loadProgress(){
 //  BOOT
 // ═══════════════════════════════════════════════
 function init(){
-  loadSettings(); // ⚙️ load settings first
-  // Init Firebase after SDKs load
+  loadSettings();
   setTimeout(initFirebase, 800);
 
-  // Check if already logged in
   const alreadyLoggedIn = loadUser();
   if(alreadyLoggedIn){
     document.getElementById('loginScreen').style.display='none';
   }
 
-  // Splash screen — show for 2s then show level select
   const splash = document.getElementById('splash');
-  // Hide level select initially
   document.getElementById('lvlSelect').classList.add('hide');
   setTimeout(()=>{
     splash.classList.add('hide');
@@ -1858,6 +3153,11 @@ function init(){
   if(saved){
     totalUnlocked = saved.totalUnlocked || 1;
     completedSet  = new Set(saved.completed || []);
+    if(saved.stars)             _levelStars          = saved.stars;
+    if(saved.bestTime)          _bestTime            = saved.bestTime;
+    if(saved.totalWriteCorrect) _totalWriteCorrect   = saved.totalWriteCorrect;
+    if(saved.totalWriteAttempts)_totalWriteAttempts  = saved.totalWriteAttempts;
+    if(saved.perfectLevels)     _perfectLevels       = saved.perfectLevels;
     const startLv = saved.curLv || 0;
     for(let i=0;i<Math.min(startLv+4, startLv+4);i++) getLv(i);
     buildStrip();
@@ -1898,16 +3198,33 @@ function fadeTransition(callback){
 function loadLevel(i){
   hideLvlSelect();
   curLv=i; foundWords=[]; selCells=[]; isSel=false; selDir=null;
+  _levelStartTime = Date.now();
+  _errorCount = 0;
+  _hintCount  = 0;
+  loadVocab();
   const lv=getLv(i);
-  document.getElementById('lname').textContent=lv.name;
+  // Update topbar
+  const nameParts = lv.name.split(' · ');
+  const lvNum = nameParts[0] || lv.name;
+  const themePart = nameParts[1] || '';
+  // Extract just the theme emoji+name for pill
+  const themeEmojis = {'자연🌿':'🌿','감정💛':'💛','음식🍜':'🍜','동물🐯':'🐯','색깔🎨':'🎨','직업💼':'💼','스포츠⚽':'⚽','나라🌍':'🌍','과일🍓':'🍓','학교📚':'📚','날씨🌈':'🌈','가족👨‍👩‍👧':'👨‍👩‍👧'};
+  const pillEmoji = themeEmojis[themePart] || '⭐';
+  // Pick a random word from the level as the pill label
+  const pillWord = lv.words.length > 0 ? lv.words[Math.floor(Math.random()*lv.words.length)].text : lvNum;
+  document.getElementById('lname').textContent = lvNum;
+  const ltheme = document.getElementById('ltheme'); if(ltheme) ltheme.textContent = themePart;
+  const pillIcon = document.getElementById('pillIcon'); if(pillIcon) pillIcon.textContent = pillEmoji;
+  const pillName = document.getElementById('pillName'); if(pillName) pillName.textContent = pillWord;
   document.getElementById('fc').textContent='0';
   document.getElementById('tc').textContent=lv.words.length;
   document.getElementById('winOv').classList.remove('show');
   buildStrip();
   renderGrid(lv);
   renderChips(lv);
-  saveProgress(); // 💾 حفظ تلقائي
+  saveProgress();
   startHintTimer();
+  initCountdown();
 }
 
 // ═══════════════════════════════════════════════
@@ -2050,6 +3367,7 @@ function checkWord(){
   const gw=document.getElementById('gwrap');
   gw.classList.remove('sk'); void gw.offsetWidth; gw.classList.add('sk');
   setTimeout(()=>gw.classList.remove('sk'),300);
+  _errorCount++;
   if(CFG.vibrate && navigator.vibrate) navigator.vibrate([30,20,30]);
 }
 
@@ -2065,7 +3383,9 @@ function markFound(w){
   document.getElementById('fc').textContent=foundWords.length;
 
   soundFound(w.text); // 🔊 chime + speak
+  stopRace1();        // ✅ cancel race1 — they found it!
   showMeaning(w.text); // 📖 show meaning
+  addToVocab(w.text);  // 📚 save to vocab book
   if(CFG.vibrate && navigator.vibrate) navigator.vibrate(60);
   const lv=getLv(curLv);
   if(foundWords.length===lv.words.length){
@@ -2073,20 +3393,297 @@ function markFound(w){
     totalUnlocked=Math.max(totalUnlocked,curLv+1);
     getLv(totalUnlocked);
     buildStrip();
-    saveProgress(); // 💾 حفظ بعد إتمام المستوى
-    setTimeout(showWin,500);
+    saveProgress();
+    // After last word meaning popup, launch writing mode → then win
+    setTimeout(()=>{
+      hideMeaningCard();
+      setTimeout(()=> startWriteMode(lv.words), 400);
+    }, 1800);
   }
 }
+
+// ═══════════════════════════════════════════════
+//  WIN TRANSLATIONS
+// ═══════════════════════════════════════════════
+const WIN_TEXT = {
+  ko: { complete: '완료!', sub: '모든 단어를 찾았어요!', next: '다음 레벨 →', time:'시간', errors:'오류', hints:'힌트' },
+  ar: { complete: 'أحسنت!', sub: 'وجدت جميع الكلمات!', next: 'المستوى التالي ←', time:'وقت', errors:'أخطاء', hints:'هنت' },
+  en: { complete: 'Complete!', sub: 'You found all the words!', next: 'Next Level →', time:'Time', errors:'Errors', hints:'Hints' },
+  ja: { complete: 'クリア！', sub: 'すべての単語を見つけました！', next: '次のレベル →', time:'時間', errors:'ミス', hints:'ヒント' },
+  zh: { complete: '完成！', sub: '找到了所有单词！', next: '下一关 →', time:'时间', errors:'错误', hints:'提示' },
+  ru: { complete: 'Готово!', sub: 'Все слова найдены!', next: 'Следующий уровень →', time:'Время', errors:'Ошибки', hints:'Подсказки' },
+};
+
+// ── GAME STATS TRACKING ──
+let _levelStartTime = 0;
+let _errorCount = 0;
+let _hintCount  = 0;
 
 // ═══════════════════════════════════════════════
 //  WIN
 // ═══════════════════════════════════════════════
 function showWin(){
-  const lv=getLv(curLv);
-  document.getElementById('wico').textContent='🎉';
-  document.getElementById('wttl').textContent=`${lv.name} 완료!`;
-  document.getElementById('wsub').textContent='모든 단어를 찾았어요!';
+  const lv = getLv(curLv);
+  const wt = WIN_TEXT[currentLang] || WIN_TEXT.ko;
+
+  const elapsed = Math.round((Date.now() - _levelStartTime) / 1000);
+  const timeStr  = elapsed >= 60 ? `${Math.floor(elapsed/60)}m${elapsed%60}s` : `${elapsed}s`;
+
+  const totalWords = lv.words.length;
+  const starCount = (_errorCount === 0 && _hintCount === 0) ? 3
+                  : (_errorCount <= totalWords && _hintCount <= 1) ? 2 : 1;
+  _lastStarCount = starCount;
+
+  // Save stars for this level (only upgrade, never downgrade)
+  if(!_levelStars[curLv] || starCount > _levelStars[curLv]){
+    _levelStars[curLv] = starCount;
+  }
+  // Track perfect levels
+  if(starCount === 3) _perfectLevels = Math.max(_perfectLevels, [...Object.values(_levelStars)].filter(s=>s===3).length);
+  // Track best time
+  if(!_bestTime || elapsed < _bestTime) _bestTime = elapsed;
+
+  // Update streak
+  updateStreak();
+  saveProgress();
+
+  // Stop countdown
+  stopCountdown();
+
+  document.getElementById('wico').textContent = '🎉';
+  document.getElementById('wttl').textContent = `${lv.name} ${wt.complete}`;
+  document.getElementById('wsub').textContent = wt.sub;
+  document.getElementById('winStatTime').textContent  = timeStr;
+  document.getElementById('winStatErrors').textContent = _errorCount;
+  document.getElementById('winStatHints').textContent  = _hintCount;
+  document.getElementById('winStatTimeLbl').textContent  = wt.time;
+  document.getElementById('winStatErrLbl').textContent   = wt.errors;
+  document.getElementById('winStatHintLbl').textContent  = wt.hints;
+
+  ['star0','star1','star2'].forEach((id,i)=>{
+    const el = document.getElementById(id);
+    el.classList.remove('lit');
+    if(i < starCount) setTimeout(()=> el.classList.add('lit'), 300 + i*180);
+  });
+
+  const btnNext = document.getElementById('btnWinNext');
+  if(btnNext) btnNext.textContent = wt.next;
+
+  const btnReview = document.getElementById('btnReview');
+  if(btnReview) btnReview.style.display = (curLv > 0 && (curLv+1) % 5 === 0) ? 'block' : 'none';
+
+  const winBox = document.querySelector('.win-box');
+  if(winBox) winBox.style.direction = currentLang === 'ar' ? 'rtl' : 'ltr';
+
   document.getElementById('winOv').classList.add('show');
+}
+
+// ═══════════════════════════════════════════════
+//  FEATURE 1: SENTENCE EXAMPLES — already in showMeaning above
+
+// ═══════════════════════════════════════════════
+//  FEATURE 2: PRONUNCIATION CHALLENGE (Speech Recognition)
+// ═══════════════════════════════════════════════
+let _speechRec = null;
+
+function startPronunciation(){
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SpeechRecognition) return;
+
+  const btnMic   = document.getElementById('btnMic');
+  const feedback = document.getElementById('pronuncFeedback');
+
+  if(_speechRec){ _speechRec.stop(); _speechRec = null; btnMic.classList.remove('listening'); return; }
+
+  _speechRec = new SpeechRecognition();
+  _speechRec.lang = 'ko-KR';
+  _speechRec.interimResults = false;
+  _speechRec.maxAlternatives = 3;
+
+  btnMic.classList.add('listening');
+  btnMic.textContent = T('vdMicOn');
+  feedback.textContent = '';
+
+  _speechRec.onresult = (e) => {
+    const results = [...e.results[0]].map(r => r.transcript.trim());
+    const correct = results.some(r => r === _currentMeaningWord || r.includes(_currentMeaningWord));
+    if(correct){
+      feedback.textContent = T('micCorrect');
+      feedback.style.color = '#7ab8b9';
+    } else {
+      feedback.textContent = T('micWrong', results[0]);
+      feedback.style.color = '#d46a7a';
+    }
+    btnMic.classList.remove('listening');
+    btnMic.textContent = T('micStart');
+    _speechRec = null;
+  };
+
+  _speechRec.onerror = () => {
+    feedback.textContent = T('micNoHear');
+    feedback.style.color = '#e8b87a';
+    btnMic.classList.remove('listening');
+    btnMic.textContent = T('micStart');
+    _speechRec = null;
+  };
+
+  _speechRec.onend = () => {
+    btnMic.classList.remove('listening');
+    if(!feedback.textContent) btnMic.textContent = T('micStart');
+    _speechRec = null;
+  };
+
+  _speechRec.start();
+}
+
+// ═══════════════════════════════════════════════
+//  FEATURE 3: STAR RATING — in showWin above
+
+// ═══════════════════════════════════════════════
+//  FEATURE 4: REVIEW QUIZ
+// ═══════════════════════════════════════════════
+let _reviewWords = [];
+let _reviewIdx   = 0;
+let _reviewScore = 0;
+
+function startReview(){
+  document.getElementById('winOv').classList.remove('show');
+  // Collect all found words from recent levels
+  const allFound = [];
+  levels.forEach(lv => { if(lv && lv.words) lv.words.forEach(w => { if(MEANINGS[w.text]) allFound.push(w.text); }); });
+  const unique = [...new Set(allFound)];
+  _reviewWords = unique.sort(()=>Math.random()-.5).slice(0, Math.min(5, unique.length));
+  _reviewIdx   = 0;
+  _reviewScore = 0;
+  document.getElementById('reviewOv').classList.add('show');
+  showReviewQ();
+}
+
+function showReviewQ(){
+  if(_reviewIdx >= _reviewWords.length){ endReview(); return; }
+  const word  = _reviewWords[_reviewIdx];
+  const m     = MEANINGS[word];
+  document.getElementById('reviewProgress').textContent = `${_reviewIdx+1} / ${_reviewWords.length}`;
+  document.getElementById('reviewEmoji').textContent  = m.emoji;
+  document.getElementById('reviewWord').textContent   = word;
+  document.getElementById('reviewResult').textContent = '';
+  document.getElementById('btnReviewNext').style.display = 'none';
+
+  // Build 4 choices: 1 correct + 3 random
+  const correct = m[currentLang] || m.ko;
+  const allWords = Object.keys(MEANINGS).filter(w => w !== word);
+  const wrongs   = allWords.sort(()=>Math.random()-.5).slice(0,3)
+                            .map(w => MEANINGS[w][currentLang] || MEANINGS[w].ko);
+  const choices  = [correct, ...wrongs].sort(()=>Math.random()-.5);
+
+  const container = document.getElementById('reviewChoices');
+  container.innerHTML = '';
+  choices.forEach(ch => {
+    const btn = document.createElement('button');
+    btn.className = 'review-choice';
+    btn.textContent = ch;
+    btn.onclick = () => answerReview(btn, ch, correct, container);
+    container.appendChild(btn);
+  });
+}
+
+function answerReview(btn, chosen, correct, container){
+  // Disable all
+  container.querySelectorAll('.review-choice').forEach(b => { b.disabled=true; });
+  const result = document.getElementById('reviewResult');
+  if(chosen === correct){
+    btn.classList.add('correct');
+    result.textContent = '✅ صحيح! 🎉';
+    result.style.color = '#7ab8b9';
+    _reviewScore++;
+    if(CFG.chime) playChime();
+  } else {
+    btn.classList.add('wrong');
+    container.querySelectorAll('.review-choice').forEach(b => { if(b.textContent===correct) b.classList.add('correct'); });
+    result.textContent = T('reviewWrong', correct);
+    result.style.color = '#d46a7a';
+  }
+  document.getElementById('btnReviewNext').style.display = 'block';
+}
+
+function nextReviewQ(){
+  _reviewIdx++;
+  if(_reviewIdx >= _reviewWords.length) endReview();
+  else showReviewQ();
+}
+
+function endReview(){
+  document.getElementById('reviewOv').classList.remove('show');
+  const pct = Math.round((_reviewScore / _reviewWords.length)*100);
+  setTimeout(()=> alert(T('reviewResult', _reviewScore, _reviewWords.length, pct)),100);
+}
+
+function closeReview(){
+  document.getElementById('reviewOv').classList.remove('show');
+}
+
+// ═══════════════════════════════════════════════
+//  FEATURE 5: VOCABULARY BOOK
+// ═══════════════════════════════════════════════
+const VOCAB_KEY = 'naltmal_vocab';
+let _vocabBook  = {};
+
+function loadVocab(){
+  try{ const r=localStorage.getItem(VOCAB_KEY); if(r) _vocabBook=JSON.parse(r); }catch(e){}
+}
+
+function saveVocab(){
+  try{ localStorage.setItem(VOCAB_KEY, JSON.stringify(_vocabBook)); }catch(e){}
+}
+
+function addToVocab(word){
+  if(_vocabBook[word]) return; // already saved
+  const m = MEANINGS[word];
+  if(!m) return;
+  _vocabBook[word] = {
+    emoji: m.emoji,
+    ko: m.ko,
+    ar: m.ar, en: m.en, ja: m.ja, zh: m.zh, ru: m.ru,
+    date: new Date().toLocaleDateString()
+  };
+  saveVocab();
+}
+
+function openVocab(){
+  loadVocab();
+  const grid  = document.getElementById('vocabGrid');
+  const empty = document.getElementById('vocabEmpty');
+  const count = document.getElementById('vocabCount');
+  grid.innerHTML = '';
+  const words = Object.keys(_vocabBook);
+  const wordUnit = {ko:'단어',ar:'كلمة',en:'words',ja:'単語',zh:'个词',ru:'слов'};
+  count.textContent = words.length + ' ' + (wordUnit[currentLang]||'');
+  if(words.length === 0){
+    empty.style.display='block'; grid.style.display='none';
+  } else {
+    empty.style.display='none'; grid.style.display='grid';
+    words.reverse().forEach(word => {
+      const v = _vocabBook[word];
+      const div = document.createElement('div');
+      div.className = 'vocab-item';
+      div.innerHTML = `
+        <div class="vocab-item-emoji">${v.emoji}</div>
+        <div class="vocab-item-word">${word}</div>
+        <div class="vocab-item-trans">${v[currentLang]||v.ko}</div>
+        <div style="display:flex;gap:6px;justify-content:center;margin-top:6px;">
+          <span style="font-size:.65rem;background:#1e1e38;border-radius:8px;padding:2px 7px;color:#7ab8b9;">🔊 نطق</span>
+          <span style="font-size:.65rem;background:#1e1e38;border-radius:8px;padding:2px 7px;color:#e8a06a;">🎤 تدريب</span>
+        </div>
+        <div class="vocab-item-date">${v.date}</div>`;
+      div.onclick = ()=>{ openVocabDetail(word); };
+      grid.appendChild(div);
+    });
+  }
+  document.getElementById('vocabOv').classList.add('show');
+}
+
+function closeVocab(){
+  document.getElementById('vocabOv').classList.remove('show');
 }
 function nextLv(){
   document.getElementById('winOv').classList.remove('show');
@@ -2100,9 +3697,13 @@ function hint(){
   const lv=getLv(curLv);
   const rem=lv.words.filter(w=>!foundWords.includes(w.text));
   if(!rem.length) return;
-  const [r,c]=rem[0].cells[0];
+  _hintCount++;
+  const target=rem[0];
+  const [r,c]=target.cells[0];
   const el=document.querySelector(`#grid .cell[data-r="${r}"][data-c="${c}"]`);
   if(el){ el.classList.remove('hfx'); void el.offsetWidth; el.classList.add('hfx'); setTimeout(()=>el.classList.remove('hfx'),1800); }
+  // 🔊 Speak first syllable as audio clue
+  if(target.text) playTTS(target.text[0]);
 }
 
 // ═══════════════════════════════════════════════
@@ -2195,7 +3796,617 @@ function hint(){
   init();
 })();
 
+// init() called after all scripts below load
+</script>
+
+<!-- VOCABULARY DETAIL PANEL -->
+<div id="vocabDetail" onclick="closeVocabDetail(event)">
+  <div class="vocab-detail-sheet">
+    <div class="vd-handle"></div>
+    <div class="vd-emoji" id="vdEmoji">⭐</div>
+    <div class="vd-word"  id="vdWord"></div>
+    <div class="vd-trans" id="vdTrans"></div>
+    <div class="vd-desc"  id="vdDesc"></div>
+    <div class="vd-bar"><div class="vd-bar-fill" id="vdBar"></div></div>
+    <div class="vd-actions">
+      <button class="btn-vd btn-vd-listen" id="vdListenBtn" onclick="vdListen()">🔊 استمع</button>
+      <button class="btn-vd btn-vd-mic" id="vdMicBtn" onclick="vdStartMic()">🎤 دربني</button>
+    </div>
+    <div class="vd-mic-feedback" id="vdFeedback"></div>
+    <button class="btn-vd btn-vd-close" id="vdCloseBtn" onclick="closeVocabDetail()">✕ إغلاق</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  VOCAB DETAIL PANEL — listen + mic practice
+// ═══════════════════════════════════════════════
+let _vdWord = '';
+let _vdSpeechRec = null;
+
+function openVocabDetail(word){
+  const v = _vocabBook[word];
+  if(!v) return;
+  _vdWord = word;
+
+  document.getElementById('vdEmoji').textContent = v.emoji;
+  document.getElementById('vdWord').textContent  = word;
+  document.getElementById('vdTrans').textContent = v[currentLang] || v.ko;
+  document.getElementById('vdDesc').textContent  = MEANINGS[word]?.desc_ko || '';
+  document.getElementById('vdFeedback').textContent = '';
+  document.getElementById('vdBar').style.width = '0';
+
+  const micBtn = document.getElementById('vdMicBtn');
+  micBtn.classList.remove('listening');
+  micBtn.textContent = '🎤 دربني';
+
+  // RTL
+  document.querySelector('.vocab-detail-sheet').style.direction = currentLang==='ar'?'rtl':'ltr';
+
+  document.getElementById('vocabDetail').classList.add('show');
+}
+
+function closeVocabDetail(e){
+  if(e && e.target.id !== 'vocabDetail') return;
+  _stopVdMic();
+  document.getElementById('vocabDetail').classList.remove('show');
+}
+
+function vdListen(){
+  if(!_vdWord) return;
+  const bar = document.getElementById('vdBar');
+  bar.style.transition = 'none';
+  bar.style.width = '100%';
+  void bar.offsetWidth;
+
+  const dur = _vdWord.length <= 2 ? 1200 : _vdWord.length <= 3 ? 1600 : 2000;
+  setTimeout(()=>{
+    bar.style.transition = `width ${dur/1000}s linear`;
+    bar.style.width = '0%';
+  }, 50);
+
+  speakWordWithCallback(_vdWord, true, ()=>{});
+}
+
+function vdStartMic(){
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const micBtn   = document.getElementById('vdMicBtn');
+  const feedback = document.getElementById('vdFeedback');
+
+  if(!SpeechRecognition){
+    feedback.textContent = '⚠️ المتصفح لا يدعم التعرف على الصوت';
+    feedback.style.color = '#e8b87a';
+    return;
+  }
+
+  // Toggle off if already listening
+  if(_vdSpeechRec){ _stopVdMic(); return; }
+
+  _vdSpeechRec = new SpeechRecognition();
+  _vdSpeechRec.lang = 'ko-KR';
+  _vdSpeechRec.interimResults = false;
+  _vdSpeechRec.maxAlternatives = 4;
+
+  micBtn.classList.add('listening');
+  micBtn.textContent = T('vdMicOn');
+  feedback.textContent = '';
+  feedback.style.color = '#c8c8e8';
+
+  _vdSpeechRec.onresult = (e)=>{
+    const heard = [...e.results[0]].map(r => r.transcript.trim());
+    const correct = heard.some(h => h === _vdWord || h.includes(_vdWord));
+    if(correct){
+      feedback.textContent = T('vdCorrect');
+      feedback.style.color = '#7ab8b9';
+      if(CFG.chime) playChime();
+    } else {
+      feedback.textContent = T('vdWrong', heard[0]);
+      feedback.style.color = '#d46a7a';
+    }
+    micBtn.classList.remove('listening');
+    micBtn.textContent = T('vdMic');
+    _vdSpeechRec = null;
+  };
+
+  _vdSpeechRec.onerror = ()=>{
+    feedback.textContent = T('micNoHear');
+    feedback.style.color = '#e8b87a';
+    _stopVdMic();
+  };
+
+  _vdSpeechRec.onend = ()=>{ _stopVdMic(); };
+
+  _vdSpeechRec.start();
+}
+
+function _stopVdMic(){
+  if(_vdSpeechRec){ try{ _vdSpeechRec.stop(); }catch(e){} _vdSpeechRec = null; }
+  const micBtn = document.getElementById('vdMicBtn');
+  if(micBtn){ micBtn.classList.remove('listening'); micBtn.textContent = T('vdMic'); }
+}
+</script>
+
+<!-- WRITING MODE OVERLAY -->
+<div id="writeOv">
+  <div class="write-box">
+    <div class="write-progress" id="wrtProgress">1 / 5</div>
+    <div id="race2Bar" style="display:none;width:100%;height:5px;background:#2a2a48;border-radius:3px;margin-bottom:4px;overflow:hidden;"><div id="race2Fill" style="height:100%;width:100%;background:linear-gradient(90deg,#7ab8b9,#e8b87a);border-radius:3px;transition:width 1s linear;"></div></div>
+    <div id="race2Num" style="display:none;font-size:.7rem;color:#e8b87a;text-align:center;font-family:'Black Han Sans',sans-serif;margin-bottom:4px;"></div>
+    <div class="write-emoji" id="wrtEmoji">⭐</div>
+    <div class="write-trans"   id="wrtTrans"></div>
+    <div class="write-desc"    id="wrtDesc"></div>
+    <div class="write-input-display" id="wrtDisplay"></div>
+    <div class="write-kbd"     id="wrtKbd"></div>
+    <div class="write-feedback" id="wrtFeedback"></div>
+    <div class="write-actions">
+      <button class="btn-write btn-write-check" id="wrtBtnCheck" onclick="writeCheck()">✓ تحقق</button>
+      <button class="btn-write btn-write-next"  id="wrtBtnNext" onclick="writeNext()">التالي ←</button>
+      <button class="btn-write btn-write-skip" id="wrtBtnSkip"  onclick="writeSkip()">تخطي</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  EXTRA STATE
+// ═══════════════════════════════════════════════
+let _levelStars          = {};
+let _bestTime            = null;
+let _totalWriteCorrect   = 0;
+let _totalWriteAttempts  = 0;
+let _perfectLevels       = 0;
+
+// ═══════════════════════════════════════════════
+//  🔥 STREAK SYSTEM
+// ═══════════════════════════════════════════════
+const STREAK_KEY = 'naltmal_streak';
+
+function initStreak(){
+  const s = loadStreakData();
+  document.getElementById('streakNum').textContent = s.current;
+}
+
+function loadStreakData(){
+  try{
+    const r = localStorage.getItem(STREAK_KEY);
+    return r ? JSON.parse(r) : {current:0,max:0,lastDate:'',history:[]};
+  }catch(e){ return {current:0,max:0,lastDate:'',history:[]}; }
+}
+
+function saveStreakData(s){
+  try{ localStorage.setItem(STREAK_KEY, JSON.stringify(s)); }catch(e){}
+}
+
+function updateStreak(){
+  const s     = loadStreakData();
+  const today = new Date().toISOString().slice(0,10);
+  if(s.lastDate === today) return;
+  const yesterday = new Date(Date.now()-86400000).toISOString().slice(0,10);
+  s.current   = s.lastDate === yesterday ? s.current+1 : 1;
+  s.max       = Math.max(s.max, s.current);
+  s.lastDate  = today;
+  if(!s.history) s.history=[];
+  s.history.push(today);
+  if(s.history.length>60) s.history=s.history.slice(-60);
+  saveStreakData(s);
+  document.getElementById('streakNum').textContent = s.current;
+  // Streak celebration
+  if(s.current > 1){
+    const badge = document.getElementById('streakBadge');
+    badge.style.transform='scale(1.3)';
+    setTimeout(()=> badge.style.transform='', 500);
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  📅 WORD OF THE DAY
+// ═══════════════════════════════════════════════
+function initWordOfDay(){
+  const words = Object.keys(MEANINGS);
+  if(!words.length) return;
+  const dayIdx = Math.floor(Date.now()/86400000) % words.length;
+  const word   = words[dayIdx];
+  const m      = MEANINGS[word];
+  document.getElementById('wotdEmoji').textContent = m.emoji;
+  document.getElementById('wotdWord').textContent  = word;
+  document.getElementById('wotdTrans').textContent = m[currentLang]||m.ko;
+  document.getElementById('wotdBanner').style.display = 'block';
+  window._wotdWord = word;
+}
+
+function wotdSpeak(){
+  if(window._wotdWord) playTTS(window._wotdWord);
+}
+
+// ═══════════════════════════════════════════════
+//  ⏱️ RACE SYSTEM — 2 types
+// ═══════════════════════════════════════════════
+const RACE1_SECS = 15; // find word in grid
+const RACE2_SECS = 20; // write word
+
+let _raceType     = 0;  // 0=off, 1=find, 2=write
+let _raceSelected = 1;
+let _raceItv      = null;
+let _raceRem      = 0;
+
+function openRaceMenu(){
+  _raceSelected = _raceType || 1;
+  updateRaceOptions();
+  const lbl = document.getElementById('raceActiveLabel');
+  lbl.textContent = _raceType ? `🔴 السباق ${_raceType===1?'الإيجاد':'الكتابة'} شغال` : '';
+  document.getElementById('raceMenu').style.display='flex';
+}
+function closeRaceMenu(){ document.getElementById('raceMenu').style.display='none'; }
+
+function selectRaceType(t){
+  _raceSelected = t;
+  updateRaceOptions();
+}
+function updateRaceOptions(){
+  const o1 = document.getElementById('raceOpt1');
+  const o2 = document.getElementById('raceOpt2');
+  if(o1) o1.style.borderColor = _raceSelected===1?'#4a8b8c':'#2a2a48';
+  if(o2) o2.style.borderColor = _raceSelected===2?'#4a8b8c':'#2a2a48';
+  if(o1) o1.style.background  = _raceSelected===1?'#0e2a2a':'#1e1e38';
+  if(o2) o2.style.background  = _raceSelected===2?'#0e2a2a':'#1e1e38';
+}
+function startSelectedRace(){
+  stopAllRace();
+  _raceType = _raceSelected;
+  const btn = document.getElementById('btnRaceTopbar');
+  if(btn){ btn.style.background='linear-gradient(135deg,#d46a7a,#e86a3a)'; btn.style.color='#fff'; }
+  closeRaceMenu();
+}
+function stopAllRace(){
+  _raceType = 0;
+  clearInterval(_raceItv); _raceItv=null;
+  const btn = document.getElementById('btnRaceTopbar');
+  if(btn){ btn.style.background=''; btn.style.color=''; }
+  _hideRace1(); _hideRace2();
+}
+
+// ── Race 1: find word (starts when meaning popup opens) ──
+function startRace1(){
+  if(_raceType!==1) return;
+  clearInterval(_raceItv);
+  _raceRem = RACE1_SECS;
+  document.getElementById('race1Bar').style.display='block';
+  document.getElementById('race1Num').style.display='block';
+  _renderRace1();
+  _raceItv = setInterval(()=>{
+    _raceRem--;
+    _renderRace1();
+    if(_raceRem<=0){ clearInterval(_raceItv); _onRace1Fail(); }
+  },1000);
+}
+function _renderRace1(){
+  const pct=(_raceRem/RACE1_SECS)*100;
+  const fill=document.getElementById('race1Fill');
+  const num =document.getElementById('race1Num');
+  if(!fill||!num) return;
+  fill.style.width=pct+'%';
+  fill.style.background=_raceRem<=5?'linear-gradient(90deg,#d46a7a,#e86a3a)':'linear-gradient(90deg,#7ab8b9,#e8b87a)';
+  num.textContent='⏱ '+_raceRem+'s';
+  num.style.color=_raceRem<=5?'#d46a7a':'#e8b87a';
+}
+function stopRace1(){ clearInterval(_raceItv); _raceItv=null; _hideRace1(); }
+function _hideRace1(){
+  const b=document.getElementById('race1Bar'); if(b) b.style.display='none';
+  const n=document.getElementById('race1Num'); if(n) n.style.display='none';
+}
+function _onRace1Fail(){
+  _hideRace1();
+  _hintCount+=2;
+  hideMeaningCard();
+  _flashRed();
+}
+
+// ── Race 2: write word (starts when each write word loads) ──
+function startRace2(){
+  if(_raceType!==2) return;
+  clearInterval(_raceItv);
+  _raceRem = RACE2_SECS;
+  document.getElementById('race2Bar').style.display='block';
+  document.getElementById('race2Num').style.display='block';
+  _renderRace2();
+  _raceItv = setInterval(()=>{
+    _raceRem--;
+    _renderRace2();
+    if(_raceRem<=0){ clearInterval(_raceItv); _onRace2Fail(); }
+  },1000);
+}
+function _renderRace2(){
+  const pct=(_raceRem/RACE2_SECS)*100;
+  const fill=document.getElementById('race2Fill');
+  const num =document.getElementById('race2Num');
+  if(!fill||!num) return;
+  fill.style.width=pct+'%';
+  fill.style.background=_raceRem<=5?'linear-gradient(90deg,#d46a7a,#e86a3a)':'linear-gradient(90deg,#7ab8b9,#e8b87a)';
+  num.textContent='⏱ '+_raceRem+'s';
+  num.style.color=_raceRem<=5?'#d46a7a':'#e8b87a';
+}
+function stopRace2(){ clearInterval(_raceItv); _raceItv=null; _hideRace2(); }
+function _hideRace2(){
+  const b=document.getElementById('race2Bar'); if(b) b.style.display='none';
+  const n=document.getElementById('race2Num'); if(n) n.style.display='none';
+}
+function _onRace2Fail(){
+  _hideRace2();
+  const w=_writeWords[_writeIdx];
+  if(!w) return;
+  const slots=document.getElementById('wrtDisplay').querySelectorAll('.write-syl-slot');
+  slots.forEach((s,i)=>{ s.textContent=w.syls[i]; s.classList.add('hint-show'); });
+  const fb=document.getElementById('wrtFeedback');
+  fb.className='write-feedback bad';
+  fb.textContent=`⏰ ${T('writeAnswer')} ${w.text}`;
+  _hintCount++;
+  document.getElementById('wrtBtnNext').style.display='inline-block';
+  document.querySelector('.btn-write-check').style.display='none';
+  document.querySelector('.btn-write-skip').style.display='none';
+  _flashRed();
+}
+function _flashRed(){
+  const d=document.createElement('div');
+  d.style.cssText='position:fixed;inset:0;background:rgba(212,106,122,.28);z-index:9999;pointer-events:none;';
+  document.body.appendChild(d);
+  setTimeout(()=>{ d.style.transition='opacity .5s'; d.style.opacity='0'; setTimeout(()=>d.remove(),500); },300);
+}
+
+// Legacy stubs — keep old calls working
+function initCountdown(){ }
+function startCountdown(){ }
+function stopCountdown(){ }
+function toggleRaceMode(){ }
+
+// ═══════════════════════════════════════════════
+//  📊 STATS SCREEN
+// ═══════════════════════════════════════════════
+function openStats(){
+  const s      = loadStreakData();
+  const vocab  = Object.keys(_vocabBook).length;
+  const perfect= Object.values(_levelStars).filter(x=>x===3).length;
+  const bestT  = _bestTime ? (_bestTime>=60?`${Math.floor(_bestTime/60)}m${_bestTime%60}s`:`${_bestTime}s`) : '-';
+  const acc    = _totalWriteAttempts>0 ? Math.round((_totalWriteCorrect/_totalWriteAttempts)*100)+'%' : '-';
+
+  document.getElementById('stTotalWords').textContent = vocab;
+  document.getElementById('stLevels').textContent     = completedSet.size;
+  document.getElementById('stStreak').textContent     = s.current;
+  document.getElementById('stStreakMax').textContent  = T('stStreakMax')+' '+s.max+' '+T('streakUnit');
+  document.getElementById('stAccuracy').textContent   = acc;
+  document.getElementById('stWriteSub').textContent   = _totalWriteAttempts>0 ? `${_totalWriteCorrect}/${_totalWriteAttempts}` : '';
+  document.getElementById('stPerfect').textContent    = perfect;
+  document.getElementById('stBestTime').textContent   = bestT;
+
+  // Last 14 days streak history
+  const hist = document.getElementById('streakHistory');
+  hist.innerHTML = '';
+  const today = new Date().toISOString().slice(0,10);
+  for(let d=13; d>=0; d--){
+    const date   = new Date(Date.now()-d*86400000).toISOString().slice(0,10);
+    const done   = s.history && s.history.includes(date);
+    const isToday= date===today;
+    const el     = document.createElement('div');
+    el.className = 'sh-day'+(done&&!isToday?' done':'')+(isToday?' today':'');
+    el.textContent = new Date(date).getDate();
+    hist.appendChild(el);
+  }
+  document.getElementById('statsOv').classList.add('show');
+}
+
+function closeStats(){
+  document.getElementById('statsOv').classList.remove('show');
+}
+
+// ═══════════════════════════════════════════════
+//  WRITING MODE
+// ═══════════════════════════════════════════════
+let _writeWords    = [];
+let _writeIdx      = 0;
+let _writeInput    = [];
+let _writeAttempts = 0;
+
+function startWriteMode(levelWords){
+  _writeWords = levelWords
+    .filter(w=>MEANINGS[w.text])
+    .map(w=>{ const m=MEANINGS[w.text]; return {text:w.text,syls:w.syls,emoji:m.emoji,trans:m[currentLang]||m.ko,desc:m.desc_ko}; });
+  _writeIdx=0;
+  document.getElementById('writeOv').classList.add('show');
+  loadWriteWord();
+}
+
+function loadWriteWord(){
+  if(_writeIdx>=_writeWords.length){ endWriteMode(); return; }
+  const w=_writeWords[_writeIdx];
+  _writeInput=[]; _writeAttempts=0;
+  document.getElementById('wrtProgress').textContent=`${_writeIdx+1} / ${_writeWords.length}`;
+  document.getElementById('wrtEmoji').textContent=w.emoji;
+  document.getElementById('wrtTrans').textContent=w.trans;
+  document.getElementById('wrtDesc').textContent=w.desc||'';
+  document.getElementById('wrtFeedback').textContent='';
+  document.getElementById('wrtFeedback').className='write-feedback';
+  document.getElementById('wrtBtnNext').style.display='none';
+  document.querySelector('.btn-write-check').style.display='inline-block';
+  document.querySelector('.btn-write-skip').style.display='inline-block';
+  playTTS(w.text);
+  renderWriteDisplay();
+  renderWriteKbd(w.syls);
+  startRace2(); // ⏱ start race2 timer for this word
+}
+
+function renderWriteDisplay(){
+  const w=_writeWords[_writeIdx];
+  const disp=document.getElementById('wrtDisplay');
+  disp.innerHTML='';
+  for(let i=0;i<w.syls.length;i++){
+    const slot=document.createElement('div');
+    slot.className='write-syl-slot'+(_writeInput[i]?' filled':'');
+    slot.textContent=_writeInput[i]||'';
+    disp.appendChild(slot);
+  }
+}
+
+function renderWriteKbd(syls){
+  const kbd=document.getElementById('wrtKbd');
+  kbd.innerHTML='';
+  const dist=['가','나','다','마','바','사','이','지','고','도','로','모','소','우','주','카','타','파'];
+  const pool=[...syls];
+  dist.filter(d=>!pool.includes(d)).sort(()=>Math.random()-.5).slice(0,Math.max(3,10-pool.length)).forEach(d=>pool.push(d));
+  pool.sort(()=>Math.random()-.5);
+  pool.forEach(syl=>{
+    const btn=document.createElement('button');
+    btn.className='write-key'; btn.textContent=syl;
+    btn.onclick=()=>writeTapSyl(syl);
+    kbd.appendChild(btn);
+  });
+  const del=document.createElement('button');
+  del.className='write-key write-key-del'; del.textContent=T('writeDel');
+  del.onclick=writeDelete; kbd.appendChild(del);
+}
+
+function writeTapSyl(syl){
+  const w=_writeWords[_writeIdx];
+  if(_writeInput.length>=w.syls.length) return;
+  _writeInput.push(syl);
+  renderWriteDisplay();
+  if(_writeInput.length===w.syls.length) writeCheck();
+}
+
+function writeDelete(){
+  if(!_writeInput.length) return;
+  _writeInput.pop();
+  document.getElementById('wrtFeedback').textContent='';
+  renderWriteDisplay();
+}
+
+function writeCheck(){
+  const w=_writeWords[_writeIdx];
+  if(_writeInput.length<w.syls.length){
+    const fb=document.getElementById('wrtFeedback');
+    fb.className='write-feedback bad'; fb.textContent=T('writeComplete'); return;
+  }
+  const correct=_writeInput.join('')===w.text;
+  const slots=document.getElementById('wrtDisplay').querySelectorAll('.write-syl-slot');
+  const fb=document.getElementById('wrtFeedback');
+  _totalWriteAttempts++;
+  if(correct){
+    _totalWriteCorrect++;
+    slots.forEach(s=>s.classList.add('correct'));
+    fb.className='write-feedback ok';
+    fb.textContent=_writeAttempts===0?T('writeGreat'):T('writeGood');
+    if(CFG.chime) playChime();
+    stopRace2(); // ✅ cancel timer — they wrote it!
+    document.getElementById('wrtBtnNext').style.display='inline-block';
+    document.querySelector('.btn-write-check').style.display='none';
+    document.querySelector('.btn-write-skip').style.display='none';
+  } else {
+    _writeAttempts++;
+    slots.forEach(s=>s.classList.add('wrong'));
+    fb.className='write-feedback bad';
+    if(_writeAttempts===1){
+      fb.textContent=`${T('writeWrong')} ${w.text} ${T('writeTryAgain')}`;
+      playTTS(w.text);
+      setTimeout(()=>{
+        slots.forEach(s=>{ s.classList.remove('wrong'); s.classList.add('hint-show'); });
+        setTimeout(()=>{ slots.forEach(s=>s.classList.remove('hint-show')); _writeInput=[]; renderWriteDisplay(); },1200);
+      },600);
+    } else {
+      fb.textContent=`${T('writeAnswer')} ${w.text}`;
+      slots.forEach((s,i)=>{ s.textContent=w.syls[i]; s.classList.add('hint-show'); });
+      playTTS(w.text);
+      document.getElementById('wrtBtnNext').style.display='inline-block';
+      document.querySelector('.btn-write-check').style.display='none';
+      document.querySelector('.btn-write-skip').style.display='none';
+    }
+  }
+}
+
+function writeNext(){ stopRace2(); _writeIdx++; loadWriteWord(); }
+function writeSkip(){ stopRace2(); _writeIdx++; loadWriteWord(); }
+function endWriteMode(){ document.getElementById('writeOv').classList.remove('show'); showWin(); }
+
+// ═══════════════════════════════════════════════
+//  BOOT — after ALL scripts are defined
+// ═══════════════════════════════════════════════
 init();
+initStreak();
+initWordOfDay();
+loadVocab();
+applyLang();
+</script>
+
+<!-- WORDS DRAWER -->
+<div id="wordsDrawer" onclick="if(event.target===this)closeWordsDrawer()">
+  <div class="words-sheet">
+    <div class="words-drawer-handle"></div>
+    <div class="words-drawer-title" id="wdTitle">📋 كلمات المرحلة</div>
+    <div class="words-drawer-sub" id="wdSub">0 / 0 كلمة</div>
+    <div class="words-drawer-grid" id="wdGrid"></div>
+    <button class="words-drawer-close" id="wdCloseBtn" onclick="closeWordsDrawer()">✕ إغلاق</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  WORDS DRAWER — shows current level words
+// ═══════════════════════════════════════════════
+function openWordsDrawer(){
+  const lv = getLv(curLv);
+  const grid = document.getElementById('wdGrid');
+  const sub  = document.getElementById('wdSub');
+  const title= document.getElementById('wdTitle');
+
+  const themeName = lv.name.replace(/레벨 \d+ · /,'');
+  const wordUnit = {ko:'단어',ar:'كلمة',en:'words',ja:'単語',zh:'个词',ru:'слов'}[currentLang] || 'كلمة';
+  const wordsLabel = {ko:'레벨 단어',ar:'كلمات المرحلة',en:'Level Words',ja:'レベルの単語',zh:'关卡单词',ru:'Слова уровня'}[currentLang] || 'كلمات المرحلة';
+
+  title.textContent = themeName + ' · ' + wordsLabel;
+  sub.textContent   = foundWords.length + ' / ' + lv.words.length + ' ' + wordUnit;
+  sub.style.direction = currentLang === 'ar' ? 'rtl' : 'ltr';
+
+  grid.innerHTML = '';
+  lv.words.forEach(w => {
+    const found = foundWords.includes(w.text);
+    const m     = MEANINGS[w.text] || {};
+    const item  = document.createElement('div');
+    item.className = 'wd-item ' + (found ? 'found' : 'notfound');
+
+    const statusEl = document.createElement('div');
+    statusEl.className = 'wd-item-status';
+    statusEl.textContent = found ? '✅' : '🔒';
+
+    const emojiEl = document.createElement('div');
+    emojiEl.className = 'wd-item-emoji';
+    emojiEl.textContent = m.emoji || '⭐';
+
+    const wordEl = document.createElement('div');
+    wordEl.className = 'wd-item-word';
+    wordEl.textContent = found ? w.text : '???';
+
+    const transEl = document.createElement('div');
+    transEl.className = 'wd-item-trans';
+    transEl.textContent = found ? (m[currentLang] || m.ko || '') : '---';
+
+    item.appendChild(statusEl);
+    item.appendChild(emojiEl);
+    item.appendChild(wordEl);
+    item.appendChild(transEl);
+
+    if(found){
+      item.onclick = () => {
+        playTTS(w.text);
+        item.style.transform = 'scale(1.08)';
+        setTimeout(()=> item.style.transform = '', 200);
+      };
+    }
+    grid.appendChild(item);
+  });
+
+  document.getElementById('wordsDrawer').classList.add('show');
+}
+
+function closeWordsDrawer(){
+  document.getElementById('wordsDrawer').classList.remove('show');
+}
 </script>
 </body>
 </html>
