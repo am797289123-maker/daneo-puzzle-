@@ -3027,6 +3027,7 @@ function speakWordWithCallback(text, isRepeat, callback){
 let _lastStarCount = 3;
 
 function showMeaning(word){
+  try{
   const m = getMeaning(word);
   if(!m) return;
   _currentMeaningWord = word;
@@ -3111,6 +3112,7 @@ function showMeaning(word){
       playTTSWithStarLogic(word);
     });
   });
+  } catch(e){ console.warn('showMeaning error:', e); }
 }
 // ═══════════════════════════════════════════════
 //  LEVEL SELECT SCREEN
@@ -3775,8 +3777,7 @@ function hint(){
   const [r,c]=target.cells[0];
   const el=document.querySelector(`#grid .cell[data-r="${r}"][data-c="${c}"]`);
   if(el){ el.classList.remove('hfx'); void el.offsetWidth; el.classList.add('hfx'); setTimeout(()=>el.classList.remove('hfx'),1800); }
-  // 🔊 Speak first syllable as audio clue
-  if(target.text) playTTS(target.text[0]);
+  // No sound on hint — sound only on cell tap
 }
 
 // ═══════════════════════════════════════════════
