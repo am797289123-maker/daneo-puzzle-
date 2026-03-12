@@ -2,7 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<style>html,body{overscroll-behavior-y:contain;}</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>단어 퍼즐</title>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -116,7 +117,9 @@ body{
   background:#ede8de;border-radius:14px;padding:6px;
   margin-bottom:12px;touch-action:none;user-select:none;
   -webkit-user-select:none;position:relative;
-}
+
+  overscroll-behavior: none;
+  touch-action: none;}
 .grid{display:grid;gap:4px;width:100%;}
 .grid.s4{grid-template-columns:repeat(4,1fr);}
 .grid.s5{grid-template-columns:repeat(5,1fr);}
@@ -1121,6 +1124,15 @@ body{
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js" defer></script>
+<script>
+window.onerror = function(msg, src, line, col, err) {
+  const div = document.createElement('div');
+  div.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:red;color:white;padding:10px;z-index:99999;font-size:12px;';
+  div.textContent = 'ERROR: ' + msg + ' | Line: ' + line + ' | Col: ' + col;
+  document.body.appendChild(div);
+  return false;
+};
+</script>
 </head>
 <body>
 <canvas id="bgCanvas"></canvas>
@@ -1236,10 +1248,7 @@ body{
       </div>
     </div>
     <div class="topbar-right">
-      <button class="btn-words" onclick="openWordsDrawer()">
-        <span style="font-size:.9rem;">📋</span>
-        <span id="btnWordsLbl" style="font-size:.58rem;display:block;margin-top:1px;">كلماتي</span>
-      </button>
+      
       <button class="btn-hint" onclick="hint()"><span class="hint-icon">💡</span><span>힌트</span></button>
       <button class="btn-gear" onclick="openSettings()">⚙️</button>
     </div>
@@ -1411,6 +1420,13 @@ body{
       <div class="settings-section-title" style="margin-top:16px" id="uiToolsSection">🎮 أدوات</div>
       <div class="settings-row">
         <div class="settings-row-left">
+          <div class="settings-row-label" id="uiLevelWordsLabel">📋 كلمات المرحلة</div>
+          <div class="settings-row-sub"   id="uiLevelWordsSub">الكلمات المخفية في هذا المستوى</div>
+        </div>
+        <button id="uiLevelWordsBtn" onclick="closeSettings();openWordsDrawer()" style="background:#4a8b8c;color:#fff;border:none;border-radius:9px;padding:7px 14px;font-family:'Black Han Sans',sans-serif;font-size:.8rem;cursor:pointer;">عرض</button>
+      </div>
+      <div class="settings-row">
+        <div class="settings-row-left">
           <div class="settings-row-label" id="uiStatsLabel">📊 إحصائياتي</div>
           <div class="settings-row-sub"   id="uiStatsSub">كلمات / مستويات / سلسلة الأيام</div>
         </div>
@@ -1474,6 +1490,13 @@ body{
   </div>
   <div class="stats-section-title" id="uiStatsHistTitle" data-ui="stHistoryTitle">🗓️ آخر 14 يوم</div>
   <div class="streak-history" id="streakHistory"></div>
+  <button id="statsVocabBtn" onclick="closeStats();openVocab()" style="
+    margin-top:18px;width:100%;max-width:420px;
+    background:linear-gradient(135deg,#4a8b8c,#2a6b6c);
+    color:#fff;border:none;border-radius:14px;
+    padding:14px;font-family:'Black Han Sans',sans-serif;
+    font-size:1rem;cursor:pointer;letter-spacing:1px;
+  ">📚 كلماتي المحفوظة</button>
 </div>
 
 <!-- RACE MENU -->
@@ -1841,7 +1864,28 @@ function initFirebase(){
         updateSettingsUser();
       }
     });
+    handleRedirectResult();
   } catch(e){ console.warn('Firebase init failed (offline?):', e); }
+}
+
+function handleRedirectResult(){
+  if(!auth) return;
+  auth.getRedirectResult().then(result => {
+    if(result && result.user){
+      const user = result.user;
+      currentUser = {
+        name:      user.displayName || user.email || '유저',
+        provider:  'google',
+        color:     '#fff',
+        textColor: '#3c3c3c',
+        photo:     user.photoURL || null,
+      };
+      try{ localStorage.setItem(USER_KEY, JSON.stringify(currentUser)); }catch(e){}
+      afterLogin();
+    }
+  }).catch(err => {
+    if(err.code !== 'auth/no-auth-event') console.error(err);
+  });
 }
 
 function loginWith(provider, btn){
@@ -1854,28 +1898,34 @@ function loginWith(provider, btn){
       alert('인터넷 연결이 필요합니다 🌐\nInternet connection required for login.');
       return;
     }
+    // Detect WebView (inside app) — Google blocks OAuth in WebView
+    const ua = navigator.userAgent;
+    const isWebView = /FBAN|FBAV|Instagram|Line|KakaoTalk|NAVER|wv|WebView/.test(ua) 
+                   || (ua.includes('Android') && !ua.includes('Chrome'))
+                   || (window.navigator.standalone === false && ua.includes('Safari') && !ua.includes('CriOS'));
+    
+    if(isWebView){
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      const msg = {
+        ko:'Chrome 브라우저에서 열어주세요\n구글 로그인은 앱 내 브라우저를 지원하지 않습니다.',
+        ar:'افتح الموقع في متصفح Chrome\nتسجيل الدخول بقوقل لا يعمل داخل التطبيقات.',
+        en:'Please open in Chrome browser\nGoogle login does not work inside apps.',
+        ja:'Chromeブラウザで開いてください\nGoogleログインはアプリ内では使えません。',
+        zh:'请在Chrome浏览器中打开\nGoogle登录不支持应用内浏览器。',
+        ru:'Откройте в браузере Chrome\nВход через Google не работает внутри приложений.'
+      }[currentLang] || 'Please open in Chrome browser';
+      alert(msg);
+      return;
+    }
+
     const gProvider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(gProvider)
-      .then(result => {
-        const user = result.user;
-        currentUser = {
-          name:      user.displayName || user.email || '유저',
-          provider:  'google',
-          color:     '#fff',
-          textColor: '#3c3c3c',
-          photo:     user.photoURL || null,
-        };
-        try{ localStorage.setItem(USER_KEY, JSON.stringify(currentUser)); }catch(e){}
-        btn.classList.remove('loading');
-        btn.disabled = false;
-        afterLogin();
-      })
-      .catch(err => {
-        console.error(err);
-        btn.classList.remove('loading');
-        btn.disabled = false;
-        alert('로그인 실패: ' + err.message);
-      });
+    auth.signInWithRedirect(gProvider).catch(err => {
+      console.error(err);
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      alert('로그인 실패: ' + err.message);
+    });
   } else {
     // Kakao/Naver — simulate for now (need their SDK)
     setTimeout(()=>{
@@ -2159,6 +2209,22 @@ function soundChipTap(word){
   playTap();
   setTimeout(() => speakWord(word), 80);
 }
+
+// Prevent pull-to-refresh on mobile
+document.addEventListener('touchmove', function(e){
+  if(e.touches.length === 1){
+    const grid = document.getElementById('grid');
+    if(grid && grid.contains(e.target)){
+      e.preventDefault();
+    }
+  }
+}, {passive: false});
+
+// Prevent pull-to-refresh entirely
+let _lastTouchY = 0;
+document.addEventListener('touchstart', function(e){
+  _lastTouchY = e.touches[0].clientY;
+}, {passive: true});
 
 // Pre-warm native TTS voices as fallback
 if(window.speechSynthesis){
@@ -2606,6 +2672,18 @@ function applyLang(){
   const wrtBtnSkip = document.getElementById('wrtBtnSkip');
   if(wrtBtnSkip) wrtBtnSkip.textContent = T('writeSkip');
 
+  const uiLevelWordsLabel = document.getElementById('uiLevelWordsLabel');
+  if(uiLevelWordsLabel) uiLevelWordsLabel.textContent = {ko:'📋 레벨 단어',ar:'📋 كلمات المرحلة',en:'📋 Level Words',ja:'📋 レベルの単語',zh:'📋 关卡单词',ru:'📋 Слова уровня'}[l] || '📋 레벨 단어';
+
+  const uiLevelWordsSub = document.getElementById('uiLevelWordsSub');
+  if(uiLevelWordsSub) uiLevelWordsSub.textContent = {ko:'이 레벨에 숨겨진 단어',ar:'الكلمات المخفية في هذا المستوى',en:'Hidden words in this level',ja:'このレベルの隠し単語',zh:'本关卡的隐藏单词',ru:'Скрытые слова в этом уровне'}[l] || '이 레벨에 숨겨진 단어';
+
+  const uiLevelWordsBtn = document.getElementById('uiLevelWordsBtn');
+  if(uiLevelWordsBtn) uiLevelWordsBtn.textContent = {ko:'보기',ar:'عرض',en:'View',ja:'見る',zh:'查看',ru:'Смотреть'}[l] || '보기';
+
+  const statsVocabBtn = document.getElementById('statsVocabBtn');
+  if(statsVocabBtn) statsVocabBtn.textContent = {ko:'📚 내 단어장 보기',ar:'📚 كلماتي المحفوظة',en:'📚 My Saved Words',ja:'📚 単語帳を見る',zh:'📚 我的单词本',ru:'📚 Мои слова'}[l] || '📚 내 단어장 보기';
+
   const wdCloseBtn = document.getElementById('wdCloseBtn');
   if(wdCloseBtn) wdCloseBtn.textContent = {ko:'✕ 닫기',ar:'✕ إغلاق',en:'✕ Close',ja:'✕ 閉じる',zh:'✕ 关闭',ru:'✕ Закрыть'}[l] || '✕ 닫기';
 
@@ -2965,20 +3043,19 @@ function showMeaning(word){
   const mProCh     = document.getElementById('pronuncChallenge');
 
   // Reset
+  if(!card) return;
   card.classList.remove('show','hide');
 
-  mImg.textContent  = m.emoji;
-  mWord.textContent = m.word;
+  if(mImg)  mImg.textContent  = m.emoji;
+  if(mWord) mWord.textContent = m.word;
 
   // Translation in the user's language (big + colored)
   if(currentLang !== 'ko'){
-    mTransMain.textContent = m.trans;
-    mTransMain.style.display = 'block';
-    mRead.textContent = '(' + m.desc_ko + ')';
+    if(mTransMain){ mTransMain.textContent = m.trans; mTransMain.style.display = 'block'; }
+    if(mRead) mRead.textContent = '(' + m.desc_ko + ')';
   } else {
-    mTransMain.textContent = '';
-    mTransMain.style.display = 'none';
-    mRead.textContent = '';
+    if(mTransMain){ mTransMain.textContent = ''; mTransMain.style.display = 'none'; }
+    if(mRead) mRead.textContent = '';
   }
   // mDef: show localized description or fall back to Korean
   if(currentLang !== 'ko'){
@@ -2990,16 +3067,16 @@ function showMeaning(word){
 
   // Pronunciation button label
   const pronLabels = {ko:'🔊 다시 듣기',ar:'🔊 استمع مرة أخرى',en:'🔊 Listen again',ja:'🔊 もう一度聴く',zh:'🔊 再听一遍',ru:'🔊 Слушать снова'};
-  mPronBtn.textContent = pronLabels[currentLang] || pronLabels.ko;
+  if(mPronBtn) mPronBtn.textContent = pronLabels[currentLang] || pronLabels.ko;
 
   // Sentence example
   const sent = getSentence(word);
   if(sent){
     document.getElementById('mSentKo').textContent    = '💬 ' + sent.ko;
     document.getElementById('mSentTrans').textContent = sent.trans ? `(${sent.trans})` : '';
-    mSent.style.display = 'block';
+    if(mSent) mSent.style.display = 'block';
   } else {
-    mSent.style.display = 'none';
+    if(mSent) mSent.style.display = 'none';
   }
 
   // Pronunciation challenge
@@ -3014,20 +3091,16 @@ function showMeaning(word){
   }
 
   // RTL for Arabic
-  card.style.direction = currentLang === 'ar' ? 'rtl' : 'ltr';
+  if(card) card.style.direction = currentLang === 'ar' ? 'rtl' : 'ltr';
 
   // Reset bar
-  mBar.style.transition = 'none';
-  mBar.style.width = '100%';
+  if(mBar){ mBar.style.transition = 'none'; mBar.style.width = '100%'; }
 
   // Make card tappable to close manually
-  card.style.pointerEvents = 'all';
-  card.style.cursor = 'pointer';
-  card.onclick = ()=> hideMeaningCard();
+  if(card){ card.style.pointerEvents = 'all'; card.style.cursor = 'pointer'; card.onclick = ()=> hideMeaningCard(); }
 
   // Show card — stays open until user taps or sound logic closes it
-  void card.offsetWidth;
-  card.classList.add('show');
+  if(card){ void card.offsetWidth; card.classList.add('show'); }
 
   // Start race1 timer if active
   startRace1();
@@ -3132,7 +3205,7 @@ function init(){
 
   const alreadyLoggedIn = loadUser();
   if(alreadyLoggedIn){
-    document.getElementById('loginScreen').style.display='none';
+    const _ls=document.getElementById('loginScreen'); if(_ls)_ls.style.display='none';
   }
 
   const splash = document.getElementById('splash');
@@ -3567,7 +3640,7 @@ function showReviewQ(){
   document.getElementById('reviewEmoji').textContent  = m.emoji;
   document.getElementById('reviewWord').textContent   = word;
   document.getElementById('reviewResult').textContent = '';
-  document.getElementById('btnReviewNext').style.display = 'none';
+  const _brn1=document.getElementById('btnReviewNext'); if(_brn1)_brn1.style.display='none';
 
   // Build 4 choices: 1 correct + 3 random
   const correct = m[currentLang] || m.ko;
@@ -3603,7 +3676,7 @@ function answerReview(btn, chosen, correct, container){
     result.textContent = T('reviewWrong', correct);
     result.style.color = '#d46a7a';
   }
-  document.getElementById('btnReviewNext').style.display = 'block';
+  const _brn2=document.getElementById('btnReviewNext'); if(_brn2)_brn2.style.display='block';
 }
 
 function nextReviewQ(){
@@ -3834,14 +3907,14 @@ function openVocabDetail(word){
   document.getElementById('vdTrans').textContent = v[currentLang] || v.ko;
   document.getElementById('vdDesc').textContent  = MEANINGS[word]?.desc_ko || '';
   document.getElementById('vdFeedback').textContent = '';
-  document.getElementById('vdBar').style.width = '0';
+  const _vdb=document.getElementById('vdBar'); if(_vdb)_vdb.style.width='0';
 
   const micBtn = document.getElementById('vdMicBtn');
   micBtn.classList.remove('listening');
   micBtn.textContent = '🎤 دربني';
 
   // RTL
-  document.querySelector('.vocab-detail-sheet').style.direction = currentLang==='ar'?'rtl':'ltr';
+  const _vds=document.querySelector('.vocab-detail-sheet'); if(_vds)_vds.style.direction=currentLang==='ar'?'rtl':'ltr';
 
   document.getElementById('vocabDetail').classList.add('show');
 }
@@ -3855,16 +3928,16 @@ function closeVocabDetail(e){
 function vdListen(){
   if(!_vdWord) return;
   const bar = document.getElementById('vdBar');
-  bar.style.transition = 'none';
-  bar.style.width = '100%';
-  void bar.offsetWidth;
-
-  const dur = _vdWord.length <= 2 ? 1200 : _vdWord.length <= 3 ? 1600 : 2000;
-  setTimeout(()=>{
-    bar.style.transition = `width ${dur/1000}s linear`;
-    bar.style.width = '0%';
-  }, 50);
-
+  if(bar){
+    bar.style.transition = 'none';
+    bar.style.width = '100%';
+    void bar.offsetWidth;
+    const dur = _vdWord.length <= 2 ? 1200 : _vdWord.length <= 3 ? 1600 : 2000;
+    setTimeout(()=>{
+      bar.style.transition = `width ${dur/1000}s linear`;
+      bar.style.width = '0%';
+    }, 50);
+  }
   speakWordWithCallback(_vdWord, true, ()=>{});
 }
 
@@ -3872,6 +3945,7 @@ function vdStartMic(){
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const micBtn   = document.getElementById('vdMicBtn');
   const feedback = document.getElementById('vdFeedback');
+  if(!micBtn || !feedback) return;
 
   if(!SpeechRecognition){
     feedback.textContent = '⚠️ المتصفح لا يدعم التعرف على الصوت';
@@ -4010,7 +4084,7 @@ function initWordOfDay(){
   document.getElementById('wotdEmoji').textContent = m.emoji;
   document.getElementById('wotdWord').textContent  = word;
   document.getElementById('wotdTrans').textContent = m[currentLang]||m.ko;
-  document.getElementById('wotdBanner').style.display = 'block';
+  const _wb=document.getElementById('wotdBanner'); if(_wb)_wb.style.display='block';
   window._wotdWord = word;
 }
 
@@ -4034,9 +4108,9 @@ function openRaceMenu(){
   updateRaceOptions();
   const lbl = document.getElementById('raceActiveLabel');
   lbl.textContent = _raceType ? `🔴 السباق ${_raceType===1?'الإيجاد':'الكتابة'} شغال` : '';
-  document.getElementById('raceMenu').style.display='flex';
+  const _rm=document.getElementById('raceMenu'); if(_rm)_rm.style.display='flex';
 }
-function closeRaceMenu(){ document.getElementById('raceMenu').style.display='none'; }
+function closeRaceMenu(){ const _rm2=document.getElementById('raceMenu'); if(_rm2)_rm2.style.display='none'; }
 
 function selectRaceType(t){
   _raceSelected = t;
@@ -4070,8 +4144,8 @@ function startRace1(){
   if(_raceType!==1) return;
   clearInterval(_raceItv);
   _raceRem = RACE1_SECS;
-  document.getElementById('race1Bar').style.display='block';
-  document.getElementById('race1Num').style.display='block';
+  const _r1b=document.getElementById('race1Bar'); if(_r1b)_r1b.style.display='block';
+  const _r1n=document.getElementById('race1Num'); if(_r1n)_r1n.style.display='block';
   _renderRace1();
   _raceItv = setInterval(()=>{
     _raceRem--;
@@ -4106,8 +4180,8 @@ function startRace2(){
   if(_raceType!==2) return;
   clearInterval(_raceItv);
   _raceRem = RACE2_SECS;
-  document.getElementById('race2Bar').style.display='block';
-  document.getElementById('race2Num').style.display='block';
+  const _r2b=document.getElementById('race2Bar'); if(_r2b)_r2b.style.display='block';
+  const _r2n=document.getElementById('race2Num'); if(_r2n)_r2n.style.display='block';
   _renderRace2();
   _raceItv = setInterval(()=>{
     _raceRem--;
@@ -4140,9 +4214,9 @@ function _onRace2Fail(){
   fb.className='write-feedback bad';
   fb.textContent=`⏰ ${T('writeAnswer')} ${w.text}`;
   _hintCount++;
-  document.getElementById('wrtBtnNext').style.display='inline-block';
-  document.querySelector('.btn-write-check').style.display='none';
-  document.querySelector('.btn-write-skip').style.display='none';
+  const _wbn=document.getElementById('wrtBtnNext'); if(_wbn)_wbn.style.display='inline-block';
+  const _bwc1=document.querySelector('.btn-write-check'); if(_bwc1)_bwc1.style.display='none';
+  const _bws1=document.querySelector('.btn-write-skip'); if(_bws1)_bws1.style.display='none';
   _flashRed();
 }
 function _flashRed(){
@@ -4224,9 +4298,9 @@ function loadWriteWord(){
   document.getElementById('wrtDesc').textContent=w.desc||'';
   document.getElementById('wrtFeedback').textContent='';
   document.getElementById('wrtFeedback').className='write-feedback';
-  document.getElementById('wrtBtnNext').style.display='none';
-  document.querySelector('.btn-write-check').style.display='inline-block';
-  document.querySelector('.btn-write-skip').style.display='inline-block';
+  const _wbn2=document.getElementById('wrtBtnNext'); if(_wbn2)_wbn2.style.display='none';
+  const _bwc2=document.querySelector('.btn-write-check'); if(_bwc2)_bwc2.style.display='inline-block';
+  const _bws2=document.querySelector('.btn-write-skip'); if(_bws2)_bws2.style.display='inline-block';
   playTTS(w.text);
   renderWriteDisplay();
   renderWriteKbd(w.syls);
@@ -4295,9 +4369,9 @@ function writeCheck(){
     fb.textContent=_writeAttempts===0?T('writeGreat'):T('writeGood');
     if(CFG.chime) playChime();
     stopRace2(); // ✅ cancel timer — they wrote it!
-    document.getElementById('wrtBtnNext').style.display='inline-block';
-    document.querySelector('.btn-write-check').style.display='none';
-    document.querySelector('.btn-write-skip').style.display='none';
+    const _wbn=document.getElementById('wrtBtnNext'); if(_wbn)_wbn.style.display='inline-block';
+    const _bwc1=document.querySelector('.btn-write-check'); if(_bwc1)_bwc1.style.display='none';
+    const _bws1=document.querySelector('.btn-write-skip'); if(_bws1)_bws1.style.display='none';
   } else {
     _writeAttempts++;
     slots.forEach(s=>s.classList.add('wrong'));
@@ -4313,9 +4387,9 @@ function writeCheck(){
       fb.textContent=`${T('writeAnswer')} ${w.text}`;
       slots.forEach((s,i)=>{ s.textContent=w.syls[i]; s.classList.add('hint-show'); });
       playTTS(w.text);
-      document.getElementById('wrtBtnNext').style.display='inline-block';
-      document.querySelector('.btn-write-check').style.display='none';
-      document.querySelector('.btn-write-skip').style.display='none';
+      const _wbn=document.getElementById('wrtBtnNext'); if(_wbn)_wbn.style.display='inline-block';
+      const _bwc1=document.querySelector('.btn-write-check'); if(_bwc1)_bwc1.style.display='none';
+      const _bws1=document.querySelector('.btn-write-skip'); if(_bws1)_bws1.style.display='none';
     }
   }
 }
