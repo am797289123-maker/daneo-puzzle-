@@ -3712,16 +3712,17 @@ function addToVocab(word){
 function openVocab(){
   loadVocab();
   const grid  = document.getElementById('vocabGrid');
+  if(!grid) return;
   const empty = document.getElementById('vocabEmpty');
   const count = document.getElementById('vocabCount');
   grid.innerHTML = '';
   const words = Object.keys(_vocabBook);
   const wordUnit = {ko:'단어',ar:'كلمة',en:'words',ja:'単語',zh:'个词',ru:'слов'};
-  count.textContent = words.length + ' ' + (wordUnit[currentLang]||'');
+  if(count) count.textContent = Object.keys(_vocabBook).length + ' ' + ({ko:'단어',ar:'كلمة',en:'words',ja:'単語',zh:'个词',ru:'слов'}[currentLang]||'');
   if(words.length === 0){
-    empty.style.display='block'; grid.style.display='none';
+    if(empty) empty.style.display='block'; grid.style.display='none';
   } else {
-    empty.style.display='none'; grid.style.display='grid';
+    if(empty) empty.style.display='none'; grid.style.display='grid';
     words.reverse().forEach(word => {
       const v = _vocabBook[word];
       const div = document.createElement('div');
@@ -3739,7 +3740,8 @@ function openVocab(){
       grid.appendChild(div);
     });
   }
-  document.getElementById('vocabOv').classList.add('show');
+  const vo = document.getElementById('vocabOv');
+  if(vo) vo.classList.add('show');
 }
 
 function closeVocab(){
